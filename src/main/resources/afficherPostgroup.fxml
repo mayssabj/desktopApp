@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="684.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.afficherPostgroup">
+    <children>
+        <VBox layoutX="20.0" layoutY="38.0" prefHeight="646.0" prefWidth="873.0" styleClass="card" stylesheets="@style/styleafficher.css">
+            <children>
+                <HBox prefHeight="122.0" prefWidth="737.0">
+                    <children>
+                        <ImageView fitHeight="29.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/bouton-retour.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets left="30.0" top="10.0" />
+                            </HBox.margin>
+                        </ImageView>
+                        <HBox prefHeight="122.0" prefWidth="422.0" styleClass="card" stylesheets="@style/styleafficher.css">
+                            <children>
+                                <VBox prefHeight="122.0" prefWidth="325.0" styleClass="card" stylesheets="@style/styleafficher.css">
+                                    <children>
+                                        <Label alignment="BOTTOM_LEFT" prefHeight="65.0" prefWidth="260.0" text="sponsoring name">
+                                            <font>
+                                                <Font name="Cambria Math" size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <HBox.margin>
+                                <Insets left="160.0" />
+                            </HBox.margin>
+                        </HBox>
+                    </children>
+                </HBox>
+                <HBox prefHeight="106.0" prefWidth="763.0" stylesheets="@style/styleafficher.css">
+                    <children>
+                        <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <HBox.margin>
+                                <Insets left="30.0" top="5.0" />
+                            </HBox.margin>
+                            <image>
+                                <Image url="@images/profil.png" />
+                            </image>
+                        </ImageView>
+                        <TextField fx:id="sasie1" prefHeight="26.0" prefWidth="445.0" promptText="write something" stylesheets="@style/styleafficher.css">
+                            <HBox.margin>
+                                <Insets left="50.0" top="20.0" />
+                            </HBox.margin>
+                        </TextField>
+                        <Button fx:id="ajouter1" mnemonicParsing="false" onAction="#ajouterPostgroup" prefHeight="26.0" prefWidth="103.0" styleClass="poste-button" stylesheets="@style/styleafficher.css" text="poster" textFill="#fffafa">
+                            <HBox.margin>
+                                <Insets top="20.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <styleClass>
+                        <String fx:value="eco-card" />
+                        <String fx:value="card" />
+                    </styleClass>
+                </HBox>
+                <VBox fx:id="postbox" styleClass="eco-card" prefHeight="521.0" prefWidth="795.0">
+                    <!-- Les posts seront affichés ici -->
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
