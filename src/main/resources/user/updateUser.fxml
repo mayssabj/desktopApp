@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<ScrollPane hmax="600.0" hmin="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.user.UserController">
+    <content>
+        <AnchorPane>
+            <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <VBox fillWidth="false" maxWidth="1.7976931348623157E308">
+                        <TitledPane layoutX="10.0" layoutY="10.0" text="Picture">
+                            <content>
+                                <VBox alignment="CENTER" spacing="5.0">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="15.0">
+                                            <children>
+                                                <VBox spacing="5.0">
+                                                    <children>
+                                                        <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../images/default_user.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </children>
+                                                </VBox>
+                                                <VBox alignment="CENTER" layoutX="460.0" layoutY="10.0" spacing="10.0">
+                                                    <children>
+                                                        <Button mnemonicParsing="false" onAction="#openFileChooser" prefWidth="100.0" text="Choose picture" />
+                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="100.0" text="Remove picture" />
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets bottom="4.0" />
+                                            </VBox.margin>
+                                        </HBox>
+                                        <Button maxHeight="35.0" minHeight="35.0" onAction="#updateInformation" prefHeight="35.0" prefWidth="1000.0" text="Submit" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                        <!-- Section 1: Information -->
+                        <TitledPane text="Information">
+                            <VBox spacing="5.0">
+                                <Label text="Phone:" />
+                                <TextField fx:id="phoneField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
+                                <VBox fx:id="phoneErrorsContainer" />
+                                <Label text="Address:" />
+                                <TextField fx:id="addressField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
+                                <VBox fx:id="addressErrorsContainer" />
+                                <Label fx:id="infoUpdateMessageLabel" />
+                                <Button maxHeight="35.0" minHeight="35.0" onAction="#updateInformation" prefHeight="35.0" prefWidth="1000.0" text="Update Information" />
+                            </VBox>
+                        </TitledPane>
+
+                        <!-- Section 2: Change Email -->
+                        <TitledPane text="Change Email">
+                            <VBox spacing="5.0">
+                                <Label text="Current Email:" />
+                                <TextField fx:id="currentEmailField" editable="false" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
+                                <Label text="New Email:" />
+                                <TextField fx:id="newEmailField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
+                                <VBox fx:id="newEmailErrorsContainer" />
+                                <Label text="Password:" />
+                                <PasswordField fx:id="passwordForEmailField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
+                                <VBox fx:id="passwordForEmailErrorsContainer" />
+                                <Label fx:id="emailUpdateMessageLabel" />
+                                <Button maxHeight="35.0" minHeight="35.0" onAction="#changeEmail" prefHeight="35.0" prefWidth="1000.0" text="Change Email" />
+                            </VBox>
+                        </TitledPane>
+
+
+                        <!-- Section 3: Change Password -->
+                        <TitledPane text="Change Password">
+                            <VBox spacing="5.0">
+                                <Label text="Old Password:" />
+                                <PasswordField fx:id="oldPasswordField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
+                                <VBox fx:id="oldPasswordErrorsContainer" />
+                                <Label text="New Password:" />
+                                <PasswordField fx:id="newPasswordField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
+                                <VBox fx:id="newPasswordErrorsContainer" />
+                                <Label fx:id="passwordUpdateMessageLabel" />
+                                <Button maxHeight="35.0" minHeight="35.0" onAction="#changePassword" prefHeight="35.0" prefWidth="1000.0" text="Change Password" />
+                            </VBox>
+                        </TitledPane>
+                    </VBox>
+                </children>
+            </HBox>
+        </AnchorPane>
+    </content>
+</ScrollPane>

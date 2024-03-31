@@ -3,6 +3,7 @@ package edu.esprit.controller.user;
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
 import edu.esprit.utils.FileChooserUtil;
+import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.ValidationUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -161,21 +162,7 @@ public class RegistrationController implements Initializable {
 
 
     public void openLogin(MouseEvent event) {
-        try {
-            // Load the registration form FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/login.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage from the event
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Set the new scene to the stage
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        NavigationUtil.redirectTo("/user/login.fxml", event);
     }
 
 

@@ -57,4 +57,8 @@ public class ValidationUtils {
         }
         return errors;
     }
+
+    public static List<String> validateAddress(String text) {
+        return new ArrayList<String>();
+    }
 }
