@@ -31,11 +31,9 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
         }
     }
 
-
-
     @Override
     public void modifier(Post_group postGroup) throws SQLException {
-        String req ="UPDATE `post_group` SET `contenu`=?,`date`=?,`sponsoring_id`=?,`user_id`=?  WHERE `id`=?";
+        String req = "UPDATE `post_group` SET `contenu`=?,`date`=?,`sponsoring_id`=?,`user_id`=? WHERE `id`=?";
         try (PreparedStatement pg = con.prepareStatement(req)) {
             pg.setString(1, postGroup.getContenu());
             pg.setDate(2, new java.sql.Date(postGroup.getDate().getTime()));
@@ -67,23 +65,22 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
                 Date date = rs.getDate("date");
                 int sponsoringId = rs.getInt("sponsoring_id");
                 int userId = rs.getInt("user_id");
-                // Assume you have methods to retrieve Sponsoring and User objects
                 Sponsoring sponsoring = getSponsoringById(sponsoringId);
                 User user = getUserById(userId);
-                Post_group post = new Post_group(id, contenu, date, sponsoring, user);
+                Post_group post = new Post_group(id, contenu,date, sponsoring,user);
                 posts.add(post);
             }
         }
         return posts;
     }
+
     public Sponsoring getSponsoringById(int id) throws SQLException {
         String req = "SELECT * FROM `sponsoring` WHERE `id`=?";
         try (PreparedStatement ps = con.prepareStatement(req)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                String sponsoringName = rs.getString("name"); // Assurez-vous de changer le nom de la colonne si nécessaire
-                // Créez et retournez un objet Sponsoring avec les informations récupérées
+                String sponsoringName = rs.getString("name");
                 return new Sponsoring(id, sponsoringName);
             }
         }
@@ -98,14 +95,31 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
             if (rs.next()) {
                 String username = rs.getString("username");
                 String image = rs.getString("image");
-                // Créez et retournez un objet User avec les informations récupérées
-                return new User(id, username, image); // Vous devrez ajouter le mot de passe ou d'autres informations si nécessaire
+                return new User(id, username, image); // Assuming User constructor takes id, username, and image
             }
         }
         return null;
     }
 
-
-
+    public List<Post_group> afficherBySponsoring(String sponsoringName) throws SQLException {
+        List<Post_group> posts = new ArrayList<>();
+        String req = "SELECT * FROM `post_group` WHERE `sponsoring_id` IN (SELECT `id` FROM `sponsoring` WHERE `name` = ?)";
+        try (PreparedStatement pg = con.prepareStatement(req)) {
+            pg.setString(1, sponsoringName);
+            ResultSet rs = pg.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String contenu = rs.getString("contenu");
+                Date date = rs.getDate("date");
+                int sponsoringId = rs.getInt("sponsoring_id");
+                int userId = rs.getInt("user_id");
+                User user = getUserById(userId);
+                Sponsoring sponsoring = getSponsoringById(sponsoringId);
+                Post_group post = new Post_group(id, contenu, date,sponsoring ,user);
+                posts.add(post);
+            }
+        }
+        return posts;
+    }
 
 }

@@ -44,6 +44,10 @@ public class Sponsoring {
         this.type = type;
     }
 
+    public Sponsoring(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

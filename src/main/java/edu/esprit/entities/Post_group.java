@@ -10,7 +10,7 @@ public class Post_group {
     private Sponsoring sponsoring_id;
     private User user_id ;
 
-    public Post_group(int id, String contenu, Date date, Sponsoring sponsoring_id, User user_id) {
+    public Post_group(int id, String contenu,Date date , Sponsoring sponsoring_id , User user_id) {
         this.id = id;
         this.contenu = contenu;
         this.date = date;
@@ -23,6 +23,11 @@ public class Post_group {
         this.date = date;
         this.sponsoring_id = sponsoring_id;
         this.user_id = user_id;
+    }
+
+    public Post_group(int id, String contenu) {
+        this.id = id;
+        this.contenu = contenu;
     }
 
     public int getId() {

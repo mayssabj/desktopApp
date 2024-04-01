@@ -78,12 +78,28 @@ public class SponsoringService implements ServiceSponsoring<Sponsoring> {
         }
         return sponsoringList;
     }
-
-
-
-
-
-
-
+    public Sponsoring getById(int id) throws SQLException {
+        String req = "SELECT * FROM `sponsoring` WHERE `id`=?";
+        try (PreparedStatement sp = con.prepareStatement(req)) {
+            sp.setInt(1, id);
+            try (ResultSet rs = sp.executeQuery()) {
+                if (rs.next()) {
+                    int sponsoringId = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    String image = rs.getString("image");
+                    Date date = rs.getDate("date");
+                    Sponsoring.Duration contrat = Sponsoring.Duration.valueOf(rs.getString("contrat"));
+                    Sponsoring.TypeSpon type = Sponsoring.TypeSpon.valueOf(rs.getString("type"));
+                    return new Sponsoring(sponsoringId, name, description, image, date, contrat, type);
+                }
+            }
+        }
+        return null;
+    }
 }
+
+
+
+
 

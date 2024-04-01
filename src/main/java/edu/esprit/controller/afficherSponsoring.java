@@ -3,16 +3,21 @@ package edu.esprit.controller;
 import edu.esprit.entities.Sponsoring;
 import edu.esprit.services.SponsoringService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -64,11 +69,33 @@ public class afficherSponsoring {
                     column = 0;
                     row++;
                 }
+                // Ajouter un événement de clic à chaque carte de sponsoring
+                sponsoringBox.setOnMouseClicked(event -> {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherPostgroup.fxml"));
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+
+                        // Passer le nom du sponsoring à la nouvelle fenêtre
+                        afficherPostgroup controller = loader.getController();
+                        controller.setSponsoringName(sponsoring.getName());
+                        controller.setSponsoringId(sponsoring.getId());
+
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
             }
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
         }
+
     }
+
 
 
 
