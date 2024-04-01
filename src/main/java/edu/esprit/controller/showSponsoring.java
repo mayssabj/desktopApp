@@ -38,6 +38,8 @@ public class showSponsoring implements Initializable {
     private TableColumn<Sponsoring, Sponsoring.TypeSpon> typeColumn;
     @FXML
     private TableColumn<Sponsoring, Void> actionsColumn;
+    @FXML
+    private Button buttonajouter;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -133,6 +135,29 @@ public class showSponsoring implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             // Gérer l'exception en conséquence
+        }
+    }
+    @FXML
+    private void handlesponsorButtonClick() {
+        try {
+            // Charger le fichier FXML de la nouvelle page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterSponsoring.fxml"));
+            Parent root = loader.load();
+
+            // Créer la scène avec la nouvelle page
+            Scene scene = new Scene(root);
+
+            // Obtenir la scène actuelle à partir du bouton cliqué
+            Stage stage = (Stage) buttonajouter.getScene().getWindow();
+
+            // Remplacer la scène actuelle par la nouvelle scène
+            stage.setScene(scene);
+            stage.show();
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();  // Gérer les exceptions en conséquence
         }
     }
 
