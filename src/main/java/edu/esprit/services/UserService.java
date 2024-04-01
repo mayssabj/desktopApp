@@ -131,6 +131,39 @@ public class UserService {
         return false;
     }
 
+    public boolean updateUserProfilePicture(String profilePicture, int userId) {
+        Connection con = mydb.getInstance().getCon();
+        String query = "UPDATE users SET profile_picture = ? WHERE id = ?";
+
+        try (PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setString(1, profilePicture);
+            pst.setInt(2, userId);
+
+            int rowsUpdated = pst.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteUser(int userId) {
+        Connection con = mydb.getInstance().getCon();
+        String query = "DELETE FROM users WHERE id = ?";
+
+        try (PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setInt(1, userId);
+
+            int rowsDeleted = pst.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 
 
 

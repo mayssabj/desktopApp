@@ -3,6 +3,7 @@ package edu.esprit.controller.user;
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
 import edu.esprit.utils.FileChooserUtil;
+import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.Session;
 import edu.esprit.utils.ValidationUtils;
 import javafx.event.ActionEvent;
@@ -14,9 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +62,17 @@ public class UserController implements Initializable {
     public TextField currentEmailField;
     @FXML
     public ImageView profileImageView;
+    @FXML
+    public Label profilePictureUpdateMessageLabel;
+
+    @FXML
+    public PasswordField deletePasswordField;
+    @FXML
+    public VBox deletePasswordErrorsContainer;
+    @FXML
+    public Label deleteMessageLabel;
+
+
 
     private UserService userService = new UserService();
 
@@ -193,6 +208,34 @@ public class UserController implements Initializable {
     }
 
 
+    public void performUpdatePicture(ActionEvent event) {
+        User currentUser = Session.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String profilePictureUrl = (currentUser.getProfilePicture() != null) ? currentUser.getProfilePicture() : "";
+            boolean updateSuccessful = userService.updateUserProfilePicture(profilePictureUrl, currentUser.getId());
+            if (updateSuccessful) {
+                displayProfileUpdateSuccess("Profile picture updated successfully.");
+            } else {
+                displayProfileUpdateError("Failed to update profile picture. Please try again.");
+            }
+        }
+    }
+
+    private void displayProfileUpdateSuccess(String message) {
+        profilePictureUpdateMessageLabel.setText(message);
+        profilePictureUpdateMessageLabel.setStyle("-fx-text-fill: green;");
+    }
+
+    private void displayProfileUpdateError(String message) {
+        profilePictureUpdateMessageLabel.setText(message);
+        profilePictureUpdateMessageLabel.setStyle("-fx-text-fill: red;");
+    }
+
+
+
+
+
+
 
 
 
@@ -225,12 +268,17 @@ public class UserController implements Initializable {
             addressField.setText(currentUser.getAddress());
             currentEmailField.setText(currentUser.getEmail()); // Set the current email
             String profilePictureUrl = currentUser.getProfilePicture();
+
+            // Set the clip for the ImageView to make it circular
+            Circle clip = new Circle(50, 50, 50); // Assuming the ImageView is 100x100
+            profileImageView.setClip(clip);
+
             if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
                 try {
-                    Image profileImage = new Image(profilePictureUrl);
+                    Image profileImage = new Image(new FileInputStream(profilePictureUrl));
                     profileImageView.setImage(profileImage);
-                } catch (IllegalArgumentException e) {
-                    // Set default image if the URL is invalid
+                } catch (IllegalArgumentException | FileNotFoundException e) {
+                    // Set default image if the URL is invalid or file not found
                     Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
                     profileImageView.setImage(defaultImage);
                 }
@@ -238,8 +286,47 @@ public class UserController implements Initializable {
                 Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
                 profileImageView.setImage(defaultImage);
             }
+
+            // Set the properties for the ImageView after setting the clip and image
+            profileImageView.setFitWidth(100);
+            profileImageView.setFitHeight(100);
+            profileImageView.setPreserveRatio(false);
+            profileImageView.setStyle("-fx-border-color: red;-fx-background-size: cover;-fx-background-position: center ; -fx-border-width: 2; -fx-border-radius: 50;");
         }
     }
+
+    private void displayDeleteSuccess(String message) {
+        deleteMessageLabel.setText(message);
+        deleteMessageLabel.setStyle("-fx-text-fill: green;");
+    }
+
+    private void displayDeleteError(String message) {
+        deleteMessageLabel.setText(message);
+        deleteMessageLabel.setStyle("-fx-text-fill: red;");
+    }
+
+    public void deleteAccount(ActionEvent event) {
+        User currentUser = Session.getInstance().getCurrentUser();
+        if (deletePasswordField.getText().isEmpty()) {
+            displayDeleteError("Password is required.");
+            return;
+        }
+
+        if (currentUser != null && BCrypt.checkpw(deletePasswordField.getText(), currentUser.getPassword())) {
+            boolean deletionSuccessful = userService.deleteUser(currentUser.getId());
+            if (deletionSuccessful) {
+                Session.getInstance().setCurrentUser(null);
+                displayDeleteSuccess("Account deleted successfully.");
+                NavigationUtil.redirectTo("/user/login.fxml",event);
+            } else {
+                displayDeleteError("Failed to delete account. Please try again.");
+            }
+        } else {
+            displayDeleteError("Incorrect password.");
+        }
+    }
+
+
 
     private void displayInfoUpdateSuccess(String message) {
         infoUpdateMessageLabel.setText(message);
@@ -271,16 +358,34 @@ public class UserController implements Initializable {
         passwordUpdateMessageLabel.setStyle("-fx-text-fill: red;");
     }
 
-    public void openFileChooser() {
+    public void openFileChooser(ActionEvent event) {
         List<File> selectedFiles = FileChooserUtil.openFileChooser(false); // false for single file selection
-
         if (!selectedFiles.isEmpty()) {
             File selectedFile = selectedFiles.get(0);
             Image image = new Image(selectedFile.toURI().toString());
             profileImageView.setImage(image);
+            // Update the current user's profile picture URL in the session
+            User currentUser = Session.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                currentUser.setProfilePicture(selectedFile.toURI().toString());
+            }
         } else {
             System.out.println("File selection cancelled.");
         }
     }
+
+
+    public void removePicture(ActionEvent event) {
+        // Set the profile picture to the default image
+        Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
+        profileImageView.setImage(defaultImage);
+        // Update the current user's profile picture URL in the session to null
+        User currentUser = Session.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            currentUser.setProfilePicture(null);
+        }
+    }
+
+
 
 }
