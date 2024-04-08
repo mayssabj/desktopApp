@@ -2,6 +2,8 @@ package org.example; // Use your actual package name
 
 import Controller.AfficherPostController;
 import Controller.AjouterPostController;
+import Controller.dashbord;
+import Controller.showPostAdminController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

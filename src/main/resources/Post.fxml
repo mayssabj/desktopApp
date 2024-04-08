@@ -21,6 +21,7 @@
 
 
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Pagination?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AfficherPostController">
   <children>
     <BorderPane layoutX="6.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -29,12 +30,12 @@
           <children>
             <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
               <children>
-                <Label prefHeight="49.0" prefWidth="128.0" text="LOST" textFill="#878787">
+                <Label prefHeight="49.0" prefWidth="128.0" text="LOST" textFill="#FF0000">
                   <font>
                     <Font name="Cambria Bold" size="40.0" />
                   </font>
                 </Label>
-                <Label text="FOUND" textFill="#878787">
+                <Label text="FOUND" textFill="#008000">
                   <font>
                     <Font name="Cambria" size="40.0" />
                   </font>
@@ -77,22 +78,23 @@
                     <Font name="Cambria Bold" size="18.0" />
                   </font>
                 </Label>
-                <Label prefHeight="29.0" prefWidth="77.0" text="English" textFill="#878787" underline="true">
+                <Label prefHeight="29.0" prefWidth="77.0" text="Français" textFill="#878787" underline="true">
                   <font>
                     <Font name="Cambria" size="18.0" />
                   </font>
                 </Label>
                 <Pane prefHeight="65.0" prefWidth="393.0" HBox.hgrow="ALWAYS" />
-                <Label prefHeight="62.0" prefWidth="100.0" text="My Account" textFill="#878787">
+                <Label prefHeight="62.0" prefWidth="100.0" text="Mon Profile" textFill="#878787">
                   <font>
                     <Font name="Cambria" size="18.0" />
                   </font>
                 </Label>
                 <ImageView fitHeight="50.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" />
+                    <Image url="@images/rayen.jpg" />
                   </image>
                 </ImageView>
+
               </children>
             </HBox>
             <HBox prefHeight="50.0" prefWidth="100.0">
@@ -103,7 +105,7 @@
               <VBox.margin>
                 <Insets left="20.0" right="20.0" top="10.0" />
               </VBox.margin>
-              <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" onAction="#handleAddPostButton"/>
+              <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" onAction="#handleAddPostButton"/>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
               <children>
@@ -121,7 +123,6 @@
                 </ScrollPane>
               </children>
             </HBox>
-
           </children>
         </VBox>
       </center>

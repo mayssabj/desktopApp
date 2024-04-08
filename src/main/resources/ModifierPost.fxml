@@ -14,19 +14,19 @@
             <children>
                 <VBox alignment="CENTER" layoutX="27.0" layoutY="11.0" prefHeight="539.0" prefWidth="384.0" spacing="10">
                     <children>
-                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Ajouter un post" />
+                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Modifier un post" />
                         <TextField fx:id="titreField" prefHeight="21.0" prefWidth="384.0" promptText="Titre" styleClass="search-box">
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </TextField>
-                        <Text fx:id="errorname" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                        <Text fx:id="errorTitre" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
                         <TextArea fx:id="descriptionArea" prefHeight="9.0" prefWidth="366.0" promptText="Description" styleClass="search-box">
                             <padding>
                                 <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                             </padding>
                         </TextArea>
-                        <Text fx:id="errordescription" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="367.7367057800293" />
+                        <Text fx:id="errorDescription" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
                         <VBox prefHeight="200.0" prefWidth="100.0">
                             <children>
                                 <HBox prefHeight="115.0" prefWidth="379.0">
@@ -48,12 +48,14 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </ComboBox>
+                        <Text fx:id="errorType" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
                         <TextField fx:id="placeField" prefHeight="21.0" prefWidth="384.0" promptText="Place" styleClass="search-box">
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </TextField>
-                        <Button fx:id="buttonModifier" onAction="#modifierPost" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Add Post" />
+                        <Text fx:id="errorPlace" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                        <Button fx:id="buttonModifier" onAction="#modifierPost" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Edit Post" />
                     </children>
                 </VBox>
             </children>

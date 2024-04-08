@@ -1,33 +1,43 @@
 package Controller;
 
+import entite.Comment;
 import entite.Post;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import services.CommentCRUD;
 import services.PostCRUD;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AfficherPostController {
     @FXML
     private GridPane grid;
+
+
 
     @FXML
     private void initialize() {
@@ -42,23 +52,20 @@ public class AfficherPostController {
             List<Post> posts = postCRUD.afficher();
             int rowIndex = 0;
             int columnIndex = 0;
-            // Set the horizontal and vertical gaps between grid cells
-            grid.setHgap(20); // Horizontal gap
-            grid.setVgap(20); // Vertical gap
+            grid.setHgap(20);
+            grid.setVgap(20);
             for (Post post : posts) {
                 VBox postBox = createPostBox(post);
                 grid.add(postBox, columnIndex, rowIndex);
 
-                // Update row and column indices for the next post
                 columnIndex++;
-                if (columnIndex >= 2) { // Assuming you want 2 posts per row
+                if (columnIndex >= 2) {
                     columnIndex = 0;
                     rowIndex++;
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception as needed
         }
     }
 
@@ -68,12 +75,24 @@ public class AfficherPostController {
         postBox.setPrefWidth(300);
         postBox.setPadding(new Insets(10));
 
+        HBox titleDateBox = new HBox();
+        titleDateBox.setSpacing(10); // Adjust the spacing as needed
+        titleDateBox.setAlignment(Pos.CENTER_LEFT); // Aligns content to the left
+
         Label labelTitle = new Label(post.getTitre());
         labelTitle.setFont(new Font("Cambria", 24));
-        labelTitle.setTextFill(Color.WHITE);
+        labelTitle.setTextFill(Color.web("#333333"));
+
+        Label labelDate = new Label(post.getDate().toString());
+        labelDate.setFont(new Font("Arial", 14));
+        labelDate.setTextFill(Color.web("#333333"));
+
+        Region spring = new Region();
+        HBox.setHgrow(spring, Priority.ALWAYS);
+
+        titleDateBox.getChildren().addAll(labelTitle, spring, labelDate);
 
 
-        // Créer un ImageView pour afficher l'image du sponsoring
         ImageView fruitImg = new ImageView();
         fruitImg.setFitHeight(170);
         fruitImg.setFitWidth(285);
@@ -81,43 +100,68 @@ public class AfficherPostController {
             Image image = new Image(new FileInputStream(post.getImageUrl()));
             fruitImg.setImage(image);
         } catch (FileNotFoundException e) {
-            // Handle the exception, e.g., log an error or display a placeholder image
             System.out.println("Image file not found: " + e.getMessage());
         }
-// Adjust the height of the image
 
+
+        Label labelType = new Label(" " + post.getType());
+        labelType.setFont(Font.font("Cambria", FontWeight.BOLD, 17));
+        if ("LOST".equals(post.getType().toString())) {
+            labelType.setTextFill(Color.web("#FF0000"));
+        } else if ("FOUND".equals(post.getType().toString())) {
+            labelType.setTextFill(Color.web("#008000"));
+        } else {
+            labelType.setTextFill(Color.web("#333333"));
+        }
 
         Label labelDescription = new Label(post.getDescription());
-        labelDescription.setFont(new Font("Cambria", 18));
-        labelDescription.setTextFill(Color.WHITE);
-
-        Label labelType = new Label("Type: " + post.getType());
-        labelType.setFont(new Font("Cambria", 24));
-        labelType.setTextFill(Color.WHITE);
+        labelDescription.setFont(new Font("Arial", 20));
+        labelDescription.setTextFill(Color.web("#333333"));
 
         Label labelPlace = new Label("Place: " + post.getPlace());
-        labelPlace.setFont(new Font("Cambria", 24));
-        labelPlace.setTextFill(Color.WHITE);
+        labelPlace.setFont(new Font("Cambria", 17));
+        labelPlace.setTextFill(Color.web("#333333"));
 
-        Button deleteButton = new Button("Supprimer Post");
+        Button commentButton = new Button("Comment");
+        commentButton.setOnAction(event -> commentOnPost(post));
+        Button deleteButton = new Button();
+        ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
+        deleteIcon.setFitWidth(16);
+        deleteIcon.setFitHeight(16);
+        deleteButton.setGraphic(deleteIcon);
         deleteButton.getStyleClass().add("add-btn");
         deleteButton.setFont(new Font("System Bold", 18));
         deleteButton.setTextFill(Color.valueOf("#828282"));
         deleteButton.setOnAction(event -> deletePost(post));
 
-        Button modifierButton = new Button("Modifier Post");
+        Button modifierButton = new Button();
+        ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/edit-icon.png")));
+        editIcon.setFitWidth(16);
+        editIcon.setFitHeight(16);
+        modifierButton.setGraphic(editIcon);
         modifierButton.getStyleClass().add("add-btn");
         modifierButton.setFont(new Font("System Bold", 18));
         modifierButton.setTextFill(Color.valueOf("#828282"));
         modifierButton.setOnAction(event -> modifierPost(post));
 
-        postBox.getChildren().addAll(labelTitle, fruitImg, labelDescription, labelType, labelPlace, deleteButton, modifierButton);
+        HBox buttonBox = new HBox(10);
+        buttonBox.getChildren().addAll(commentButton, deleteButton, modifierButton);
+
+        postBox.getChildren().addAll(titleDateBox, fruitImg, labelType, labelDescription, labelPlace, buttonBox);
+        postBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 1) { // Single click
+                    handlePostClick(post);
+                }
+            }
+        });
         return postBox;
     }
 
 
+
     private void loadPosts() {
-        // This method can be used to reload the posts after a post is deleted
         grid.getChildren().clear();
         afficherPosts();
     }
@@ -126,33 +170,27 @@ public class AfficherPostController {
         PostCRUD service = new PostCRUD();
         try {
             service.supprimer(post.getId());
-            loadPosts(); // Reload the posts after deletion
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception as needed
         }
     }
 
     private void modifierPost(Post post) {
         try {
-            // Load the modifierPost.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifierPost.fxml"));
             Parent modifierPostParent = loader.load();
 
-            // Get the controller and initialize it with the post to be modified
             ModifierPostController controller = loader.getController();
             controller.initData(post);
 
-            // Set the scene and show the new window
             Scene modifierPostScene = new Scene(modifierPostParent);
             Stage window = new Stage();
             window.setScene(modifierPostScene);
-            window.showAndWait(); // Use showAndWait to wait for the window to close
+            window.showAndWait();
 
-            loadPosts(); // Reload the posts after modification
+            loadPosts();
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception as needed
         }
     }
 
@@ -160,17 +198,76 @@ public class AfficherPostController {
     @FXML
     private void handleAddPostButton(ActionEvent event) {
         try {
-            // Load the addpost.fxml file
             Parent addPostParent = FXMLLoader.load(getClass().getResource("/addpost.fxml"));
             Scene addPostScene = new Scene(addPostParent);
 
-            // Get the stage from the event source and set the new scene
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(addPostScene);
             window.show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception as needed
         }
     }
+
+    @FXML
+    private void commentOnPost(Post post) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/comment_dialog.fxml"));
+            Parent commentDialogParent = loader.load();
+
+            CommentDialogController controller = loader.getController();
+            controller.setPost(post);
+
+            Scene commentDialogScene = new Scene(commentDialogParent);
+            Stage commentDialogStage = new Stage();
+            commentDialogStage.setScene(commentDialogScene);
+            commentDialogStage.setTitle("Comment on Post");
+
+            commentDialogStage.showAndWait();
+
+            loadPosts();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Comment> getCommentsForPost(Post post) {
+        List<Comment> comments = new ArrayList<>();
+        try {
+            // Retrieve comments for the given post from the database
+            CommentCRUD commentCRUD = new CommentCRUD();
+            comments = commentCRUD.getCommentsForPost(post);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comments;
+    }
+
+
+        @FXML
+        private void handlePostClick(Post post) {
+            // Create a new stage for displaying comments
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Comments");
+
+            // Create a VBox to hold the comments
+            VBox vbox = new VBox();
+            vbox.setSpacing(10);
+
+            // Retrieve comments for the selected post
+            List<Comment> comments = getCommentsForPost(post);
+            for (Comment comment : comments) {
+                Label commentLabel = new Label(comment.getText());
+                commentLabel.setWrapText(true); // Allow wrapping of long comments
+                vbox.getChildren().add(commentLabel);
+            }
+
+            // Add the VBox to the scene and set the scene in the stage
+            popupStage.setScene(new Scene(vbox, 400, 300));
+            popupStage.show();
+        }
+
+
+
+
 }

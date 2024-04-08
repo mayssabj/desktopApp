@@ -8,13 +8,23 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="589.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AjouterPostController">
   <children>
     <Pane layoutX="98.0" layoutY="11.0" prefHeight="566.0" prefWidth="438.0" styleClass="eco-card" stylesheets="style.css">
       <children>
         <VBox alignment="CENTER" layoutX="27.0" layoutY="11.0" prefHeight="539.0" prefWidth="384.0" spacing="10">
           <children>
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Ajouter un post" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+              <Button fx:id="backButton" onAction="#returnToPostsPage" styleClass="back-button">
+                <graphic>
+                  <ImageView fitWidth="16" fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@icons/back-icon.png" />
+                  </ImageView>
+                </graphic>
+              </Button>
+              <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Ajouter un post" />
+            </HBox>
             <TextField fx:id="titreField" prefHeight="21.0" prefWidth="384.0" promptText="Titre" styleClass="search-box">
               <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -37,11 +47,7 @@
                 </HBox>
               </children>
             </VBox>
-            <DatePicker fx:id="datePicker" promptText="Date" styleClass="search-box">
-              <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-              </padding>
-            </DatePicker>
+            <Text fx:id="errorImage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
             <ComboBox fx:id="typeComboBox" promptText="Type" styleClass="search-box">
               <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -53,11 +59,13 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
               </padding>
             </ComboBox>
+            <Text fx:id="errorType" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
             <TextField fx:id="placeField" prefHeight="21.0" prefWidth="384.0" promptText="Place" styleClass="search-box">
               <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
               </padding>
             </TextField>
+            <Text fx:id="errorPlace" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
             <Button fx:id="buttonAjouter" onAction="#ajouterPost" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Add Post" />
           </children>
         </VBox>

@@ -58,11 +58,13 @@ public class PostCRUD implements ServicePost<Post> {
     @Override
     public void ajouter(Post post) throws SQLException {
         String req = "INSERT INTO `post`(`titre`, `description`, `image_url`, `date`, `type`, `place`) VALUES (?, ?, ?, ?, ?, ?)";
+        long millis = System.currentTimeMillis();
+        java.sql.Date today = new java.sql.Date(millis);
         try (PreparedStatement pst = connection.prepareStatement(req)) {
             pst.setString(1, post.getTitre());
             pst.setString(2, post.getDescription());
             pst.setString(3, post.getImageUrl());
-            pst.setDate(4, new java.sql.Date(post.getDate().getTime()));
+            pst.setDate(4, today);
             pst.setString(5, post.getType().toString());
             pst.setString(6, post.getPlace());
             pst.executeUpdate();

@@ -8,8 +8,13 @@
 }
 
 .search-button{
-    -fx-background-color: #828282;
-    -fx-background-radius: 30;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 15px; /* Adjust padding to your preference */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.0, 0.0, 1.0); /* subtle shadow effect */
+    -fx-cursor: hand; /* Changes the cursor to a hand when hovered over the button */
+    -fx-background-color: #4E9F3D; /* An inviting green color */
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
 }
 
 .right-bar{
@@ -20,10 +25,15 @@
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
 }
 
-.chosen-fruit-card{
-    -fx-background-color: #0000FF;
-    -fx-background-radius: 30;
+.chosen-fruit-card {
+    -fx-background-color: #F5F5F5; /* Light gray background */
+    -fx-border-color: #E0E0E0; /* Slightly darker border color for definition */
+     /* Border rounded corners to match the background */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 8);
+
+    -fx-padding: 10; /* Space inside the card */
 }
+
 
 .comboBox{
     -fx-background-color: rgba(255,255,255,0.3);
@@ -31,8 +41,13 @@
 }
 
 .add-btn{
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 100;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 15px; /* Adjust padding to your preference */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.0, 0.0, 1.0); /* subtle shadow effect */
+    -fx-cursor: hand; /* Changes the cursor to a hand when hovered over the button */
+    -fx-background-color: #4E9F3D; /* An inviting green color */
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
 }
 
 .free-delivery-card{
@@ -48,4 +63,18 @@
 .fruit-item{
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 30;
+}
+.chosen-fruit-card:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0.1, 0, 12);
+}
+.back-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.back-button .graphic {
+    -fx-max-width: 16;
+    -fx-max-height: 16;
 }

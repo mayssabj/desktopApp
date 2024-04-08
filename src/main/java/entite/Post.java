@@ -1,8 +1,11 @@
 package entite;
 
+import javax.persistence.Id;
 import java.util.Date;
+import java.util.List;
 
 public class Post {
+    @Id
     private int id;
     private String titre;
     private String description;
@@ -21,6 +24,13 @@ public class Post {
         this.description = description;
         this.imageUrl = imageUrl;
         this.date = date;
+        this.type = type;
+        this.place = place;
+    }
+    public Post( String titre, String description, String imageUrl, Type type, String place) {
+        this.titre = titre;
+        this.description = description;
+        this.imageUrl = imageUrl;
         this.type = type;
         this.place = place;
     }

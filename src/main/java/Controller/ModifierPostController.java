@@ -42,20 +42,26 @@ public class ModifierPostController {
     @FXML
     private Button buttonModifier;
 
-    @FXML
-    private Text errorTitre;
-
-    @FXML
-    private Text errorDescription;
     private File selectedImageFile;
 
     private Post post;
 
     @FXML
-    private Text errorname;
+    private Text errorTitre;
 
     @FXML
-    private Text errordescription;
+    private Text errorPlace;
+
+    @FXML
+    private Text errorType;
+
+
+
+
+    @FXML
+    private Text errorDescription;
+
+
 
 
     public void initData(Post post) {
@@ -70,7 +76,6 @@ public class ModifierPostController {
             imageView.setImage(image);
         } catch (FileNotFoundException e) {
             System.out.println("Image file not found: " + e.getMessage());
-            // Optionally, set a placeholder image if the file is not found
             imageView.setImage(new Image("file:path/to/placeholder/image.png"));
         }
     }
@@ -116,19 +121,35 @@ public class ModifierPostController {
     private boolean isInputValid() {
         boolean isValid = true;
 
-        // Validate and display error messages
-        if (titreField.getText().isEmpty() || !titreField.getText().matches("^[a-zA-Z]+$")) {
-            errorname.setText("Name is required and should not contain numbers");
+        if (titreField.getText().isEmpty()) {
+            errorTitre.setText("Title is required");
             isValid = false;
         } else {
-            errorname.setText("");
+            errorTitre.setText("");
         }
+
         if (descriptionArea.getText().isEmpty()) {
-            errordescription.setText("Description is required and should not contain numbers");
+            errorDescription.setText("Description is required");
             isValid = false;
         } else {
-            errordescription.setText("");
+            errorDescription.setText("");
         }
+
+        if (placeField.getText().isEmpty()) {
+            errorPlace.setText("Place is required");
+            isValid = false;
+        } else {
+            errorPlace.setText("");
+        }
+
+        if (typeComboBox.getValue() == null || typeComboBox.getValue().trim().isEmpty()) {
+            errorType.setText("Type is required");
+            isValid = false;
+        } else {
+            errorType.setText("");
+        }
+
+
         return isValid;
     }
 }
