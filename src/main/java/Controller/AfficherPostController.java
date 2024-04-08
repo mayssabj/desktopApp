@@ -122,8 +122,16 @@ public class AfficherPostController {
         labelPlace.setFont(new Font("Cambria", 17));
         labelPlace.setTextFill(Color.web("#333333"));
 
-        Button commentButton = new Button("Comment");
+        Button commentButton = new Button();
+        ImageView commentIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/comment.png")));
+        commentIcon.setFitWidth(16);
+        commentIcon.setFitHeight(16);
+        commentButton.setGraphic(commentIcon);
+        commentButton.getStyleClass().add("add-btn");
+        commentButton.setFont(new Font("System Bold", 18));
+        commentButton.setTextFill(Color.valueOf("#828282"));
         commentButton.setOnAction(event -> commentOnPost(post));
+
         Button deleteButton = new Button();
         ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
         deleteIcon.setFitWidth(16);
@@ -244,29 +252,43 @@ public class AfficherPostController {
     }
 
 
-        @FXML
-        private void handlePostClick(Post post) {
-            // Create a new stage for displaying comments
-            Stage popupStage = new Stage();
-            popupStage.setTitle("Comments");
+    @FXML
+    private void handlePostClick(Post post) {
+        // Create a new stage for displaying comments
+        Stage popupStage = new Stage();
+        popupStage.setTitle("Comments");
 
-            // Create a VBox to hold the comments
-            VBox vbox = new VBox();
-            vbox.setSpacing(10);
+        // Create a VBox to hold the comments
+        VBox vbox = new VBox();
+        vbox.getStyleClass().add("comments-popup"); // Add the style class for the popup
+        vbox.setSpacing(10);
 
-            // Retrieve comments for the selected post
-            List<Comment> comments = getCommentsForPost(post);
-            for (Comment comment : comments) {
-                Label commentLabel = new Label(comment.getText());
-                commentLabel.setWrapText(true); // Allow wrapping of long comments
-                vbox.getChildren().add(commentLabel);
-            }
+        // Retrieve comments for the selected post
+        List<Comment> comments = getCommentsForPost(post);
+        for (Comment comment : comments) {
+            // Create a container for each comment
+            VBox commentContainer = new VBox();
+            commentContainer.getStyleClass().add("comment-container"); // Add the style class for the comment container
+            commentContainer.setSpacing(5); // Adjust spacing between elements within the container
 
-            // Add the VBox to the scene and set the scene in the stage
-            popupStage.setScene(new Scene(vbox, 400, 300));
-            popupStage.show();
+            // Create label for the comment text
+            Label commentLabel = new Label(comment.getText());
+            commentLabel.getStyleClass().add("comment-label"); // Add the style class for the comment label
+            commentLabel.setWrapText(true); // Allow wrapping of long comments
+
+            // Add the comment label to the comment container
+            commentContainer.getChildren().add(commentLabel);
+
+            // Add the comment container to the main VBox
+            vbox.getChildren().add(commentContainer);
         }
 
+        // Add the VBox to the scene and set the scene in the stage
+        Scene scene = new Scene(vbox, 400, 300);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());// Load CSS file
+        popupStage.setScene(scene);
+        popupStage.show();
+    }
 
 
 

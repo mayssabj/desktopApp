@@ -2,7 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="Controller.CommentDialogController">
-    <TextArea fx:id="commentTextArea" prefHeight="100" promptText="Enter your comment here"/>
-    <Button text="Submit" onAction="#submitComment"/>
+      fx:controller="Controller.CommentDialogController" stylesheets="style.css">
+    <TextArea fx:id="commentTextArea" prefHeight="100" promptText="Enter your comment here" styleClass="text-area"/>
+    <Button text="Submit" onAction="#submitComment" styleClass="submit-button"/>
 </VBox>

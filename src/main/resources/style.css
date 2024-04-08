@@ -78,3 +78,83 @@
     -fx-max-width: 16;
     -fx-max-height: 16;
 }
+
+
+.text-area {
+    -fx-background-color: #f0f0f0; /* Set background color */
+    -fx-border-color: #ccc; /* Set border color */
+    -fx-border-width: 1px; /* Set border width */
+    -fx-border-radius: 5px; /* Set border radius */
+}
+
+.submit-button {
+    -fx-background-color: #2196f3; /* Set background color */
+    -fx-text-fill: white; /* Set text color */
+    -fx-font-size: 14px; /* Set font size */
+    -fx-padding: 10px 20px; /* Add padding */
+    -fx-border-radius: 5px; /* Set border radius */
+    -fx-border-color: transparent; /* Set border color */
+}
+
+.submit-button:hover {
+    -fx-background-color: #1976d2; /* Set background color on hover */
+}
+
+
+
+
+
+.blue-panel {
+    -fx-background-color: #2196f3; /* Set background color */
+    -fx-padding: 20px; /* Add padding */
+}
+
+.search-box {
+    -fx-background-color: #f0f0f0; /* Set background color */
+    -fx-border-color: #ccc; /* Set border color */
+    -fx-border-width: 1px; /* Set border width */
+    -fx-border-radius: 5px; /* Set border radius */
+}
+
+.sponsor-button {
+    -fx-background-color: #4caf50; /* Set background color */
+    -fx-text-fill: white; /* Set text color */
+    -fx-font-size: 14px; /* Set font size */
+    -fx-padding: 10px 20px; /* Add padding */
+    -fx-border-radius: 5px; /* Set border radius */
+    -fx-border-color: transparent; /* Set border color */
+}
+
+.eco-card {
+    -fx-background-color: #e7e5e5; /* Set background color */
+    -fx-padding: 20px; /* Add padding */
+    -fx-border-color: #ccc; /* Set border color */
+    -fx-border-width: 1px; /* Set border width */
+}
+
+.back-button {
+    -fx-background-color: transparent; /* Set background color */
+    -fx-border-color: transparent; /* Set border color */
+}
+
+.back-button:hover {
+    -fx-background-color: transparent; /* Set background color on hover */
+    -fx-border-color: transparent; /* Set border color on hover */
+}
+
+
+
+
+
+
+.comments-popup {
+    -fx-background-color: white; /* Set background color */
+    -fx-padding: 20px; /* Add padding */
+}
+
+
+.comment-label {
+    -fx-font-size: 14px; /* Set font size */
+    -fx-text-fill: #333333; /* Set text color */
+    -fx-padding: 5px; /* Add padding */
+}

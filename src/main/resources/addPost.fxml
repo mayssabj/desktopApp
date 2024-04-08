@@ -9,9 +9,9 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<AnchorPane prefHeight="589.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AjouterPostController">
+<AnchorPane prefHeight="589.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AjouterPostController" stylesheets="style.css">
   <children>
-    <Pane layoutX="98.0" layoutY="11.0" prefHeight="566.0" prefWidth="438.0" styleClass="eco-card" stylesheets="style.css">
+    <Pane layoutX="98.0" layoutY="11.0" prefHeight="566.0" prefWidth="438.0" styleClass="eco-card">
       <children>
         <VBox alignment="CENTER" layoutX="27.0" layoutY="11.0" prefHeight="539.0" prefWidth="384.0" spacing="10">
           <children>
