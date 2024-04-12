@@ -22,7 +22,9 @@ public class Postcommentaire {
         this.postgroup_id = postgroup_id;
         this.user_id = user_id;
     }
-
+    public Postcommentaire() {
+        // Constructeur par défaut
+    }
     public int getId() {
         return id;
     }

@@ -26,17 +26,31 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
         }
     }
 
+
+
     @Override
-    public void modifierCommentaire(Postcommentaire postcommentaire) throws SQLException {
-        String req = "UPDATE `postcommentaire` SET `commentaire`=?,`postgroup_id`=?,`user_id`=? WHERE `id`=?";
-        try (PreparedStatement com = con.prepareStatement(req)) {
-            com.setString(1, postcommentaire.getCommentaire());
-            com.setInt(2, postcommentaire.getPostgroup_id().getId());
-            com.setInt(3, postcommentaire.getUser_id().getId());
-            com.setInt(4, postcommentaire.getId());
-            com.executeUpdate();
+    public void modifierCommentaire(int idCommentaire, String nouveauTexte) throws SQLException {
+        // Préparer la requête SQL pour mettre à jour le commentaire
+        String sql = "UPDATE postcommentaire SET commentaire = ? WHERE id = ?";
+
+        // Créer un objet PreparedStatement pour exécuter la requête
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            // Définir les paramètres de la requête
+            statement.setString(1, nouveauTexte);
+            statement.setInt(2, idCommentaire);
+
+            // Exécuter la mise à jour
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Commentaire mis à jour avec succès.");
+            } else {
+                System.out.println("Aucun commentaire trouvé avec l'ID fourni.");
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erreur lors de la mise à jour du commentaire: " + e.getMessage());
         }
     }
+
 
     @Override
     public void supprimerCommentaire(int id) throws SQLException {

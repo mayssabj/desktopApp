@@ -4,6 +4,7 @@ import edu.esprit.entities.Post_group;
 import edu.esprit.entities.Postcommentaire;
 import edu.esprit.entities.Sponsoring;
 import edu.esprit.entities.User;
+import edu.esprit.services.CommentaireService;
 import edu.esprit.services.PostgroupService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class afficherPostgroup {
 
@@ -98,12 +101,40 @@ public class afficherPostgroup {
                     // Commentaires et champ pour ajouter un commentaire
                     VBox commentairesBox = new VBox();
                     for (Postcommentaire commentaire : post.getCommentaires()) {
-                        Label commentaireLabel = new Label(commentaire.getCommentaire());
-                        commentairesBox.getChildren().add(commentaireLabel);
+                        User commentUser = commentaire.getUser_id(); // Récupérer l'utilisateur qui a fait le commentaire
+                        if (commentUser != null) {
+                            Label commentUserNameLabel = new Label(commentUser.getUsername());
+                            String commentUserImageUrl = commentUser.getImage();
+                            Image commentUserImage = new Image(new FileInputStream(commentUserImageUrl));
+                            ImageView commentUserImageView = new ImageView(commentUserImage);
+                            commentUserImageView.setFitWidth(20); // Vous pouvez ajuster la taille selon vos besoins
+                            commentUserImageView.setFitHeight(20);
+                            Label commentaireLabel = new Label(commentaire.getCommentaire());
+                            Button deleteCommentButton = new Button("delete");
+                            deleteCommentButton.setOnAction(event -> supprimerCommentaire(commentaire));
+
+                            Button editCommentButton = new Button("edit");
+                            editCommentButton.setOnAction(event -> {
+                                // Afficher une boîte de dialogue pour entrer le nouveau texte du commentaire
+                                // Par exemple, utiliser TextInputDialog pour cela
+                                TextInputDialog dialog = new TextInputDialog(commentaire.getCommentaire());
+                                dialog.setTitle("edit  comment");
+                                dialog.setContentText("new comment:");
+
+                                Optional<String> result = dialog.showAndWait();
+                                result.ifPresent(nouveauTexte -> modifierCommentaire(commentaire, nouveauTexte));
+                            });
+
+
+                            HBox commentItem = new HBox(commentUserImageView, commentUserNameLabel, commentaireLabel, deleteCommentButton, editCommentButton);
+                            commentItem.setSpacing(10);
+                            commentairesBox.getChildren().add(commentItem);
+
+                        }
                     }
 
                     TextField commentaireField = new TextField();
-                    commentaireField.setPromptText("Add comment...");
+                    commentaireField.setPromptText("Ajouter un commentaire...");
                     Button commenterButton = new Button("Commenter");
                     commenterButton.setOnAction(event -> ajouterCommentaire(post, commentaireField.getText()));
                     commentairesBox.getChildren().addAll(commentaireField, commenterButton);
@@ -121,6 +152,40 @@ public class afficherPostgroup {
             e.printStackTrace();
         }
     }
+    public void supprimerCommentaire(Postcommentaire commentaire) {
+        User currentUser = new User(1, "username", "password");
+        CommentaireService commentaireService = new CommentaireService();
+        try {
+            // Vérifier si l'utilisateur actuel est l'auteur du commentaire
+            if (commentaire.getUser_id().getId() == currentUser.getId()) {
+                commentaireService.supprimerCommentaire(commentaire.getId());
+                afficherPostsSponsoring(sponsoringName); // Réafficher les posts après la suppression
+            } else {
+                System.out.println("Vous n'êtes pas autorisé à supprimer ce commentaire.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void modifierCommentaire(Postcommentaire commentaire, String nouveauTexte) {
+        User currentUser = new User(1, "username", "password");
+        CommentaireService commentaireService = new CommentaireService();
+        try {
+            // Vérifier si l'utilisateur actuel est l'auteur du commentaire
+            if (commentaire.getUser_id().getId() == currentUser.getId()) {
+                commentaireService.modifierCommentaire(commentaire.getId(), nouveauTexte);
+                afficherPostsSponsoring(sponsoringName); // Réafficher les posts après la modification
+            } else {
+                System.out.println("Vous n'êtes pas autorisé à modifier ce commentaire.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
     public void ajouterCommentaire(Post_group post, String commentaireText) {

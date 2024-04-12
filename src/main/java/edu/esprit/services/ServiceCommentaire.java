@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ServiceCommentaire <C> {
     public void ajouterCommentaire (C c) throws SQLException;
-    public void modifierCommentaire (C c) throws SQLException;
+    public void modifierCommentaire (int id , String c ) throws SQLException;
     public void supprimerCommentaire (int id) throws SQLException;
     public List<Postcommentaire> afficherCommentaire () throws SQLException;
 }
