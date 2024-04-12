@@ -1,13 +1,16 @@
 package edu.esprit.services;
 
 import edu.esprit.entities.Post_group;
+import edu.esprit.entities.Postcommentaire;
 import edu.esprit.entities.Sponsoring;
 import edu.esprit.entities.User;
 import edu.esprit.utils.mydb;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostgroupService implements ServicePostgroup<Post_group> {
     private Connection con ;
@@ -103,23 +106,38 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
 
     public List<Post_group> afficherBySponsoring(String sponsoringName) throws SQLException {
         List<Post_group> posts = new ArrayList<>();
-        String req = "SELECT * FROM `post_group` WHERE `sponsoring_id` IN (SELECT `id` FROM `sponsoring` WHERE `name` = ?)";
+        String req = "SELECT pg.*, pc.id AS comment_id, pc.commentaire FROM post_group pg "
+                + "LEFT JOIN postcommentaire pc ON pg.id = pc.postgroup_id "
+                + "WHERE pg.sponsoring_id IN (SELECT id FROM sponsoring WHERE name = ?)";
         try (PreparedStatement pg = con.prepareStatement(req)) {
             pg.setString(1, sponsoringName);
             ResultSet rs = pg.executeQuery();
+            Map<Integer, Post_group> postsMap = new HashMap<>();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String contenu = rs.getString("contenu");
-                Date date = rs.getDate("date");
-                int sponsoringId = rs.getInt("sponsoring_id");
-                int userId = rs.getInt("user_id");
-                User user = getUserById(userId);
-                Sponsoring sponsoring = getSponsoringById(sponsoringId);
-                Post_group post = new Post_group(id, contenu, date,sponsoring ,user);
-                posts.add(post);
+                int postId = rs.getInt("id");
+                Post_group post = postsMap.getOrDefault(postId,
+                        new Post_group(postId, rs.getString("contenu"), rs.getDate("date"), getSponsoringById(rs.getInt("sponsoring_id")), getUserById(rs.getInt("user_id"))));
+                int commentId = rs.getInt("comment_id");
+                if (commentId != 0) { // Check if there is a comment
+                    Postcommentaire comment = new Postcommentaire(commentId, rs.getString("commentaire"), post, post.getUser_id());
+                    post.addCommentaire(comment);
+                }
+                postsMap.putIfAbsent(postId, post);
             }
+            posts.addAll(postsMap.values());
         }
         return posts;
     }
+
+    public void ajouterCommentaire(Postcommentaire commentaire) throws SQLException {
+        String req = "INSERT INTO `postcommentaire`(`commentaire`, `postgroup_id`, `user_id`) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = con.prepareStatement(req)) {
+            ps.setString(1, commentaire.getCommentaire());
+            ps.setInt(2, commentaire.getPostgroup_id().getId());
+            ps.setInt(3, commentaire.getUser_id().getId());
+            ps.executeUpdate();
+        }
+    }
+
 
 }

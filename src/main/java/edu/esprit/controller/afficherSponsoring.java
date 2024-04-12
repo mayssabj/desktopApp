@@ -69,25 +69,27 @@ public class afficherSponsoring {
                     column = 0;
                     row++;
                 }
-                // Ajouter un événement de clic à chaque carte de sponsoring
                 sponsoringBox.setOnMouseClicked(event -> {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherPostgroup.fxml"));
                         Parent root = loader.load();
-                        Scene scene = new Scene(root);
-                        Stage stage = new Stage();
-                        stage.setScene(scene);
 
                         // Passer le nom du sponsoring à la nouvelle fenêtre
                         afficherPostgroup controller = loader.getController();
                         controller.setSponsoringName(sponsoring.getName());
                         controller.setSponsoringId(sponsoring.getId());
 
-                        stage.show();
+                        // Charger les posts du sponsoring
+                        controller.afficherPostsSponsoring(sponsoring.getName());
+
+                        // Remplacer la racine de la scène actuelle par le nouveau contenu
+                        sponsoringBox.getScene().setRoot(root);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
+
+
 
             }
         } catch (SQLException | FileNotFoundException e) {
@@ -95,6 +97,7 @@ public class afficherSponsoring {
         }
 
     }
+
 
 
 

@@ -4,7 +4,9 @@ package edu.esprit.services;
 
 import edu.esprit.entities.Sponsoring;
 import edu.esprit.utils.mydb;
+import javafx.scene.image.Image;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,16 +70,23 @@ public class SponsoringService implements ServiceSponsoring<Sponsoring> {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
-                String image = rs.getString("image");
+                String imagePath = rs.getString("image"); // Chemin de l'image
                 Date date = rs.getDate("date");
                 Sponsoring.Duration contrat = Sponsoring.Duration.valueOf(rs.getString("contrat"));
                 Sponsoring.TypeSpon type = Sponsoring.TypeSpon.valueOf(rs.getString("type"));
-                Sponsoring sponsoring = new Sponsoring(id, name, description, image, date, contrat, type);
+
+                // Utiliser le chemin de l'image pour créer un objet Image
+                Image image = new Image("file:" + imagePath); // Utilisation de "file:" pour spécifier un chemin de fichier local
+
+                Sponsoring sponsoring = new Sponsoring(id, name, description, imagePath, date, contrat, type); // Utilisation du chemin de l'image
                 sponsoringList.add(sponsoring);
             }
         }
         return sponsoringList;
     }
+
+
+
     public Sponsoring getById(int id) throws SQLException {
         String req = "SELECT * FROM `sponsoring` WHERE `id`=?";
         try (PreparedStatement sp = con.prepareStatement(req)) {

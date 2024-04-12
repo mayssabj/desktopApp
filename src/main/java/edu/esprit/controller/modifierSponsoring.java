@@ -12,6 +12,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -59,7 +61,13 @@ public class modifierSponsoring {
         descriptionArea.setText(sponsoring.getDescription());
         contratComboBox.setValue(sponsoring.getContrat().toString()); // Assuming getContrat() returns a Duration enum value
         typeComboBox.setValue(sponsoring.getType().toString()); // Assuming getType() returns a TypeSpon enum value
-        // Set other fields similarly
+        try{
+            Image image = new Image(new FileInputStream(sponsoring.getImage()));
+            imageView.setImage(image);
+        }catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
@@ -72,6 +80,7 @@ public class modifierSponsoring {
             sponsoring.setDate(Date.valueOf(datePicker.getValue())); // Convert LocalDate to Date
             sponsoring.setContrat(Sponsoring.Duration.valueOf(contratComboBox.getValue())); // Assuming Contrat is an enum
             sponsoring.setType(Sponsoring.TypeSpon.valueOf(typeComboBox.getValue())); // Assuming TypeSpon is an enum
+            sponsoring.setImage(String.valueOf(imageView.getImage()));
             // Update other fields of the sponsoring object
 
             // Update the image if a new one is selected

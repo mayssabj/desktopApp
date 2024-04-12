@@ -1,7 +1,9 @@
 package edu.esprit.entities;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Post_group {
     private int id ;
@@ -9,13 +11,16 @@ public class Post_group {
     private Date date ;
     private Sponsoring sponsoring_id;
     private User user_id ;
+    private List<Postcommentaire> commentaires;
 
-    public Post_group(int id, String contenu,Date date , Sponsoring sponsoring_id , User user_id) {
+    public Post_group(int id, String contenu, Date date, Sponsoring sponsoring_id, User user_id) {
         this.id = id;
         this.contenu = contenu;
         this.date = date;
         this.sponsoring_id = sponsoring_id;
         this.user_id = user_id;
+        this.commentaires = new ArrayList<>();
+
     }
 
     public Post_group(String contenu, Date date, Sponsoring sponsoring_id, User user_id) {
@@ -23,12 +28,21 @@ public class Post_group {
         this.date = date;
         this.sponsoring_id = sponsoring_id;
         this.user_id = user_id;
+        this.commentaires = new ArrayList<>();
+
     }
 
     public Post_group(int id, String contenu) {
         this.id = id;
         this.contenu = contenu;
     }
+
+
+    public List<Postcommentaire> getCommentaires() {
+        return commentaires;
+    }
+
+
 
     public int getId() {
         return id;
@@ -80,6 +94,10 @@ public class Post_group {
                 ", user_id=" + user_id +
                 '}';
     }
+    public void addCommentaire(Postcommentaire commentaire) {
+        this.commentaires.add(commentaire);
+    }
+
 
 
 }

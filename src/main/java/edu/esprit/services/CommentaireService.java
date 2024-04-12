@@ -49,23 +49,9 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
 
     @Override
     public List<Postcommentaire> afficherCommentaire() throws SQLException {
-        List<Postcommentaire> commentairesList = new ArrayList<>();
-        String req = "SELECT * FROM `postcommentaire`";
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(req)) {
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String commentaire = rs.getString("commentaire");
-                int postgroupId = rs.getInt("postgroup_id");
-                int userId = rs.getInt("user_id");
-                Post_group postgroup = getPostgroupById(postgroupId);
-                User user = getUserById(userId);
-                Postcommentaire comm = new Postcommentaire(id, commentaire, postgroup, user);
-                commentairesList.add(comm);
-            }
-        }
-        return commentairesList;
+        return null;
     }
+
 
     public User getUserById(int id) throws SQLException {
         String req = "SELECT * FROM `user` WHERE `id`=?";
@@ -81,16 +67,8 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
         return null;
     }
 
-    public Post_group getPostgroupById(int id) throws SQLException {
-        String req = "SELECT * FROM `post_group` WHERE `id`=?";
-        try (PreparedStatement com = con.prepareStatement(req)) {
-            com.setInt(1, id);
-            ResultSet rs = com.executeQuery();
-            if (rs.next()) {
-                String contenu = rs.getString("contenu");
-                return new Post_group(id, contenu);
-            }
-        }
-        return null;
-    }
+
+
+
+
 }
