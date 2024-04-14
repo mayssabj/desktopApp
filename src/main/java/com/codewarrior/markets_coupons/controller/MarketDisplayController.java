@@ -2,8 +2,6 @@ package com.codewarrior.markets_coupons.controller;
 
 import com.codewarrior.markets_coupons.model.Market;
 import com.codewarrior.markets_coupons.service.MarketDAO;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -77,7 +74,7 @@ public class MarketDisplayController implements Initializable {
     }
 
     @FXML
-    void getMarketInfo(MouseEvent event) {
+    Market getMarketInfo(MouseEvent event) {
         Market selectedMarket = marketTable.getSelectionModel().getSelectedItem();
         if (selectedMarket != null) {
             int id = selectedMarket.getId();
@@ -93,15 +90,76 @@ public class MarketDisplayController implements Initializable {
             String s = market.toString();
             System.out.println(s);
 
-            // Attempt to load the image from the classpath resources
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-            if (image != null) {
+            // Create a File object from the image path
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                // Convert the File object to a URI
+                URI imageUri = imageFile.toURI();
+                // Convert the URI to a string and create an Image object
+                Image image = new Image(imageUri.toString());
+                // Set the image to your ImageView
                 marketImage.setImage(image);
             } else {
                 System.err.println("Image file not found: " + imagePath);
             }
         }
+        return selectedMarket;
     }
+
+    private Market getSelectedMarket() {
+        return marketTable.getSelectionModel().getSelectedItem();
+    }
+
+    // Method to display market information and set image
+    @FXML
+    Market displayMarketInfo() {
+        Market selectedMarket = getSelectedMarket();
+        if (selectedMarket != null) {
+            int id = selectedMarket.getId();
+            String name = selectedMarket.getName();
+            String imagePath = selectedMarket.getImage();
+            String address = selectedMarket.getAddress();
+            String city = selectedMarket.getCity();
+            String region = selectedMarket.getRegion();
+            int zipCode = selectedMarket.getZipCode();
+
+            Market market = new Market(id, name, imagePath, address, city, region, zipCode);
+
+            String s = market.toString();
+            System.out.println(s);
+
+            // Create a File object from the image path
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                // Convert the File object to a URI
+                URI imageUri = imageFile.toURI();
+                // Convert the URI to a string and create an Image object
+                Image image = new Image(imageUri.toString());
+                // Set the image to your ImageView
+                marketImage.setImage(image);
+            } else {
+                System.err.println("Image file not found: " + imagePath);
+            }
+
+            return market;
+        }
+        return null;
+    }
+
+    // Method to delete a market
+    @FXML
+    void deleteMarket() {
+        Market marketFound = getSelectedMarket();
+        if (marketFound != null) {
+            // Delete the market from the database
+            marketDAO.deleteMarket(marketFound.getId());
+            System.out.println("Market with id: " + marketFound.getId() + " deleted !");
+
+            // Remove the deleted market from the table view
+            marketTable.getItems().remove(marketFound);
+        }
+    }
+
 
 
     @FXML

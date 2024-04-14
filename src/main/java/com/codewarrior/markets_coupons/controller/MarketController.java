@@ -111,19 +111,26 @@ public class MarketController{
     }
     @FXML
     void addMarket(MouseEvent event) {
-
         System.out.println("add market");
         String name = nameField.getText();
         String address = addressField.getText();
         String city = cityField.getText();
         String region = regionField.getText();
         int zipCode = Integer.parseInt(zipCodeField.getText());
-        String image = imageView.getImage() != null ? imageView.getImage().getUrl() : null;
+        String image = null;
 
+        // Check if imageView has an image
+        if (imageView.getImage() != null) {
+            // Get the file path of the image
+            image = imageView.getImage().getUrl();
+            // Remove "file:" prefix from the URL
+            image = image.substring("file:".length());
+        }
 
         Market newMarket = new Market(name, image, address, city, region, zipCode);
         marketDAO.addMarket(newMarket);
     }
+
 
 
 }

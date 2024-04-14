@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b8feff5-3da8-4dc7-9036-00268fca46c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketDisplayController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayMarket-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/CategoryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/Market.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/MarketDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/MarketDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/VoucherDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/VoucherDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/market-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/market-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketDisplayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketDisplayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayMarket-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayMarket-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +119,7 @@
       <workItem from="1712021218854" duration="9935000" />
       <workItem from="1712046782000" duration="1575000" />
       <workItem from="1712050610677" duration="297000" />
-      <workItem from="1713018942708" duration="22429000" />
+      <workItem from="1713018942708" duration="24420000" />
     </task>
     <servers />
   </component>
