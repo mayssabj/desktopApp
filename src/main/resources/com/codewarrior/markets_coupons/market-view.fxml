@@ -40,7 +40,7 @@
         </Pane>
         <Pane layoutX="14.0" layoutY="134.0" prefHeight="504.0" prefWidth="312.0" style="-fx-background-color: black;">
             <children>
-                <Pane layoutX="29.0" layoutY="83.0" prefHeight="65.0" prefWidth="254.0" style="-fx-background-color: white;">
+                <Pane fx:id="display" layoutX="29.0" layoutY="83.0" onMouseClicked="#displayRoute" prefHeight="65.0" prefWidth="254.0" style="-fx-background-color: white;">
                     <children>
                         <ImageView fitHeight="50.0" fitWidth="43.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                             <image>

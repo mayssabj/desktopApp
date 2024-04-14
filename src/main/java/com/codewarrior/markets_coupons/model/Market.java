@@ -7,12 +7,12 @@ public class Market {
     private String address;
     private String city;
     private String region;
-    private String zipCode;
+    private int zipCode;
 
     public Market() {
     }
 
-    public Market(int id, String name, String image, String address, String city, String region, String zipCode) {
+    public Market(int id, String name, String image, String address, String city, String region, int zipCode) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -22,7 +22,7 @@ public class Market {
         this.zipCode = zipCode;
     }
 
-    public Market(String name, String image, String address, String city, String region, String zipCode) {
+    public Market(String name, String image, String address, String city, String region, int zipCode) {
         this.name = name;
         this.image = image;
         this.address = address;
@@ -78,11 +78,24 @@ public class Market {
         this.region = region;
     }
 
-    public String getZipCode() {
+    public int getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
+    public void setZipCode(int zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Market{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", region='" + region + '\'' +
+                ", zipCode=" + zipCode +
+                '}';
     }
 }

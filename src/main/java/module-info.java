@@ -6,6 +6,9 @@ module com.codewarrior.markets_coupons {
 
     opens com.codewarrior.markets_coupons to javafx.fxml;
     exports com.codewarrior.markets_coupons;
+
     opens com.codewarrior.markets_coupons.controller to javafx.fxml;
     exports com.codewarrior.markets_coupons.controller;
+
+    opens com.codewarrior.markets_coupons.model to javafx.base;
 }

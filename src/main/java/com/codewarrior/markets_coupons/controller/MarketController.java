@@ -1,13 +1,17 @@
 package com.codewarrior.markets_coupons.controller;
 
-import com.codewarrior.markets_coupons.model.MarketDAO;
+import com.codewarrior.markets_coupons.service.MarketDAO;
 import com.codewarrior.markets_coupons.model.Market;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,8 +21,12 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class MarketController {
+public class MarketController{
 
     private final MarketDAO marketDAO = new MarketDAO();
 
@@ -27,6 +35,9 @@ public class MarketController {
 
     @FXML
     private TextField cityField;
+
+    @FXML
+    private Pane display;
 
     @FXML
     private Pane goBack;
@@ -81,6 +92,24 @@ public class MarketController {
     }
 
     @FXML
+    void displayRoute(MouseEvent event) {
+        System.out.println("marzabba");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/displayMarket-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Home Window");
+            newStage.show();
+
+            // Close the current stage (window)
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
     void addMarket(MouseEvent event) {
 
         System.out.println("add market");
@@ -88,12 +117,13 @@ public class MarketController {
         String address = addressField.getText();
         String city = cityField.getText();
         String region = regionField.getText();
-        String zipCode = zipCodeField.getText();
+        int zipCode = Integer.parseInt(zipCodeField.getText());
         String image = imageView.getImage() != null ? imageView.getImage().getUrl() : null;
 
 
         Market newMarket = new Market(name, image, address, city, region, zipCode);
         marketDAO.addMarket(newMarket);
     }
+
 
 }

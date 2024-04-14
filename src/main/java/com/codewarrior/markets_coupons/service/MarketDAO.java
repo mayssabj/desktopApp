@@ -1,7 +1,9 @@
-package com.codewarrior.markets_coupons.model;
+package com.codewarrior.markets_coupons.service;
 
 import com.codewarrior.markets_coupons.model.Market;
 import com.codewarrior.markets_coupons.util.DataBase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ public class MarketDAO {
     private final Connection connection;
 
     public MarketDAO() {
+        System.out.println("MDAO INITITALIZED !");
         this.connection = DataBase.getConnection();
     }
 
@@ -22,7 +25,7 @@ public class MarketDAO {
             statement.setString(2, market.getAddress());
             statement.setString(3, market.getCity());
             statement.setString(4, market.getRegion());
-            statement.setString(5, market.getZipCode());
+            statement.setInt(5, market.getZipCode());
             statement.setString(6, market.getImage());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -40,10 +43,32 @@ public class MarketDAO {
                 Market market = new Market();
                 market.setId(resultSet.getInt("id"));
                 market.setName(resultSet.getString("name"));
+                market.setImage(resultSet.getString("image"));
                 market.setAddress(resultSet.getString("address"));
                 market.setCity(resultSet.getString("city"));
                 market.setRegion(resultSet.getString("region"));
-                market.setZipCode(resultSet.getString("zip_code"));
+                market.setZipCode(resultSet.getInt("zip_code"));
+                markets.add(market);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return markets;
+    }
+    public ObservableList<Market> getAllMarketsOb() {
+        ObservableList<Market> markets = FXCollections.observableArrayList();
+        String query = "SELECT * FROM market";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                Market market = new Market();
+                market.setId(resultSet.getInt("id"));
+                market.setName(resultSet.getString("name"));
+                market.setImage(resultSet.getString("image"));
+                market.setAddress(resultSet.getString("address"));
+                market.setCity(resultSet.getString("city"));
+                market.setRegion(resultSet.getString("region"));
+                market.setZipCode(resultSet.getInt("zip_code"));
                 markets.add(market);
             }
         } catch (SQLException e) {
@@ -65,7 +90,7 @@ public class MarketDAO {
                     market.setAddress(resultSet.getString("address"));
                     market.setCity(resultSet.getString("city"));
                     market.setRegion(resultSet.getString("region"));
-                    market.setZipCode(resultSet.getString("zip_code"));
+                    market.setZipCode(resultSet.getInt("zip_code"));
                     return market;
                 }
             }
@@ -83,7 +108,7 @@ public class MarketDAO {
             statement.setString(2, market.getAddress());
             statement.setString(3, market.getCity());
             statement.setString(4, market.getRegion());
-            statement.setString(5, market.getZipCode());
+            statement.setInt(5, market.getZipCode());
             statement.setInt(6, market.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
