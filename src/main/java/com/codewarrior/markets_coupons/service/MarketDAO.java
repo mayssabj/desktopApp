@@ -102,6 +102,7 @@ public class MarketDAO {
 
     // Method to update an existing market
     public void updateMarket(Market market) {
+        System.out.println("in marketDAO :> "+ market.toString());
         String query = "UPDATE market SET name = ?, address = ?, city = ?, region = ?, zip_code = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, market.getName());

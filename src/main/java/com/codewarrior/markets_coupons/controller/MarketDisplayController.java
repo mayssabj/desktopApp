@@ -15,8 +15,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,6 +52,41 @@ public class MarketDisplayController implements Initializable {
     @FXML
     private TableView<Market> marketTable;
 
+    @FXML
+    private Label controlAddress;
+
+    @FXML
+    private Label controlCity;
+
+    @FXML
+    private Label controllName;
+
+    @FXML
+    private Label controllRegion;
+
+    @FXML
+    private Label controllZipCode;
+
+    @FXML
+    private TextField updateAddress;
+
+    @FXML
+    private TextField updateCity;
+
+    @FXML
+    private TextField updateName;
+
+    @FXML
+    private TextField updateRegion;
+
+    @FXML
+    private TextField updateZipCode;
+
+    @FXML
+    private Button updateButton;
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         displayMarkets();
@@ -86,6 +120,12 @@ public class MarketDisplayController implements Initializable {
             int zipCode = selectedMarket.getZipCode();
 
             Market market = new Market(id, name, imagePath, address, city, region, zipCode);
+            this.updateAddress.setText(market.getAddress());
+            this.updateName.setText(market.getName());
+            this.updateRegion.setText(market.getRegion());
+            this.updateCity.setText(market.getCity());
+            String strZipCode = String.valueOf(market.getZipCode());
+            this.updateZipCode.setText(strZipCode);
 
             String s = market.toString();
             System.out.println(s);
@@ -124,7 +164,6 @@ public class MarketDisplayController implements Initializable {
             int zipCode = selectedMarket.getZipCode();
 
             Market market = new Market(id, name, imagePath, address, city, region, zipCode);
-
             String s = market.toString();
             System.out.println(s);
 
@@ -140,6 +179,8 @@ public class MarketDisplayController implements Initializable {
             } else {
                 System.err.println("Image file not found: " + imagePath);
             }
+
+
 
             return market;
         }
@@ -157,6 +198,28 @@ public class MarketDisplayController implements Initializable {
 
             // Remove the deleted market from the table view
             marketTable.getItems().remove(marketFound);
+        }
+    }
+
+
+    @FXML
+    void updateMarket(MouseEvent event) {
+        Market market = new Market();
+        market.setId(displayMarketInfo().getId());
+        market.setName(this.updateName.getText());
+        market.setImage(displayMarketInfo().getImage());
+        market.setAddress(this.updateAddress.getText());
+        market.setCity(this.updateCity.getText());
+        market.setRegion(this.updateRegion.getText());
+        int zipCode = Integer.parseInt(this.updateZipCode.getText());
+        market.setZipCode(zipCode);
+        System.out.println("Update Button :> "+market.toString());
+        if (market !=null){
+            marketDAO.updateMarket(market);
+            System.out.println("Market with id: " + market.getId() + " updated !");
+
+            // Refresh the TableView
+            displayMarkets();
         }
     }
 
