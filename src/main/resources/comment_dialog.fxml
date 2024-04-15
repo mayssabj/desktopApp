@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="Controller.CommentDialogController" stylesheets="style.css">
     <TextArea fx:id="commentTextArea" prefHeight="100" promptText="Enter your comment here" styleClass="text-area"/>
-    <Button text="Submit" onAction="#submitComment" styleClass="submit-button"/>
+    <Button onAction="#submitComment" styleClass="submit-button">
+        <graphic>
+            <ImageView fitWidth="16" fitHeight="16">
+                <image>
+                    <Image url="/icons/cmnt.png"/> <!-- Replace "your_icon.png" with the path to your local image -->
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
 </VBox>

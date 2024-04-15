@@ -130,7 +130,15 @@ public class AfficherPostController {
         commentButton.getStyleClass().add("add-btn");
         commentButton.setFont(new Font("System Bold", 18));
         commentButton.setTextFill(Color.valueOf("#828282"));
-        commentButton.setOnAction(event -> commentOnPost(post));
+
+        try {
+            String commentCount = new CommentCRUD().countComment(post); // Call your countComment method here
+            commentButton.setText("Comments (" + commentCount + ")");
+        } catch (SQLException e) {
+            // Handle SQLException
+        }
+
+        commentButton.setOnAction(event -> handlePostClick(post));
 
         Button deleteButton = new Button();
         ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
@@ -159,8 +167,8 @@ public class AfficherPostController {
         postBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getClickCount() == 1) { // Single click
-                    handlePostClick(post);
+                if (event.getClickCount() == 1) {
+                    commentOnPost(post);
                 }
             }
         });

@@ -123,6 +123,22 @@ public class CommentCRUD implements ServicePost<Comment> {
         return commentsForPost;
     }
 
+    public String countComment(Post post) throws SQLException {
+        String req = "SELECT COUNT(*) AS comment_count FROM `comment` WHERE `post`=?";
+        try (PreparedStatement pst = connection.prepareStatement(req)) {
+            pst.setInt(1, post.getId());
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt("comment_count");
+                    return Integer.toString(count);
+                }
+            }
+        }
+        return "0"; // Return 0 if no result found
+    }
+
+
+
 
     public void initData(Post post) {
         // Implementation of initData method

@@ -4,6 +4,7 @@ import entite.Comment;
 import entite.Post;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import services.CommentCRUD;
 
 import java.sql.SQLException;
@@ -26,9 +27,15 @@ public class CommentDialogController {
             CommentCRUD commentCRUD = new CommentCRUD();
             try {
                 commentCRUD.ajouter(comment);
+                closeDialog();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void closeDialog() {
+        Stage stage = (Stage) commentTextArea.getScene().getWindow();
+        stage.close();
     }
 }

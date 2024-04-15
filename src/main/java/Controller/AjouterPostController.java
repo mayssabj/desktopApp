@@ -12,16 +12,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.PostCRUD;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class AjouterPostController {
 
@@ -172,6 +176,14 @@ public class AjouterPostController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private WebView mapWebView;
+
+
+    public void initialize(URL location, ResourceBundle resources) {
+        WebEngine webEngine = mapWebView.getEngine();
+        webEngine.load("https://maps.google.com"); // Load Google Maps URL
     }
 
 
