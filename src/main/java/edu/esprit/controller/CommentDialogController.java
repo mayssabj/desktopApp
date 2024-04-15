@@ -1,11 +1,11 @@
-package Controller;
+package edu.esprit.controller;
 
-import entite.Comment;
-import entite.Post;
+import edu.esprit.entities.Comment;
+import edu.esprit.entities.Post;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import services.CommentCRUD;
+import edu.esprit.services.CommentCRUD;
 
 import java.sql.SQLException;
 

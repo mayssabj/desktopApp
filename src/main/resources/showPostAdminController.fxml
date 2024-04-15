@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.showPostAdminController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.showPostAdminController">
     <VBox alignment="CENTER" layoutX="6.0" layoutY="-62.0" prefHeight="455.0" prefWidth="772.0">
         <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="List post" />
         <TableView fx:id="postTable" prefHeight="258.0" prefWidth="751.0">

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 
 <?import javafx.scene.image.ImageView?>
-<AnchorPane prefHeight="589.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifierPostController">
+<AnchorPane prefHeight="589.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.ModifierPostController">
     <children>
         <Pane layoutX="98.0" layoutY="11.0" prefHeight="566.0" prefWidth="438.0" styleClass="eco-card" stylesheets="style.css">
             <children>

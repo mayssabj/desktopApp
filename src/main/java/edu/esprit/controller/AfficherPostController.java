@@ -1,7 +1,7 @@
-package Controller;
+package edu.esprit.controller;
 
-import entite.Comment;
-import entite.Post;
+import edu.esprit.entities.Comment;
+import edu.esprit.entities.Post;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,8 +21,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import services.CommentCRUD;
-import services.PostCRUD;
+import edu.esprit.services.CommentCRUD;
+import edu.esprit.services.PostCRUD;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,7 +30,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AfficherPostController {
     @FXML

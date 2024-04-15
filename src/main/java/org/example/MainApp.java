@@ -1,15 +1,11 @@
 package org.example; // Use your actual package name
 
-import Controller.AfficherPostController;
-import Controller.AjouterPostController;
-import Controller.dashbord;
-import Controller.showPostAdminController;
+import edu.esprit.controller.AfficherPostController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import services.PostCRUD;
 
 public class MainApp extends Application {
 

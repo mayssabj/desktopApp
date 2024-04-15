@@ -1,11 +1,11 @@
-package services;
+package edu.esprit.services;
 
-import entite.Comment;
-import entite.Post;
+import edu.esprit.entities.Comment;
+import edu.esprit.entities.Post;
+import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import utils.MyDB;
 
 import java.net.URL;
 import java.sql.*;
@@ -23,7 +23,7 @@ public class CommentCRUD implements ServicePost<Comment> {
     private Connection connection;
 
     public CommentCRUD() {
-        connection = MyDB.getInstance().getConn();
+        connection = mydb.getInstance().getCon();
     }
 
     @Override

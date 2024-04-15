@@ -1,14 +1,13 @@
-package services;
+package edu.esprit.services;
 
-import entite.Post;
+import edu.esprit.entities.Post;
+import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import utils.MyDB;
 import javafx.scene.control.Label;
 
 import java.net.URL;
@@ -52,7 +51,7 @@ public class PostCRUD implements ServicePost<Post> {
     Statement ste;
 
     public PostCRUD() {
-        connection = MyDB.getInstance().getConn();
+        connection = mydb.getInstance().getCon();
     }
 
     @Override

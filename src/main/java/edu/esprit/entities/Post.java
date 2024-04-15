@@ -1,4 +1,4 @@
-package entite;
+package edu.esprit.entities;
 
 import javax.persistence.Id;
 import java.util.Date;

@@ -1,6 +1,6 @@
-package Controller;
+package edu.esprit.controller;
 
-import entite.Post;
+import edu.esprit.entities.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,13 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import services.PostCRUD;
+import edu.esprit.services.PostCRUD;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class ModifierPostController {
 

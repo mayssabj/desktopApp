@@ -1,4 +1,4 @@
-package Controller;
+package edu.esprit.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package services;
+package edu.esprit.services;
 
 import java.net.URL;
 import java.sql.SQLException;
