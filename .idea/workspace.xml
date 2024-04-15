@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b8feff5-3da8-4dc7-9036-00268fca46c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayMarket-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayMarket-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/CategoryDisplayController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/VoucherCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayCategory-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/VoucherCtegory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/CategoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/category-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/category-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +128,8 @@
       <workItem from="1712046782000" duration="1575000" />
       <workItem from="1712050610677" duration="297000" />
       <workItem from="1713018942708" duration="24656000" />
-      <workItem from="1713103246704" duration="4692000" />
+      <workItem from="1713103246704" duration="4749000" />
+      <workItem from="1713137457998" duration="5545000" />
     </task>
     <servers />
   </component>

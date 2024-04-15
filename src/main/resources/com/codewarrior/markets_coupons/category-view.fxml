@@ -41,7 +41,7 @@
       </Pane>
       <Pane layoutX="14.0" layoutY="134.0" prefHeight="352.0" prefWidth="341.0" style="-fx-background-color: black;">
          <children>
-            <Pane layoutX="22.0" layoutY="14.0" prefHeight="81.0" prefWidth="302.0" style="-fx-background-color: white;">
+            <Pane fx:id="display" layoutX="22.0" layoutY="14.0" onMouseClicked="#displayRoute" prefHeight="81.0" prefWidth="302.0" style="-fx-background-color: white;">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="43.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,11 +75,11 @@
       </Pane>
       <Pane layoutX="384.0" layoutY="134.0" prefHeight="352.0" prefWidth="474.0" style="-fx-background-color: gray;">
          <children>
-            <TextField layoutX="91.0" layoutY="45.0" promptText="add title" />
-            <TextArea layoutX="57.0" layoutY="96.0" prefHeight="108.0" prefWidth="238.0" promptText="Description ..." />
+            <TextField fx:id="titleField" layoutX="91.0" layoutY="45.0" promptText="add title" />
+            <TextArea fx:id="descriptionField" layoutX="57.0" layoutY="96.0" prefHeight="108.0" prefWidth="238.0" promptText="Description ..." />
             <Pane layoutX="211.0" layoutY="241.0" prefHeight="81.0" prefWidth="84.0">
                <children>
-                  <Button layoutX="20.0" layoutY="29.0" mnemonicParsing="false" text="Add" />
+                  <Button layoutX="20.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#addButton" text="Add" />
                </children>
             </Pane>
          </children>

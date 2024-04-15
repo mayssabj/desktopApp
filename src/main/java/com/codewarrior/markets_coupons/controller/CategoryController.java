@@ -1,19 +1,69 @@
 package com.codewarrior.markets_coupons.controller;
 
+import com.codewarrior.markets_coupons.model.VoucherCategory;
+import com.codewarrior.markets_coupons.service.CategoryDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class CategoryController {
 
+    private final CategoryDAO categoryDAO = new CategoryDAO();
+
     @FXML
     private Pane goBack;
+
+    @FXML
+    private TextArea descriptionField;
+
+
+    @FXML
+    private TextField titleField;
+
+    @FXML
+    private Pane display;
+
+    @FXML
+    void addButton(MouseEvent event) throws SQLException {
+        String title = this.titleField.getText();
+        String description = this.descriptionField.getText();
+        if ("purchase".equals(title) || "discount".equals(title)) {
+            VoucherCategory newCategory = new VoucherCategory(title, description);
+            categoryDAO.createCategory(newCategory);
+            System.out.println("Category added successfully!");
+        } else {
+            System.out.println("Title must be either 'purchase' or 'discount'.");
+        }
+    }
+
+    @FXML
+    void displayRoute(MouseEvent event) {
+        System.out.println("marzabba");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/displayCategory-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Category Window");
+            newStage.show();
+
+            // Close the current stage (window)
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     void goBack(MouseEvent event) {
