@@ -1,6 +1,8 @@
 package edu.esprit.controller;
 
 import edu.esprit.entities.Post;
+import edu.esprit.entities.User;
+import edu.esprit.services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,30 +69,45 @@ public class AjouterPostController {
 
 
 
+    private UserService userService; // Inject UserService
+
+// Constructor or setter for injecting UserService
+
     @FXML
     public void ajouterPost() throws SQLException {
         if (isInputValid()) {
-            String titre = titreField.getText();
-            String description = descriptionArea.getText();
-            String image = (selectedImageFile != null) ? selectedImageFile.getPath() : "";
-            Post.Type type = Post.Type.valueOf(typeComboBox.getValue());
-            String place = placeField.getText();
+            UserService userService = new UserService();
+            User u1 = userService.getCurrentLoggedInUser();
 
-            Post post = new Post(titre, description, image, type, place);
-            PostCRUD service = new PostCRUD();
-            service.ajouter(post);
+            // Check if user is logged in
+            if (u1 != null) {
+                String titre = titreField.getText();
+                String description = descriptionArea.getText();
+                String image = (selectedImageFile != null) ? selectedImageFile.getPath() : "";
+                Post.Type type = Post.Type.valueOf(typeComboBox.getValue());
+                String place = placeField.getText();
 
-            titreField.clear();
-            descriptionArea.clear();
-            imageView.setImage(null);
-            selectedImageFile = null;
-            typeComboBox.setValue(null);
-            placeField.clear();
+                Post post = new Post(titre, description, image, type, place, u1.getId());
+                PostCRUD service = new PostCRUD();
+                service.ajouter(post);
 
+                titreField.clear();
+                descriptionArea.clear();
+                imageView.setImage(null);
+                selectedImageFile = null;
+                typeComboBox.setValue(null);
+                placeField.clear();
 
-            returnToPostsPage();
+                returnToPostsPage();
+            } else {
+                // Handle case when user is not logged in
+                // Display error message or redirect to login page
+                System.out.println("User not logged in");
+            }
         }
     }
+
+
     @FXML
     void selectImageAction(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();

@@ -1,6 +1,7 @@
 package edu.esprit.services;
 
 import edu.esprit.entities.Post;
+import edu.esprit.entities.User;
 import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -56,7 +57,9 @@ public class PostCRUD implements ServicePost<Post> {
 
     @Override
     public void ajouter(Post post) throws SQLException {
-        String req = "INSERT INTO `post`(`titre`, `description`, `image_url`, `date`, `type`, `place`) VALUES (?, ?, ?, ?, ?, ?)";
+        UserService userService=new UserService();
+        User u1=userService.getCurrentLoggedInUser();
+        String req = "INSERT INTO `post`(`titre`, `description`, `image_url`, `date`, `type`, `place`, `user`) VALUES (?, ?, ?, ?, ?, ?,?)";
         long millis = System.currentTimeMillis();
         java.sql.Date today = new java.sql.Date(millis);
         try (PreparedStatement pst = connection.prepareStatement(req)) {
@@ -66,6 +69,7 @@ public class PostCRUD implements ServicePost<Post> {
             pst.setDate(4, today);
             pst.setString(5, post.getType().toString());
             pst.setString(6, post.getPlace());
+            pst.setInt(7, u1.getId());
             pst.executeUpdate();
         }
     }
@@ -116,8 +120,9 @@ public class PostCRUD implements ServicePost<Post> {
                 Date date = rs.getDate("date");
                 Post.Type type = Post.Type.valueOf(rs.getString("type"));
                 String place = rs.getString("place");
+                int user = rs.getInt("user");
 
-                Post post = new Post(id, titre, description, imageUrl, date, type, place);
+                Post post = new Post(id, titre, description, imageUrl, date, type, place, user);
                 posts.add(post);
             }
         }
@@ -162,4 +167,3 @@ public class PostCRUD implements ServicePost<Post> {
     }
 
 }
-

@@ -2,6 +2,7 @@ package edu.esprit.controller;
 
 import edu.esprit.entities.Comment;
 import edu.esprit.entities.Post;
+import edu.esprit.entities.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;

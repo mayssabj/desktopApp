@@ -24,6 +24,15 @@ public class User {
         this.gender = gender;
     }
 
+    public User(int id, String email, String phone, String profilePicture, String address, String gender) {
+        this.id = id;
+        this.email = email;
+        this.phone = phone;
+        this.profilePicture = profilePicture;
+        this.address = address;
+        this.gender = gender;
+    }
+
     // Getters and setters
     public int getId() {
         return id;

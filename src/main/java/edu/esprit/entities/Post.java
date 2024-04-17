@@ -18,7 +18,9 @@ public class Post {
         LOST, FOUND
     }
 
-    public Post(int id, String titre, String description, String imageUrl, Date date, Type type, String place) {
+    public int user;
+
+    public Post(int id, String titre, String description, String imageUrl, Date date, Type type, String place ,int user) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -26,22 +28,25 @@ public class Post {
         this.date = date;
         this.type = type;
         this.place = place;
+        this.user = user;
     }
-    public Post( String titre, String description, String imageUrl, Type type, String place) {
+    public Post( String titre, String description, String imageUrl, Type type, String place, int user) {
         this.titre = titre;
         this.description = description;
         this.imageUrl = imageUrl;
         this.type = type;
         this.place = place;
+        this.user = user;
     }
 
-    public Post(String titre, String description, String imageUrl, Date date, Type type, String place) {
+    public Post(String titre, String description, String imageUrl, Date date, Type type, String place, int user) {
         this.titre = titre;
         this.description = description;
         this.imageUrl = imageUrl;
         this.date = date;
         this.type = type;
         this.place = place;
+        this.user = user;
     }
 
     public int getId() {
@@ -100,6 +105,22 @@ public class Post {
         this.place = place;
     }
 
+    public int getUser() {
+        return user;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
+    }
+
+    public int user() {
+        return user;
+    }
+
+    public void user(int user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -110,6 +131,7 @@ public class Post {
                 ", date=" + date +
                 ", type=" + type +
                 ", place='" + place + '\'' +
+                ", user=" + user +
                 '}';
     }
 }

@@ -1,17 +1,14 @@
 package edu.esprit.services;
 
 import edu.esprit.entities.User;
-import edu.esprit.utils.FileChooserUtil;
 import edu.esprit.utils.mydb;
-import javafx.scene.image.Image;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 
 public class UserService {
+    private static User currentUser;
     public boolean registerUser(User user) {
         Connection con = mydb.getInstance().getCon();
         String query = "INSERT INTO users (email, password, phone, profile_picture, address, gender) VALUES (?, ?, ?, ?, ?, ?)";
@@ -90,7 +87,7 @@ public class UserService {
         return null;
     }
 
-    private User getUserById(int userId) {
+    public User getUserById(int userId) {
         Connection con = mydb.getInstance().getCon();
         String query = "SELECT * FROM users WHERE id = ?";
 
@@ -162,9 +159,19 @@ public class UserService {
         }
     }
 
+    public void logout() {
+        currentUser = null;
+    }
 
+    public boolean isLoggedIn() {
+        return currentUser != null;
+    }
 
+    public void setCurrentLoggedInUser(User user) {
+        currentUser=user;
+    }
 
-
-
+    public User getCurrentLoggedInUser() {
+        return currentUser;
+    }
 }

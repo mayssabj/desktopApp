@@ -1,6 +1,7 @@
 package edu.esprit.controller.user;
 
 import edu.esprit.entities.User;
+import edu.esprit.services.UserService;
 import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.Session;
 import edu.esprit.utils.ValidationUtils;
@@ -83,7 +84,7 @@ public class LoginController implements Initializable {
                 // Set the current user in the session
                 Session.getInstance().setCurrentUser(user);
                 // Proceed with login (e.g., navigate to another page)
-                NavigationUtil.redirectTo("/user/updateUser.fxml", event);
+                NavigationUtil.redirectTo("/Post.fxml", event);
             } else {
                 loginMessageLabel.setText("Email or password incorrect");
                 loginMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
@@ -112,6 +113,8 @@ public class LoginController implements Initializable {
                     user.setPhone(rs.getString("phone"));
                     user.setProfilePicture(rs.getString("profile_picture"));
                     user.setAddress(rs.getString("address"));
+                    UserService userservice=new UserService();
+                    userservice.setCurrentLoggedInUser(user);
                     return user;
                 }
             }

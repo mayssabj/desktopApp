@@ -2,6 +2,7 @@ package edu.esprit.services;
 
 import edu.esprit.entities.Comment;
 import edu.esprit.entities.Post;
+import edu.esprit.entities.User;
 import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -86,25 +87,7 @@ public class CommentCRUD implements ServicePost<Comment> {
     }
 
     private Post getPostById(int postId) throws SQLException {
-        String req = "SELECT * FROM `post` WHERE `id`=?";
-        Post post = null;
-        try (PreparedStatement pst = connection.prepareStatement(req)) {
-            pst.setInt(1, postId);
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    int id = rs.getInt("id");
-                    String titre = rs.getString("titre");
-                    String description = rs.getString("description");
-                    String imageUrl = rs.getString("image_url");
-                    Date date = rs.getDate("date");
-                    Post.Type type = Post.Type.valueOf(rs.getString("type"));
-                    String place = rs.getString("place");
-
-                    post = new Post(id, titre, description, imageUrl, date, type, place);
-                }
-            }
-        }
-        return post;
+        return null;
     }
 
     public List<Comment> getCommentsForPost(Post post) throws SQLException {
