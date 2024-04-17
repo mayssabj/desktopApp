@@ -36,13 +36,13 @@ public class CategoryDAO {
     // Read operation - Get all categories
     public List<VoucherCategory> getAllCategories() throws SQLException {
         List<VoucherCategory> categories = new ArrayList<>();
-        String sql = "SELECT id, titre, description FROM voucher_category";
+        String sql = "SELECT id, titre, discription FROM voucher_category";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String titre = resultSet.getString("titre");
-                String description = resultSet.getString("description");
+                String description = resultSet.getString("discription");
                 VoucherCategory category = new VoucherCategory(id, titre, description);
                 categories.add(category);
             }
@@ -52,13 +52,13 @@ public class CategoryDAO {
 
     // Read operation - Get category by ID
     public VoucherCategory getCategoryById(int categoryId) throws SQLException {
-        String sql = "SELECT titre, description FROM voucher_category WHERE id = ?";
+        String sql = "SELECT titre, discription FROM voucher_category WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, categoryId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     String titre = resultSet.getString("titre");
-                    String description = resultSet.getString("description");
+                    String description = resultSet.getString("discription");
                     return new VoucherCategory(categoryId, titre, description);
                 }
             }
@@ -68,7 +68,7 @@ public class CategoryDAO {
 
     // Update operation
     public void updateCategory(VoucherCategory category) throws SQLException {
-        String sql = "UPDATE voucher_category SET titre = ?, description = ? WHERE id = ?";
+        String sql = "UPDATE voucher_category SET titre = ?, discription = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, category.getTitre());
             statement.setString(2, category.getDescription());

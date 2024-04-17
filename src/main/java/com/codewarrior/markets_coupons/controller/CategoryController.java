@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -32,16 +33,28 @@ public class CategoryController {
     @FXML
     private Pane display;
 
+
+    @FXML
+    private Label descriptionControll;
+
+    @FXML
+    private Label titleControll;
+
     @FXML
     void addButton(MouseEvent event) throws SQLException {
         String title = this.titleField.getText();
         String description = this.descriptionField.getText();
-        if ("purchase".equals(title) || "discount".equals(title)) {
+        if ("purchase".equals(title) || "discount".equals(title) || this.titleField.getText().isBlank() || this.descriptionField.getText().isBlank()) {
+            this.titleControll.setText("");
+            this.descriptionControll.setText("");
+            this.descriptionControll.setText("should not be blank");
+            this.titleControll.setText("should not be blank and Title must be either 'purchase' or 'discount'.");
             VoucherCategory newCategory = new VoucherCategory(title, description);
             categoryDAO.createCategory(newCategory);
             System.out.println("Category added successfully!");
         } else {
             System.out.println("Title must be either 'purchase' or 'discount'.");
+
         }
     }
 

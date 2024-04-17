@@ -1,5 +1,6 @@
 package com.codewarrior.markets_coupons.controller;
 
+import com.codewarrior.markets_coupons.model.Market;
 import com.codewarrior.markets_coupons.model.VoucherCategory;
 import com.codewarrior.markets_coupons.service.CategoryDAO;
 import javafx.collections.ObservableList;
@@ -115,11 +116,30 @@ public class CategoryDisplayController implements Initializable {
         }
     }
 
+    public void displayCategories() {
+        ObservableList<VoucherCategory> list = getCategories();
+        categoryTable.setItems(list);
+        colTitle.setCellValueFactory(new PropertyValueFactory<VoucherCategory,String>("titre"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<VoucherCategory,String>("description"));
+    }
+
 
     @FXML
-    void updateCategory(MouseEvent event) {
+    void updateCategory(MouseEvent event) throws SQLException {
+        VoucherCategory category = new VoucherCategory();
+        category.setId(displayCategoryInfo().getId());
+        category.setTitre(this.updateTitle.getText());
+        category.setDescription(updateDescription.getText());
+        System.out.println("Update Button :> "+category.toString());
+        if (category !=null){
+            categoryDAO.updateCategory(category);
+            System.out.println("Category with id: " + category.getId() + " updated !");
 
+            // Refresh the TableView
+            displayCategories();
+        }
     }
+
 
 
 
@@ -127,7 +147,7 @@ public class CategoryDisplayController implements Initializable {
     void goBack(MouseEvent event) {
         System.out.println("redirect to Home");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/hello-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/category-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage newStage = new Stage();
             newStage.setScene(scene);
