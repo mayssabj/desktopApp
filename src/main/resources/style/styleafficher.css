@@ -21,7 +21,11 @@
 
 
 .right-bar{
+<<<<<<< HEAD
     -fx-background-color: #f6e6d4;
+=======
+    -fx-background-color: #F8C07F;
+>>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
 }
 
 .shadow {
@@ -44,13 +48,21 @@
     -fx-background-radius: 30;
 }
 .eco-card {
+<<<<<<< HEAD
     -fx-background-color: rgb(250, 247, 208);
+=======
+    -fx-background-color: rgb(245, 240, 174);
+>>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
     -fx-background-radius: 10px; /* Coins arrondis */
     -fx-padding: 15px; /* Marge intérieure */
     -fx-spacing: 10px; /* Espacement entre les éléments */
 }
 .card {
+<<<<<<< HEAD
     -fx-background-color: white; /* Couleur de fond */
+=======
+    -fx-background-color: #fcdc6b; /* Couleur de fond */
+>>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
     -fx-background-radius: 20px; /* Coins arrondis */
     -fx-padding: 30px; /* Marge intérieure */
     -fx-spacing: 30px; /* Espacement entre les éléments */
@@ -70,6 +82,7 @@
     -fx-background-radius: 30;
 
 }
+<<<<<<< HEAD
 .post-card {
     -fx-background-color: #FFFFFF;
     -fx-border-color: #CCCCCC;
@@ -81,6 +94,8 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);
 }
 
+=======
+>>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
 
 
 

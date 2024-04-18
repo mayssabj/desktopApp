@@ -12,6 +12,7 @@ public class dashbord {
     @FXML
     private VBox vboxdash;
     @FXML
+<<<<<<< HEAD
     void showsponsor(MouseEvent event) {
 
         try {
@@ -26,8 +27,24 @@ public class dashbord {
             vboxdash.getChildren().add(eventFXML);
         } catch (IOException e) {
             // Handle exception (e.g., file not found or invalid FXML)
+=======
+    void showpost(MouseEvent event) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/showPostAdminController.fxml"));
+            Node eventFXML = loader.load();
+
+            vboxdash.getChildren().clear();
+
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+>>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
             e.printStackTrace();
         }
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
