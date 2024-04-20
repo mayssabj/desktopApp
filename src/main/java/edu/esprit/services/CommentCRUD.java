@@ -55,7 +55,7 @@ public class CommentCRUD implements ServicePost<Comment> {
 
     @Override
     public void supprimer(int id) throws SQLException {
-        String req = "DELETE FROM `comment` WHERE `id`=?";
+        String req = "DELETE FROM `comment` WHERE `id_c`=?";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
             pst.setInt(1, id);
             pst.executeUpdate();
@@ -78,7 +78,7 @@ public class CommentCRUD implements ServicePost<Comment> {
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(req)) {
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_c");
                 String text = rs.getString("text");
                 // You might need to retrieve the post ID from the result set and fetch the corresponding post object from the database
                 // For simplicity, I'm assuming you already have a method to get Post object by ID
@@ -107,9 +107,10 @@ public class CommentCRUD implements ServicePost<Comment> {
             pst.setInt(1, post.getId());
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
+                    int id = rs.getInt("id_c");
                     String text = rs.getString("text");
                     int id_u = rs.getInt("id_u");
-                    Comment comment = new Comment(text, post ,U.getUserById(id_u));
+                    Comment comment = new Comment(id,text, post ,U.getUserById(id_u));
                     commentsForPost.add(comment);
                 }
             }

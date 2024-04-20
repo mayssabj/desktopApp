@@ -31,7 +31,7 @@
      /* Border rounded corners to match the background */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 8);
 
-    -fx-padding: 10; /* Space inside the card */
+    -fx-padding: 15; /* Space inside the card */
 }
 
 

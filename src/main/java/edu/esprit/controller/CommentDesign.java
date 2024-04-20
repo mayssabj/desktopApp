@@ -17,15 +17,15 @@ public class CommentDesign extends VBox {
         // Create an HBox to hold the user name and comment text
         HBox contentBox = new HBox();
         contentBox.getChildren().addAll(userNameLabel, commentTextLabel);
-        contentBox.setSpacing(10);
+        contentBox.setSpacing(7);
 
         // Style the content box
-        contentBox.setStyle("-fx-padding: 5px;");
+        contentBox.setStyle("-fx-padding: 7px;");
 
         // Add content box to this VBox
         getChildren().add(contentBox);
 
         // Style the comment design
-        setStyle("-fx-background-color: #f0f0f0; -fx-padding: 10px;");
+        setStyle("-fx-background-color: #f5f1f1; -fx-padding: 8px;");
     }
 }

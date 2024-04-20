@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,48 +16,133 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Pagination?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.AfficherPostController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.AfficherPostController">
   <children>
-    <BorderPane layoutX="6.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <left>
-        <VBox prefHeight="200.0" prefWidth="435.0" styleClass="right-bar" stylesheets="style.css" BorderPane.alignment="CENTER">
+    <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" styleClass="primary_color" stylesheets="/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <left>
+        <VBox prefHeight="200.0" prefWidth="235.0" spacing="20.0" styleClass="secondary-color" stylesheets="/style1.css" BorderPane.alignment="CENTER">
           <children>
-            <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
-              <children>
-                <Label prefHeight="49.0" prefWidth="128.0" text="LOST" textFill="#FF0000">
-                  <font>
-                    <Font name="Cambria Bold" size="40.0" />
-                  </font>
-                </Label>
-                <Label text="FOUND" textFill="#008000">
-                  <font>
-                    <Font name="Cambria" size="40.0" />
-                  </font>
-                </Label>
-              </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="200.0" stylesheets="style.css" VBox.vgrow="NEVER">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+              </image>
               <VBox.margin>
-                <Insets left="30.0" right="30.0" />
+                <Insets left="20.0" top="20.0" />
               </VBox.margin>
+            </ImageView>
+            <VBox prefHeight="182.0" prefWidth="235.0" spacing="10.0">
               <children>
-                <TextField prefHeight="40.0" prefWidth="235.0" promptText="Type here to search" styleClass="transparent" stylesheets="style.css">
-                  <HBox.margin>
-                    <Insets left="20.0" />
-                  </HBox.margin>
-                  <font>
-                    <Font name="Cambria" size="18.0" />
-                  </font>
-                </TextField>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="search-button" stylesheets="style.css" text="Search" textFill="WHITE" />
+                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="selected" stylesheets="/style1.css">
+                  <children>
+                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                      </image>
+                    </ImageView>
+                    <Label prefHeight="21.0" prefWidth="101.0" text="Home" textFill="WHITE">
+                      <font>
+                        <Font name="System Bold" size="18.0" />
+                      </font>
+                    </Label>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                  <children>
+                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                      </image>
+                    </ImageView>
+                    <Label prefHeight="21.0" prefWidth="101.0" text="Explore" textFill="#a1a1a1">
+                      <font>
+                        <Font name="System Bold" size="18.0" />
+                      </font>
+                    </Label>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                  <children>
+                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                      </image>
+                    </ImageView>
+                    <Label prefHeight="21.0" prefWidth="101.0" text="Radio" textFill="#a1a1a1">
+                      <font>
+                        <Font name="System Bold" size="18.0" />
+                      </font>
+                    </Label>
+                  </children>
+                </HBox>
               </children>
-              <styleClass>
-                <String fx:value="search-box" />
-                <String fx:value="shadow" />
-              </styleClass>
+            </VBox>
+            <VBox prefHeight="292.0" prefWidth="235.0">
+              <children>
+                <Label prefHeight="48.0" prefWidth="192.0" text="YOUR LIBRARY" textFill="#a1a1a1">
+                  <font>
+                    <Font size="18.0" />
+                  </font>
+                  <VBox.margin>
+                    <Insets />
+                  </VBox.margin>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="192.0" text="Made For You" textFill="#a1a1a1">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="192.0" text="Recently Played" textFill="#a1a1a1">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="192.0" text="Liked Songs" textFill="#a1a1a1">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="192.0" text="Albums" textFill="#a1a1a1">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="192.0" text="Artists" textFill="#a1a1a1">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="192.0" text="Poscasts" textFill="#a1a1a1">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+              </children>
+              <padding>
+                <Insets left="20.0" right="20.0" />
+              </padding>
+            </VBox>
+            <Label prefHeight="48.0" prefWidth="192.0" text="PLAYLISTS" textFill="#a1a1a1">
+              <font>
+                <Font size="18.0" />
+              </font>
+              <VBox.margin>
+                <Insets left="20.0" />
+              </VBox.margin>
+            </Label>
+            <Pane prefHeight="12.0" prefWidth="235.0" VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="top-border" stylesheets="/style1.css">
+              <children>
+                <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                  </image>
+                </ImageView>
+                <Label prefHeight="40.0" prefWidth="120.0" text="New Playlist" textFill="#a1a1a1">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+              </children>
             </HBox>
           </children>
         </VBox>
@@ -68,36 +150,59 @@
       <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
           <children>
-            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="200.0">
-              <VBox.margin>
-                <Insets left="20.0" right="20.0" />
-              </VBox.margin>
+            <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="1080.0" spacing="20.0">
               <children>
-                <Label prefHeight="29.0" prefWidth="88.0" text="language" textFill="#878787">
-                  <font>
-                    <Font name="Cambria Bold" size="18.0" />
-                  </font>
-                </Label>
-                <Label prefHeight="29.0" prefWidth="77.0" text="Français" textFill="#878787" underline="true">
-                  <font>
-                    <Font name="Cambria" size="18.0" />
-                  </font>
-                </Label>
-                <Pane prefHeight="65.0" prefWidth="393.0" HBox.hgrow="ALWAYS" />
-                <Label prefHeight="62.0" prefWidth="100.0" text="Mon Profile" textFill="#878787">
-                  <font>
-                    <Font name="Cambria" size="18.0" />
-                  </font>
-                </Label>
-                <ImageView fitHeight="50.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@images/rayen.jpg" />
-                  </image>
-                </ImageView>
-
+                <HBox alignment="CENTER_LEFT">
+                  <children>
+                    <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                      <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                          </image>
+                        </ImageView>
+                      </graphic>
+                    </Button>
+                    <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
+                      <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                          </image>
+                        </ImageView>
+                      </graphic>
+                    </Button>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="35.0" prefWidth="215.0" styleClass="search-container" stylesheets="/style1.css">
+                  <children>
+                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                      </image>
+                    </ImageView>
+                    <TextField prefHeight="31.0" prefWidth="173.0" promptText="Search" style="-fx-background-color: transparent;" />
+                  </children>
+                </HBox>
+                <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" styleClass="upgrade-button" stylesheets="style1.css" text="UPGRADE" textFill="WHITE" />
+                <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0">
+                  <children>
+                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                      </image>
+                    </ImageView>
+                    <Label prefHeight="27.0" prefWidth="171.0" text="Username" textFill="WHITE">
+                      <font>
+                        <Font size="18.0" />
+                      </font>
+                    </Label>
+                  </children>
+                </HBox>
               </children>
             </HBox>
-            <HBox prefHeight="50.0" prefWidth="100.0">
+            <HBox prefHeight="50.0" prefWidth="1080.0">
               <children>
                 <Pane VBox.vgrow="ALWAYS" />
 
@@ -105,15 +210,15 @@
               <VBox.margin>
                 <Insets left="20.0" right="20.0" top="10.0" />
               </VBox.margin>
-              <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" onAction="#handleAddPostButton"/>
+              <Button mnemonicParsing="false" onAction="#handleAddPostButton" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" />
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
               <children>
-                <ScrollPane fx:id="scroll" prefHeight="570.0" prefWidth="785.0" styleClass="transparent" stylesheets="style.css">
+                <ScrollPane fx:id="scroll" prefHeight="748.0" prefWidth="1351.0" styleClass="transparent" stylesheets="style.css">
                   <content>
-                    <GridPane fx:id="grid" prefHeight="20.0" prefWidth="0.0">
+                    <GridPane fx:id="grid" prefHeight="20.0" prefWidth="40.0">
                       <rowConstraints>
-                        <RowConstraints  />
+                        <RowConstraints />
                       </rowConstraints>
                     </GridPane>
                   </content>

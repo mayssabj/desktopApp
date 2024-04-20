@@ -1,8 +1,6 @@
 package edu.esprit.controller;
 
-import edu.esprit.entities.Post;
-import edu.esprit.entities.User;
-import edu.esprit.services.UserService;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,10 +11,12 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import edu.esprit.entities.Post;
+import edu.esprit.entities.User;
 import edu.esprit.services.PostCRUD;
+import edu.esprit.services.UserService;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class AjouterPostController {
@@ -64,7 +64,6 @@ public class AjouterPostController {
             UserService userService = new UserService();
             User u1 = userService.getCurrentLoggedInUser();
 
-            // Check if user is logged in
             if (u1 != null) {
                 String titre = titreField.getText();
                 String description = descriptionArea.getText();
@@ -81,18 +80,15 @@ public class AjouterPostController {
                 imageView.setImage(null);
                 selectedImageFile = null;
                 typeComboBox.setValue(null);
-                // Clear map view here
             } else {
-                // Handle case when user is not logged in
-                // Display error message or redirect to login page
                 System.out.println("User not logged in");
             }
         }
     }
 
     private String getPlaceFromMap() {
-        // Add logic to retrieve place from map view
-        return ""; // Placeholder return value
+        String place = (String) mapView.getEngine().executeScript("getLocationFromMap()");
+        return place != null ? place : "";
     }
 
     @FXML
@@ -141,8 +137,6 @@ public class AjouterPostController {
             errorType.setText("");
         }
 
-        // Add validation for map view
-
         return isValid;
     }
 
@@ -150,7 +144,7 @@ public class AjouterPostController {
     private void returnToPostsPage(ActionEvent event) {
         try {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.close(); // Close current stage
+            stage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,6 +152,12 @@ public class AjouterPostController {
 
     public void initialize() {
         WebEngine webEngine = mapView.getEngine();
-        webEngine.load("https://maps.google.com");
+        webEngine.load("https://www.openstreetmap.org/export/embed.html?bbox=-2.8785%2C53.2041%2C-2.5785%2C53.4041&layer=mapnik");
+
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == Worker.State.FAILED) {
+                System.out.println("Failed to load map: " + webEngine.getLocation());
+            }
+        });
     }
 }

@@ -112,7 +112,7 @@ public class AfficherPostController {
                 grid.add(postBox, columnIndex, rowIndex);
 
                 columnIndex++;
-                if (columnIndex >= 2) {
+                if (columnIndex >= 3) {
                     columnIndex = 0;
                     rowIndex++;
                 }
@@ -127,7 +127,7 @@ public class AfficherPostController {
     private VBox createPostBox(Post post) throws FileNotFoundException, SQLException {
         VBox postBox = new VBox();
         postBox.getStyleClass().add("chosen-fruit-card");
-        postBox.setPrefWidth(300);
+        postBox.setPrefWidth(600);
         postBox.setPadding(new Insets(10));
 
         int id = post.getUser();
@@ -219,36 +219,41 @@ public class AfficherPostController {
         }
 */
         // commentButton.setOnAction(event -> handlePostClick(post));
-
-
-        Button deleteButton = new Button();
-        ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
-        deleteIcon.setFitWidth(16);
-        deleteIcon.setFitHeight(16);
-        deleteButton.setGraphic(deleteIcon);
-        deleteButton.getStyleClass().add("add-btn");
-        deleteButton.setFont(new Font("System Bold", 18));
-        deleteButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
-            deleteButton.setOnAction(event -> deletePost(post));
-        }
-
-        Button modifierButton = new Button();
-        ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/edit-icon.png")));
-        editIcon.setFitWidth(16);
-        editIcon.setFitHeight(16);
-        modifierButton.setGraphic(editIcon);
-        modifierButton.getStyleClass().add("add-btn");
-        modifierButton.setFont(new Font("System Bold", 18));
-        modifierButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
-            modifierButton.setOnAction(event -> modifierPost(post));
-        }
-
-
         HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(deleteButton, modifierButton);
-        buttonBox.setSpacing(10);
+        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
+            Button deleteButton = new Button();
+            ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
+            deleteIcon.setFitWidth(16);
+            deleteIcon.setFitHeight(16);
+            deleteButton.setGraphic(deleteIcon);
+            deleteButton.getStyleClass().add("add-btn");
+            deleteButton.setFont(new Font("System Bold", 18));
+            deleteButton.setTextFill(Color.valueOf("#828282"));
+            if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
+                deleteButton.setOnAction(event -> deletePost(post));
+            }
+
+            Button modifierButton = new Button();
+            ImageView editIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/edit-icon.png")));
+            editIcon.setFitWidth(16);
+            editIcon.setFitHeight(16);
+            modifierButton.setGraphic(editIcon);
+            modifierButton.getStyleClass().add("add-btn");
+            modifierButton.setFont(new Font("System Bold", 18));
+            modifierButton.setTextFill(Color.valueOf("#828282"));
+
+            modifierButton.setOnAction(event -> modifierPost(post));
+
+
+
+            buttonBox.getChildren().addAll(deleteButton, modifierButton);
+            buttonBox.setSpacing(10);
+            HBox.setMargin(buttonBox, new Insets(10, 0, 0, 0)); // top, right, bottom, left
+
+            buttonBox.setPadding(new Insets(0, 0, 10, 0)); // bottom padding for buttonBox
+
+
+        }
 
         // Retrieve comments for the selected post
         CommentCRUD commentCRUD = new CommentCRUD();
@@ -265,14 +270,34 @@ public class AfficherPostController {
 
 // Add each comment to the comments VBox
         for (Comment comment : comments) {
+            System.out.println(comment);
 
             commentsBox.getChildren().addAll(
                     new CommentDesign(comment.getId_u().getEmail(), comment.getText())
             );
-            ScrollPane scrollPane = new ScrollPane(commentsBox);
-            scrollPane.setFitToWidth(true);
+            if (userService.getCurrentLoggedInUser().getId() == comment.getId_u().getId()) {
+                Button deleteButton2 = new Button();
+                ImageView deleteIcon2 = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
+                deleteIcon2.setFitWidth(10);
+                deleteIcon2.setFitHeight(10);
+                deleteButton2.setGraphic(deleteIcon2);
+                deleteButton2.getStyleClass().add("add-btn");
+                deleteButton2.setFont(new Font("System Bold", 18));
+                deleteButton2.setTextFill(Color.valueOf("#828282"));
 
+                System.out.println(comment);
+                deleteButton2.setOnAction(event -> deleteCmnt(comment));
+
+                commentsBox.getChildren().addAll(deleteButton2);
+                ScrollPane scrollPane = new ScrollPane(commentsBox);
+                scrollPane.setFitToWidth(true);
+                commentsBox.setPadding(new Insets(10, 0, 0, 0));
+
+            }
         }
+        // Set margin for the buttonBox
+         // top padding for commentsBox
+
 
 
 
@@ -286,10 +311,10 @@ public class AfficherPostController {
         ImageView cmIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/cmnt.png")));
         cmIcon.setFitWidth(16);
         cmIcon.setFitHeight(16);
-        submitButton.setGraphic(editIcon);
+        submitButton.setGraphic(cmIcon);
         submitButton.getStyleClass().add("add-btn");
         submitButton.setFont(new Font("System Bold", 18));
-        submitButton.setTextFill(Color.valueOf("#828282"));
+        submitButton.setTextFill(Color.WHITE);
         submitButton.setStyle("-fx-pref-width: 80px; -fx-pref-height: 30px;");
 
         // Add an event handler to the submit button
@@ -314,8 +339,7 @@ public class AfficherPostController {
         commentInputBox.getChildren().addAll(commentField, submitButton);
 
 
-        HBox.setHgrow(buttonBox, Priority.ALWAYS);
-        HBox.setHgrow(commentsBox, Priority.ALWAYS);
+
 
         HBox userBox = new HBox(10);
         userBox.getChildren().addAll(userPhoto, labelProfilename);
@@ -341,6 +365,17 @@ public class AfficherPostController {
             e.printStackTrace();
         }
     }
+
+    private void deleteCmnt(Comment comment) {
+        CommentCRUD service = new CommentCRUD();
+        try {
+            service.supprimer(comment.getId());
+            loadPosts();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void modifierPost(Post post) {
         try {
