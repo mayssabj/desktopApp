@@ -9,19 +9,31 @@ public class Comment {
 
     private String text;
 
+    private User id_u;
+
+    public User getId_u() {
+        return id_u;
+    }
+
+    public void setId_u(User id_u) {
+        this.id_u = id_u;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post")
     private Post post;
 
-    public Comment(int id, String text, Post post) {
+    public Comment(int id, String text, Post post,User id_u) {
         this.id = id;
         this.text = text;
         this.post = post;
+        this.id_u = id_u;
     }
 
-    public Comment(String text, Post post) {
+    public Comment(String text, Post post,User id_u) {
         this.text = text;
         this.post = post;
+        this.id_u = id_u;
     }
 
     public int getId() {

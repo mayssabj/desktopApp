@@ -27,15 +27,21 @@ public class CommentCRUD implements ServicePost<Comment> {
         connection = mydb.getInstance().getCon();
     }
 
+
+
     @Override
     public void ajouter(Comment comment) throws SQLException {
-        String req = "INSERT INTO `comment`(`text`,`post`) VALUES (?,?)";
+        UserService userService=new UserService();
+        User a =userService.getCurrentLoggedInUser();
+        String req = "INSERT INTO `comment`(`text`,`post`,`id_u`) VALUES (?,?,?)";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
             pst.setString(1, comment.getText());
             pst.setInt(2, comment.getPost().getId());
+            pst.setInt(3, a.getId()); // Here, you're using a.getId() which may cause NullPointerException if a is null
             pst.executeUpdate();
         }
     }
+
 
     @Override
     public void modifier(Comment comment) throws SQLException {
@@ -77,9 +83,12 @@ public class CommentCRUD implements ServicePost<Comment> {
                 // You might need to retrieve the post ID from the result set and fetch the corresponding post object from the database
                 // For simplicity, I'm assuming you already have a method to get Post object by ID
                 int postId = rs.getInt("post_id");
+                int id_u = rs.getInt("id_u");
                 Post post = getPostById(postId);
+                UserService u=new UserService();
+                User i=u.getUserById(id_u);
 
-                Comment comment = new Comment(id, text, post);
+                Comment comment = new Comment(id, text, post, i);
                 comments.add(comment);
             }
         }
@@ -91,6 +100,7 @@ public class CommentCRUD implements ServicePost<Comment> {
     }
 
     public List<Comment> getCommentsForPost(Post post) throws SQLException {
+        UserService U = new UserService();
         List<Comment> commentsForPost = new ArrayList<>();
         String req = "SELECT * FROM `comment` WHERE `post`=?";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
@@ -98,7 +108,8 @@ public class CommentCRUD implements ServicePost<Comment> {
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
                     String text = rs.getString("text");
-                    Comment comment = new Comment(text, post);
+                    int id_u = rs.getInt("id_u");
+                    Comment comment = new Comment(text, post ,U.getUserById(id_u));
                     commentsForPost.add(comment);
                 }
             }

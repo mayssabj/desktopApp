@@ -9,6 +9,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.web.WebView?>
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.AjouterPostController" stylesheets="style.css">
   <children>
     <Pane layoutX="98.0" layoutY="11.0" prefHeight="650" prefWidth="438.0" styleClass="eco-card">
@@ -60,11 +61,7 @@
               </padding>
             </ComboBox>
             <Text fx:id="errorType" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
-            <TextField fx:id="placeField" prefHeight="21.0" prefWidth="384.0" promptText="Place" styleClass="search-box">
-              <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-              </padding>
-            </TextField>
+            <WebView fx:id="mapView" prefHeight="300.0" prefWidth="384.0"/>
             <Text fx:id="errorPlace" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
             <Button fx:id="buttonAjouter" onAction="#ajouterPost" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Add Post" />
           </children>

@@ -61,8 +61,8 @@
                 <String fx:value="search-box" />
                 <String fx:value="shadow" />
               </styleClass>
-              </HBox>
-            </children>
+            </HBox>
+          </children>
         </VBox>
       </left>
       <center>

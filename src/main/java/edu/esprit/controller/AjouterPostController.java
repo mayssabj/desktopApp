@@ -5,10 +5,6 @@ import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,9 +17,7 @@ import edu.esprit.services.PostCRUD;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class AjouterPostController {
 
@@ -35,6 +29,7 @@ public class AjouterPostController {
 
     @FXML
     private Button selectImage;
+
     @FXML
     private ImageView imageView;
 
@@ -42,36 +37,26 @@ public class AjouterPostController {
     private ComboBox<String> typeComboBox;
 
     @FXML
-    private TextField placeField;
-
-    @FXML
-    private Button buttonAjouter;
+    private WebView mapView;
 
     @FXML
     private Text errorTitre;
 
     @FXML
-    private Text errorPlace;
+    private Text errorDescription;
+
+    @FXML
+    private Text errorImage;
 
     @FXML
     private Text errorType;
 
     @FXML
-    private Text errorImage;
+    private Text errorPlace;
 
-
-
-
-    @FXML
-    private Text errorDescription;
     private File selectedImageFile;
 
-
-
-
     private UserService userService; // Inject UserService
-
-// Constructor or setter for injecting UserService
 
     @FXML
     public void ajouterPost() throws SQLException {
@@ -85,7 +70,7 @@ public class AjouterPostController {
                 String description = descriptionArea.getText();
                 String image = (selectedImageFile != null) ? selectedImageFile.getPath() : "";
                 Post.Type type = Post.Type.valueOf(typeComboBox.getValue());
-                String place = placeField.getText();
+                String place = getPlaceFromMap();
 
                 Post post = new Post(titre, description, image, type, place, u1.getId());
                 PostCRUD service = new PostCRUD();
@@ -96,9 +81,7 @@ public class AjouterPostController {
                 imageView.setImage(null);
                 selectedImageFile = null;
                 typeComboBox.setValue(null);
-                placeField.clear();
-
-                returnToPostsPage();
+                // Clear map view here
             } else {
                 // Handle case when user is not logged in
                 // Display error message or redirect to login page
@@ -107,6 +90,10 @@ public class AjouterPostController {
         }
     }
 
+    private String getPlaceFromMap() {
+        // Add logic to retrieve place from map view
+        return ""; // Placeholder return value
+    }
 
     @FXML
     void selectImageAction(ActionEvent event) {
@@ -140,11 +127,11 @@ public class AjouterPostController {
             errorDescription.setText("");
         }
 
-        if (placeField.getText().isEmpty()) {
-            errorPlace.setText("Place is required");
+        if (selectedImageFile == null || !selectedImageFile.exists()) {
+            errorImage.setText("Image is required");
             isValid = false;
         } else {
-            errorPlace.setText("");
+            errorImage.setText("");
         }
 
         if (typeComboBox.getValue() == null || typeComboBox.getValue().trim().isEmpty()) {
@@ -154,50 +141,23 @@ public class AjouterPostController {
             errorType.setText("");
         }
 
-        if (selectedImageFile == null || !selectedImageFile.exists()) {
-            errorImage.setText("Image is required");
-            isValid = false;
-        } else {
-            errorImage.setText("");
-        }
-
+        // Add validation for map view
 
         return isValid;
-    }
-
-    private void returnToPostsPage() {
-        try {
-            Node postPage = FXMLLoader.load(getClass().getResource("/post.fxml"));
-            Scene scene = new Scene((Parent) postPage);
-            Stage stage = (Stage) titreField.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
     private void returnToPostsPage(ActionEvent event) {
         try {
-            Parent postPage = FXMLLoader.load(getClass().getResource("/post.fxml"));
-            Scene scene = new Scene(postPage);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.close(); // Close current stage
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private WebView mapWebView;
-
-
-    public void initialize(URL location, ResourceBundle resources) {
-        WebEngine webEngine = mapWebView.getEngine();
-        webEngine.load("https://maps.google.com"); // Load Google Maps URL
+    public void initialize() {
+        WebEngine webEngine = mapView.getEngine();
+        webEngine.load("https://maps.google.com");
     }
-
-
 }

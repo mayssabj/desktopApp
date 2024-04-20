@@ -251,5 +251,30 @@
     -fx-fill: red;
     -fx-font-size: 12px;
 }
+/* Style for commenter name */
+.commenter-name {
+    font-weight: bold;
+    color: #333333;
+}
+
+/* Style for comment text */
+.comment-text {
+    color: #333333;
+}
+
+/* Style for comment timestamp */
+.comment-timestamp {
+    color: #888888;
+}
+
+/* Style for reply button */
+.reply-button {
+    /* Add your custom styling for the reply button */
+}
+
+/* Style for like button */
+.like-button {
+    /* Add your custom styling for the like button */
+}
 
 

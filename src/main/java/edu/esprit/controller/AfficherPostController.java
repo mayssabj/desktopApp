@@ -2,7 +2,12 @@ package edu.esprit.controller;
 
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
-import javafx.scene.control.TextInputDialog;
+import edu.esprit.utils.mydb;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.scene.control.*;
 import edu.esprit.entities.Comment;
 import edu.esprit.entities.Post;
 import javafx.event.ActionEvent;
@@ -14,8 +19,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,7 +26,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import edu.esprit.services.CommentCRUD;
 import edu.esprit.services.PostCRUD;
@@ -31,20 +33,69 @@ import edu.esprit.services.PostCRUD;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class AfficherPostController {
     @FXML
     private GridPane grid;
+    @FXML
+    private ComboBox comboBox;
 
+    @FXML
+    private TextField tfSearch;
+
+
+    @FXML
+    private ListView<Post> listView;
+
+    ObservableList<Post> postlist = FXCollections.observableArrayList();
+
+    UserService U=new UserService();
+    User a=U.getCurrentLoggedInUser();
 
 
     @FXML
     private void initialize() {
         grid.getStyleClass().add("grid-pane");
         afficherPosts();
+/*
+        ObservableList<String> listTrier = FXCollections.observableArrayList("Titre", "Description", "Place", "Type", "Date");
+        comboBox.setItems(listTrier);
+
+
+        FilteredList<Post> filtredData = new FilteredList<>(postlist, e -> true);
+        tfSearch.setOnKeyReleased(e -> {
+            tfSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+                filtredData.setPredicate((Predicate<? super Post>) post -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFiler = newValue.toLowerCase();
+                    if (post.getTitre().contains(lowerCaseFiler)) {
+                        return true;
+                    } else if (post.getDescription().toLowerCase().contains(lowerCaseFiler)) {
+                        return true;
+                    } else if (post.getPlace().toLowerCase().contains(lowerCaseFiler)) {
+                        return true;
+                    } else if (post.getType() != null && post.getType().toString().toLowerCase().contains(lowerCaseFiler)) {
+                        return true;
+                    } else if (post.getDate() != null && post.getDate().toString().toLowerCase().contains(lowerCaseFiler)) {
+                        return true;
+
+                    }
+
+                    return false;
+                });
+            });
+            SortedList<Post> sortedData = new SortedList<>(filtredData);
+            listView.setItems(sortedData);
+
+        });
+
+     */
     }
 
     @FXML
@@ -73,15 +124,15 @@ public class AfficherPostController {
         }
     }
 
-    private VBox createPostBox(Post post) throws FileNotFoundException {
+    private VBox createPostBox(Post post) throws FileNotFoundException, SQLException {
         VBox postBox = new VBox();
         postBox.getStyleClass().add("chosen-fruit-card");
         postBox.setPrefWidth(300);
         postBox.setPadding(new Insets(10));
 
-        int id=post.getUser();
-        UserService userService=new UserService();
-        User u=userService.getUserById(id);
+        int id = post.getUser();
+        UserService userService = new UserService();
+        User u = userService.getUserById(id);
 
         HBox namephotoBox = new HBox();
         namephotoBox.setSpacing(10);
@@ -95,6 +146,7 @@ public class AfficherPostController {
         Label labelProfilename = new Label(u.getEmail());
         labelProfilename.setFont(new Font("Cambria", 18));
         labelProfilename.setTextFill(Color.web("#333333"));
+
 
 
         Region spring1 = new Region();
@@ -150,7 +202,7 @@ public class AfficherPostController {
         labelPlace.setFont(new Font("Cambria", 17));
         labelPlace.setTextFill(Color.web("#333333"));
 
-        Button commentButton = new Button();
+/*        Button commentButton = new Button();
         ImageView commentIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/comment.png")));
         commentIcon.setFitWidth(16);
         commentIcon.setFitHeight(16);
@@ -165,9 +217,8 @@ public class AfficherPostController {
         } catch (SQLException e) {
             // Handle SQLException
         }
-
-        commentButton.setOnAction(event -> handlePostClick(post));
-
+*/
+        // commentButton.setOnAction(event -> handlePostClick(post));
 
 
         Button deleteButton = new Button();
@@ -178,7 +229,7 @@ public class AfficherPostController {
         deleteButton.getStyleClass().add("add-btn");
         deleteButton.setFont(new Font("System Bold", 18));
         deleteButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId()==u.getId()){
+        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
             deleteButton.setOnAction(event -> deletePost(post));
         }
 
@@ -190,31 +241,90 @@ public class AfficherPostController {
         modifierButton.getStyleClass().add("add-btn");
         modifierButton.setFont(new Font("System Bold", 18));
         modifierButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId()==u.getId()) {
+        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
             modifierButton.setOnAction(event -> modifierPost(post));
         }
 
 
         HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(commentButton, deleteButton, modifierButton );
+        buttonBox.getChildren().addAll(deleteButton, modifierButton);
+        buttonBox.setSpacing(10);
+
+        // Retrieve comments for the selected post
+        CommentCRUD commentCRUD = new CommentCRUD();
+        List<Comment> comments = commentCRUD.getCommentsForPost(post);
+        // Create a VBox to hold the comments
+        // Inside createPostBox method
+        VBox commentsBox = new VBox();
+        String commentCount = new CommentCRUD().countComment(post);
+        Label userNameLabel = new Label("Comments (" + commentCount + ")");
+        commentsBox.getChildren().add(userNameLabel);
+        commentsBox.setSpacing(10);
+        commentsBox.setStyle("-fx-background-color: #ffffff; -fx-padding: 20px;");
 
 
-        postBox.getChildren().addAll(userPhoto,labelProfilename,titleDateBox, fruitImg, labelType, labelDescription, labelPlace, buttonBox);
-        postBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getClickCount() == 1) {
-                    if (post != null) {
-                        commentOnPost(post);
-                    } else {
-                        System.out.println("Post object is null.");
-                    }
+// Add each comment to the comments VBox
+        for (Comment comment : comments) {
+
+            commentsBox.getChildren().addAll(
+                    new CommentDesign(comment.getId_u().getEmail(), comment.getText())
+            );
+            ScrollPane scrollPane = new ScrollPane(commentsBox);
+            scrollPane.setFitToWidth(true);
+
+        }
+
+
+
+// Add the comments VBox to the postBox
+// Create a TextField for the user to enter the comment
+        TextField commentField = new TextField();
+        commentField.setPromptText("Write a comment...");
+        commentField.setStyle("-fx-pref-width: 280px; -fx-pref-height: 30px;");
+
+        Button submitButton = new Button();
+        ImageView cmIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/cmnt.png")));
+        cmIcon.setFitWidth(16);
+        cmIcon.setFitHeight(16);
+        submitButton.setGraphic(editIcon);
+        submitButton.getStyleClass().add("add-btn");
+        submitButton.setFont(new Font("System Bold", 18));
+        submitButton.setTextFill(Color.valueOf("#828282"));
+        submitButton.setStyle("-fx-pref-width: 80px; -fx-pref-height: 30px;");
+
+        // Add an event handler to the submit button
+        submitButton.setOnAction(event -> {
+            String commentText = commentField.getText();
+            if (!commentText.isEmpty()) {
+                try {
+                    User currentUser = userService.getCurrentLoggedInUser();
+                    Comment comment = new Comment(commentText, post, currentUser);
+                    commentCRUD.ajouter(comment);
+                    // Reload the posts to reflect the new comment
+                    loadPosts();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    // Handle SQLException
                 }
             }
         });
+
+        // Add the comment field and submit button to a HBox
+        HBox commentInputBox = new HBox(10);
+        commentInputBox.getChildren().addAll(commentField, submitButton);
+
+
+        HBox.setHgrow(buttonBox, Priority.ALWAYS);
+        HBox.setHgrow(commentsBox, Priority.ALWAYS);
+
+        HBox userBox = new HBox(10);
+        userBox.getChildren().addAll(userPhoto, labelProfilename);
+
+        postBox.getChildren().addAll(userBox, titleDateBox, fruitImg, labelType, labelDescription, labelPlace, buttonBox, new Region(), commentsBox, commentInputBox);
+
+
         return postBox;
     }
-
 
 
     private void loadPosts() {
@@ -265,17 +375,16 @@ public class AfficherPostController {
             e.printStackTrace();
         }
     }
-
+/*
     private void commentOnPost(Post post) {
         // Create a TextInputDialog for the user to enter the comment
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Add Comment");
         dialog.setHeaderText("Enter your comment:");
-
         // Show the dialog and wait for the user's response
         dialog.showAndWait().ifPresent(commentText -> {
             // When the user submits the comment, create a new Comment object
-            Comment comment = new Comment(commentText, post);
+            Comment comment = new Comment(commentText, post,a);
 
             // Call the ajouter method to add the comment to the database
             try {
@@ -290,9 +399,7 @@ public class AfficherPostController {
             }
         });
     }
-
-
-
+*/
 
     private List<Comment> getCommentsForPost(Post post) {
         List<Comment> comments = new ArrayList<>();
@@ -321,6 +428,7 @@ public class AfficherPostController {
         // Retrieve comments for the selected post
         List<Comment> comments = getCommentsForPost(post);
         for (Comment comment : comments) {
+
             // Create a container for each comment
             VBox commentContainer = new VBox();
             commentContainer.getStyleClass().add("comment-container"); // Add the style class for the comment container
@@ -345,5 +453,41 @@ public class AfficherPostController {
         popupStage.show();
     }
 
+    @FXML
+    void Select(ActionEvent event) {
+        if (comboBox.getSelectionModel().getSelectedItem().toString().equals("titre")) {
+            grid.getChildren().clear(); // Clear existing children of the grid
+
+            try (Connection connection = mydb.getInstance().getCon()) {
+                String query = "SELECT * FROM post ORDER BY titre ASC";
+                try (PreparedStatement statement = connection.prepareStatement(query);
+                     ResultSet resultSet = statement.executeQuery()) {
+
+                    ObservableList<Post> retrievedPosts = FXCollections.observableArrayList(); // Create a new ObservableList to hold the retrieved posts
+
+                    while (resultSet.next()) {
+                        // Create a Post object for each row in the result set
+                        Post post = new Post(
+                                resultSet.getInt("id"),
+                                resultSet.getString("titre"),
+                                resultSet.getString("description"),
+                                resultSet.getString("image_url"),
+                                resultSet.getDate("date"),
+                                Post.Type.valueOf(resultSet.getString("type")),
+                                resultSet.getString("place"),
+                                resultSet.getInt("user")
+                        );
+
+                        retrievedPosts.add(post); // Add the Post object to the ObservableList
+                    }
+
+                    listView.setItems(retrievedPosts); // Set the ObservableList containing retrieved posts to the ListView
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
 }
+
