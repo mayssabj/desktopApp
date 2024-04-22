@@ -1,21 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.showPostAdminController">
-    <VBox alignment="CENTER" layoutX="6.0" layoutY="-62.0" prefHeight="455.0" prefWidth="772.0">
-        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="List post" />
-        <TableView fx:id="postTable" prefHeight="258.0" prefWidth="751.0">
-            <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="76.800048828125" text="Name" />
-                <TableColumn fx:id="descriptionColumn" prefWidth="119.99993896484375" text="Description" />
-                <TableColumn fx:id="imageColumn" prefWidth="120.79998779296875" text="Image" />
-                <TableColumn fx:id="dateColumn" prefWidth="90.4000244140625" text="Date" />
-                <TableColumn fx:id="placeColumn" prefWidth="111.99996948242188" text="Place" />
-                <TableColumn fx:id="typeColumn" prefWidth="110.39996337890625" text="Type" />
-                <TableColumn fx:id="actionsColumn" prefWidth="137.60001220703123" text="Actions" />
-            </columns>
-        </TableView>
-    </VBox>
-</AnchorPane>
+<VBox id="VBox" fx:id="vboxdash" prefHeight="538.0" prefWidth="1203.0" styleClass="white-pane" stylesheets="/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.dashboard">
+<children>
+    <GridPane prefHeight="538.0" prefWidth="1203.0" stylesheets="/style.css">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="178.19998779296876" minHeight="10.0" prefHeight="56.79999389648438" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="482.4000061035157" minHeight="10.0" prefHeight="482.4000061035157" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <TableView fx:id="tableViewUsers" prefHeight="465.0" prefWidth="1203.0" style="-fx-alignment: center;" stylesheets="/style.css" GridPane.rowIndex="1">
+                <columns>
+                    <TableColumn fx:id="nameColumn" maxWidth="3800.0" minWidth="20.0" style="-fx-alignment: center;" text="username" />
+                    <TableColumn fx:id="descriptionColumn" maxWidth="4500.0" minWidth="20.0" prefWidth="60.0" style="-fx-alignment: center;" text="Email" />
+                    <TableColumn fx:id="dateColumn" maxWidth="3500.0" prefWidth="133.5999755859375" style="-fx-alignment: center;" text="Num Tel " />
+                    <TableColumn fx:id="placeColumn" maxWidth="4000.0" prefWidth="60.0" style="-fx-alignment: center;" text="Is_Verified" />
+                    <TableColumn fx:id="typeColumn" maxWidth="3300.0" prefWidth="133.5999755859375" style="-fx-alignment: center;" text="Etat" />
+                    <TableColumn fx:id="actionsColumn" prefWidth="137.60001220703123" text="Actions" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+            <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="900.0">
+                <children>
+                    <TextField fx:id="tfSearch" prefHeight="44.0" prefWidth="650.0" style="-fx-border-radius: 20px; -fx-border-width: 2px; -fx-background-color: white; -fx-border-color: #c39f6d;">
+                        <HBox.margin>
+                            <Insets left="20.0" right="170.0" />
+                        </HBox.margin>
+                    </TextField>
+                    <ComboBox fx:id="comboBox" onAction="#Select" prefHeight="30.0" prefWidth="255.0" promptText="Trier par :" style="-fx-border-color: #c39f6d;" styleClass="trans-btn-white-border">
+                        <HBox.margin>
+                            <Insets left="10.0" right="20.0" />
+                        </HBox.margin></ComboBox>
+                </children>
+            </HBox>
+        </children>
+    </GridPane>
+</children>
+</VBox>

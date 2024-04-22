@@ -15,6 +15,7 @@ import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
 import edu.esprit.services.PostCRUD;
 import edu.esprit.services.UserService;
+import netscape.javascript.JSObject;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -56,6 +57,8 @@ public class AjouterPostController {
 
     private File selectedImageFile;
 
+    private MapDataExtractor mapDataExtractor;
+
     private UserService userService; // Inject UserService
 
     @FXML
@@ -89,6 +92,14 @@ public class AjouterPostController {
     private String getPlaceFromMap() {
         String place = (String) mapView.getEngine().executeScript("getLocationFromMap()");
         return place != null ? place : "";
+    }
+
+    public class JavaConnector {
+
+        public void getLocationFromMap(String location) {
+            System.out.println("Location received from map: " + location);
+            // Handle the received location data here
+        }
     }
 
     @FXML
@@ -150,13 +161,57 @@ public class AjouterPostController {
         }
     }
 
-    public void initialize() {
+    @FXML
+    private void initialize() {
+        // Load the HTML content into the WebView
         WebEngine webEngine = mapView.getEngine();
-        webEngine.load("https://www.openstreetmap.org/export/embed.html?bbox=-2.8785%2C53.2041%2C-2.5785%2C53.4041&layer=mapnik");
+        webEngine.loadContent("<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Map</title>\n" +
+                "    <script>\n" +
+                "        function getLocationFromMap() {\n" +
+                "            // Fonction d'implémentation\n" +
+                "            // Récupérer les données de localisation depuis la carte et les renvoyer à Java\n" +
+                "            var locationData = \"Données de localisation\"; // Remplacer par les données de localisation réelles\n" +
+                "            javaConnector.getLocationFromMap(locationData);\n" +
+                "        }\n" +
+                "    </script>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <!-- Exemple de contenu de carte -->\n" +
+                "    <div id=\"map\" style=\"width: 100%; height: 400px;\"></div>\n" +
+                "\n" +
+                "    <script>\n" +
+                "        function initMap() {\n" +
+                "            // Créer une nouvelle carte Google Maps\n" +
+                "            var map = new google.maps.Map(document.getElementById('map'), {\n" +
+                "                center: {lat: -34.397, lng: 150.644},\n" +
+                "                zoom: 8\n" +
+                "            });\n" +
+                "\n" +
+                "            // Ajouter un marqueur à la position spécifiée\n" +
+                "            var marker = new google.maps.Marker({\n" +
+                "                position: {lat: -34.397, lng: 150.644},\n" +
+                "                map: map,\n" +
+                "                title: 'Hello World!'\n" +
+                "            });\n" +
+                "        }\n" +
+                "    </script>\n" +
+                "\n" +
+                "    <!-- Charger l'API Google Maps -->\n" +
+                "    <script src=\"https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap\" async defer></script>\n" +
+                "</body>\n" +
+                "</html>\n");
 
+        // Add a listener to inject the JavaConnector object once the page is loaded
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == Worker.State.FAILED) {
-                System.out.println("Failed to load map: " + webEngine.getLocation());
+            if (newValue == Worker.State.SUCCEEDED) {
+                // Once the page is loaded, inject a Java object into the JavaScript context
+                JSObject window = (JSObject) webEngine.executeScript("window");
+                window.setMember("javaConnector", new JavaConnector());
             }
         });
     }
