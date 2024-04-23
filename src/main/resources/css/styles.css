@@ -1,0 +1,14 @@
+.list-cell {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-width: 0 0 1px 0; /* bottom border only */
+}
+
+.list-cell:selected {
+    -fx-background-color: #ddd;
+}
+
+.list-view {
+    -fx-background-color: #fff; /* ListView background color */
+}
