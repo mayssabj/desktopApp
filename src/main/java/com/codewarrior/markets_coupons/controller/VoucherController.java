@@ -9,11 +9,7 @@ import com.codewarrior.markets_coupons.service.MarketDAO;
 import com.codewarrior.markets_coupons.service.VoucherDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -66,6 +62,12 @@ public class VoucherController {
     private TextField valueField;
 
     @FXML
+    private Label controlValue;
+
+    @FXML
+    private Label dateControll;
+
+    @FXML
     public void initialize() throws SQLException {
         loadUsers();
         loadMarkets();
@@ -93,12 +95,20 @@ public class VoucherController {
     @FXML
     void addVoucher(MouseEvent event) throws IOException {
 
+        boolean isValidity = true;
+        LocalDate currentDate = LocalDate.now();
 
 
-        if (valueField.getText().isBlank() || dateField.getValue().isLeapYear() || userField.getItems().isEmpty() || !validityBox.isSelected() || !isGIvenBox.isSelected() || marketField.getItems().isEmpty() || categoryField.getItems().isEmpty() || userField.getItems().isEmpty()) {
+        if (valueField.getText().isBlank()) {
             System.out.println("ena fil if mtaa controll");
-
-        }else {
+            controlValue.setText("require a value and contain only numbers");
+            isValidity = false;
+        }
+        if (dateField.getValue().isAfter(currentDate.plusDays(3))) {
+            dateControll.setText("at least 2 days from this date");
+            isValidity = false;
+        }
+        if(isValidity) {
             double value = Double.parseDouble(valueField.getText());
             LocalDate localDate = dateField.getValue();
             Date selectedDate = Date.valueOf(localDate);
@@ -112,6 +122,7 @@ public class VoucherController {
             Voucher voucher = new Voucher(value, code , selectedDate,usable,isValid,isGiven,market.getId(),category.getId(),user.getId());
             voucherDAO.addVoucher(voucher);
             System.out.println(voucher.toString());
+            displayRoute(event);
         }
 
 

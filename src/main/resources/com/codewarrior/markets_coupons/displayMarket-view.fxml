@@ -62,11 +62,11 @@
          <TextField fx:id="updateAddress" layoutX="61.0" layoutY="192.0" prefHeight="24.0" prefWidth="257.0" promptText="market's address" />
          <TextField fx:id="updateZipCode" layoutX="390.0" layoutY="192.0" prefHeight="24.0" prefWidth="257.0" promptText="zipCode" />
          <TextField fx:id="updateCity" layoutX="61.0" layoutY="273.0" prefHeight="24.0" prefWidth="257.0" promptText="city" />
-         <Label fx:id="controllName" layoutX="61.0" layoutY="149.0" prefHeight="24.0" prefWidth="257.0" />
-         <Label fx:id="controlCity" layoutX="61.0" layoutY="309.0" prefHeight="24.0" prefWidth="257.0" />
+         <Label fx:id="controllName" layoutX="61.0" layoutY="149.0" prefHeight="24.0" prefWidth="257.0" textFill="RED" />
+         <Label fx:id="controlCity" layoutX="61.0" layoutY="309.0" prefHeight="24.0" prefWidth="257.0" textFill="RED" />
          <Label fx:id="controlAddress" layoutX="61.0" layoutY="228.0" prefHeight="24.0" prefWidth="257.0" />
-         <Label fx:id="controllRegion" layoutX="390.0" layoutY="149.0" prefHeight="24.0" prefWidth="257.0" />
-         <Label fx:id="controllZipCode" layoutX="390.0" layoutY="228.0" prefHeight="24.0" prefWidth="257.0" />
+         <Label fx:id="controllRegion" layoutX="390.0" layoutY="149.0" prefHeight="24.0" prefWidth="257.0" textFill="RED" />
+         <Label fx:id="controllZipCode" layoutX="390.0" layoutY="228.0" prefHeight="24.0" prefWidth="257.0" textFill="RED" />
       </children>
    </Pane>
 </AnchorPane>

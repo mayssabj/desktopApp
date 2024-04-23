@@ -204,8 +204,35 @@ public class MarketDisplayController implements Initializable {
 
     @FXML
     void updateMarket(MouseEvent event) {
+        boolean isValid = true;
         Market market = new Market();
         market.setId(displayMarketInfo().getId());
+        if(this.updateName.getText().isEmpty()){
+            controllName.setText("name is required 1");
+            isValid = false;
+        }
+
+        if(this.updateAddress.getText().isEmpty()){
+            controlAddress.setText("address is required");
+            isValid = false;
+        }
+        if(this.updateCity.getText().isEmpty()){
+            controlCity.setText("city is required");
+            isValid = false;
+        }
+        if(this.updateRegion.getText().isEmpty()){
+            controllRegion.setText("region is required");
+            isValid = false;
+        }
+        if(this.updateZipCode.getText().isEmpty()){
+            controllZipCode.setText("zipCode is required");
+            isValid = false;
+        }
+
+        if(!isValid){
+            System.out.println("Invalid input");
+            return;
+        }
         market.setName(this.updateName.getText());
         market.setImage(displayMarketInfo().getImage());
         market.setAddress(this.updateAddress.getText());

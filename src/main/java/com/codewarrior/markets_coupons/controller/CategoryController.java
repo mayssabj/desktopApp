@@ -44,16 +44,18 @@ public class CategoryController {
     void addButton(MouseEvent event) throws SQLException {
         String title = this.titleField.getText();
         String description = this.descriptionField.getText();
-        if ("purchase".equals(title) || "discount".equals(title) || this.titleField.getText().isBlank() || this.descriptionField.getText().isBlank()) {
+        if ("purchase".equals(title) || "discount".equals(title) || !this.titleField.getText().isBlank() || !this.descriptionField.getText().isBlank()) {
             this.titleControll.setText("");
             this.descriptionControll.setText("");
-            this.descriptionControll.setText("should not be blank");
-            this.titleControll.setText("should not be blank and Title must be either 'purchase' or 'discount'.");
+
             VoucherCategory newCategory = new VoucherCategory(title, description);
             categoryDAO.createCategory(newCategory);
             System.out.println("Category added successfully!");
+            displayRoute(event);
         } else {
             System.out.println("Title must be either 'purchase' or 'discount'.");
+            this.descriptionControll.setText("should not be blank");
+            this.titleControll.setText("should not be blank and Title must be either 'purchase' or 'discount'.");
 
         }
     }

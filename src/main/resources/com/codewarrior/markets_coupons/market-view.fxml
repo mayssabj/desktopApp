@@ -76,13 +76,18 @@
             <children>
             <Pane layoutX="27.0" layoutY="277.0" prefHeight="201.0" prefWidth="530.0">
                <children>
-                      <TextField fx:id="nameField" layoutX="31.0" layoutY="31.0" promptText="add name" />
-                  <TextField fx:id="addressField" layoutX="31.0" layoutY="70.0" prefHeight="24.0" prefWidth="170.0" promptText="add address" />
-                  <TextField fx:id="cityField" layoutX="31.0" layoutY="116.0" prefHeight="24.0" prefWidth="170.0" promptText="add city" />
-                  <TextField fx:id="regionField" layoutX="265.0" layoutY="116.0" prefHeight="24.0" prefWidth="138.0" promptText="add region" />
-                  <TextField fx:id="zipCodeField" layoutX="265.0" layoutY="70.0" prefHeight="24.0" prefWidth="138.0" promptText="add zipCode" />
+                      <TextField fx:id="nameField" layoutX="14.0" layoutY="20.0" promptText="add name" />
+                  <TextField fx:id="addressField" layoutX="14.0" layoutY="80.0" prefHeight="24.0" prefWidth="170.0" promptText="add address" />
+                  <TextField fx:id="cityField" layoutX="14.0" layoutY="143.0" prefHeight="24.0" prefWidth="170.0" promptText="add city" />
+                  <TextField fx:id="regionField" layoutX="300.0" layoutY="89.0" prefHeight="24.0" prefWidth="138.0" promptText="add region" />
+                  <TextField fx:id="zipCodeField" layoutX="300.0" layoutY="20.0" prefHeight="24.0" prefWidth="138.0" promptText="add zipCode" />
                       <Pane layoutX="222.0" layoutY="234.0" prefHeight="49.0" prefWidth="83.0" />
-                        <Button layoutX="455.0" layoutY="155.0" mnemonicParsing="false" onMouseClicked="#addMarket" text="Add" />
+                        <Button layoutX="470.0" layoutY="167.0" mnemonicParsing="false" onMouseClicked="#addMarket" text="Add" />
+                  <Label fx:id="nameControll" layoutX="14.0" layoutY="52.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
+                  <Label fx:id="cityControll" layoutX="14.0" layoutY="167.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
+                  <Label fx:id="addressControl" layoutX="14.0" layoutY="111.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
+                  <Label fx:id="zipControll" layoutX="300.0" layoutY="52.0" prefHeight="24.0" prefWidth="222.0" textFill="RED" />
+                  <Label fx:id="regionControll" layoutX="300.0" layoutY="123.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
                </children>
             </Pane>
             <Pane layoutX="27.0" layoutY="14.0" prefHeight="252.0" prefWidth="530.0">

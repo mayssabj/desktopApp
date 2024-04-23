@@ -43,7 +43,11 @@ public class CategoryDisplayController implements Initializable {
     @FXML
     private TextArea updateDescription;
 
+    @FXML
+    private Label controlDescription;
 
+    @FXML
+    private Label controllTitle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -128,13 +132,26 @@ public class CategoryDisplayController implements Initializable {
     void updateCategory(MouseEvent event) throws SQLException {
         VoucherCategory category = new VoucherCategory();
         category.setId(displayCategoryInfo().getId());
+        boolean isValid = true;
+        if (updateTitle.getText().isEmpty()) {
+            controllTitle.setText("title must be discount or purchase");
+            isValid = false;
+        }
+        if(updateDescription.getText().isEmpty()){
+            controlDescription.setText("require category description");
+            isValid = false;
+        }
+        if(!("purchase".equals(updateTitle.getText())) || !("discount".equals(updateTitle.getText()))){
+            controllTitle.setText("title must be discount or purchase");
+            isValid = false;
+        }
         category.setTitre(this.updateTitle.getText());
         category.setDescription(updateDescription.getText());
         System.out.println("Update Button :> "+category.toString());
-        if (category !=null){
+        if (category !=null && isValid){
+            System.out.println("isValid => "+isValid);
             categoryDAO.updateCategory(category);
             System.out.println("Category with id: " + category.getId() + " updated !");
-
             // Refresh the TableView
             displayCategories();
         }

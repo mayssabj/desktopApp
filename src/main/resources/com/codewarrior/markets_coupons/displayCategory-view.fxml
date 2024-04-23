@@ -51,8 +51,8 @@
     <Pane layoutX="579.0" layoutY="64.0" prefHeight="391.0" prefWidth="726.0">
         <children>
             <TextField fx:id="updateTitle" layoutX="61.0" layoutY="113.0" prefHeight="24.0" prefWidth="257.0" promptText="Category title" />
-            <Label fx:id="controllTitle" layoutX="61.0" layoutY="149.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlDescription" layoutX="53.0" layoutY="353.0" prefHeight="24.0" prefWidth="257.0" />
+            <Label fx:id="controllTitle" layoutX="61.0" layoutY="149.0" prefHeight="24.0" prefWidth="279.0" textFill="RED" />
+            <Label fx:id="controlDescription" layoutX="53.0" layoutY="353.0" prefHeight="24.0" prefWidth="257.0" textFill="RED" />
          <TextArea fx:id="updateDescription" layoutX="53.0" layoutY="205.0" prefHeight="136.0" prefWidth="257.0" promptText="Description ..." />
         </children>
     </Pane>
