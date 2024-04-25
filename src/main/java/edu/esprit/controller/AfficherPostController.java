@@ -296,7 +296,7 @@ public class AfficherPostController {
             }
         }
         // Set margin for the buttonBox
-         // top padding for commentsBox
+        // top padding for commentsBox
 
 
 
@@ -525,4 +525,3 @@ public class AfficherPostController {
     }
 
 }
-

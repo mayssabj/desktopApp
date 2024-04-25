@@ -13,9 +13,8 @@ import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.sql.Date;
+import java.util.*;
 
 
 import javafx.scene.control.Button;
@@ -164,6 +163,27 @@ public class PostCRUD implements ServicePost<Post> {
 
         postBox.getChildren().addAll(labelTitle, fruitImg, labelDescription, labelType, labelPlace, addButton);
         return postBox;
+    }
+
+    public Map<String, Integer> calculateLostAndFoundStatistics() throws SQLException {
+        Map<String, Integer> statistics = new HashMap<>();
+        List<Post> posts = afficher();
+
+        int lostCount = 0;
+        int foundCount = 0;
+
+        for (Post post : posts) {
+            if (post.getType() == Post.Type.LOST) {
+                lostCount++;
+            } else if (post.getType() == Post.Type.FOUND) {
+                foundCount++;
+            }
+        }
+
+        statistics.put("Lost", lostCount);
+        statistics.put("Found", foundCount);
+
+        return statistics;
     }
 
 }

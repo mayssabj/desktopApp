@@ -1,196 +1,82 @@
 package edu.esprit.controller;
 
-import java.io.IOException;
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-
 import edu.esprit.entities.Post;
+import edu.esprit.entities.User;
 import edu.esprit.services.PostCRUD;
-import edu.esprit.utils.mydb;
+import edu.esprit.services.UserService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.event.ActionEvent;
 
 public class dashboard {
 
     @FXML
-    private TableColumn<Post, Integer> nameColumn;
-
-    @FXML
-    private TableColumn<Post, String> descriptionColumn;
-
-    @FXML
-    private TableColumn<Post, String> dateColumn2;
-
-    @FXML
-    private TableColumn<Post, String> placeColumn;
-
-    @FXML
-    private TableColumn<Post, Boolean> typeColumn;
-    @FXML
-    private TableColumn<Post, Date> dateColumn;
-
-    @FXML
-    private TableView<Post> tableViewUsers;
-
-    @FXML
-    private TableColumn<Post, String> actionsCol;
-
-    @FXML
     private TextField tfSearch;
-
-    @FXML
-    private ComboBox<String> comboBox;
 
     @FXML
     private VBox vboxdash;
 
     ObservableList<Post> userList = FXCollections.observableArrayList();
 
-    Button blockButton = null;
+    List<VBox> postBoxes = new ArrayList<>();
 
     @FXML
     private void initialize() throws SQLException {
-        // Initialiser la vue
         fnReloadData();
-
-        // Ajouter un écouteur sur la liste déroulante pour détecter les changements de sélection
-        comboBox.setOnAction(event -> {
-            try {
-                fnReloadData();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
     }
-
-
-    @FXML
-    private void Select(ActionEvent event) {
-        if (comboBox.getSelectionModel().getSelectedItem().equals("username")) {
-            userList.clear();
-            try (Connection connection = mydb.getInstance().getCon()) {
-                String query = "SELECT * FROM `post` WHERE id != 1 ORDER BY titre ASC";
-                try (PreparedStatement statement = connection.prepareStatement(query);
-                     ResultSet resultSet = statement.executeQuery()) {
-
-                    while (resultSet.next()) {
-                        Post post = new Post(
-                                resultSet.getInt("id"),
-                                resultSet.getString("titre"),
-                                resultSet.getString("description"),
-                                resultSet.getString("image_url"),
-                                resultSet.getDate("date"),
-                                Post.Type.valueOf(resultSet.getString("type")),
-                                resultSet.getString("place"),
-                                resultSet.getInt("user")
-                        );
-                        userList.add(post);
-                    }
-                }
-                tableViewUsers.setItems(userList);
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-
-        } else if (comboBox.getSelectionModel().getSelectedItem().equals("email")) {
-            userList.clear();
-            try (Connection connection = mydb.getInstance().getCon()) {
-                String query = "SELECT * FROM `post` WHERE id != 1 ORDER BY numero ASC";
-                try (PreparedStatement statement = connection.prepareStatement(query);
-                     ResultSet resultSet = statement.executeQuery()) {
-
-                    while (resultSet.next()) {
-                        // Récupération de l'état de vérification de l'utilisateur
-                        Post post = new Post(
-                                resultSet.getInt("id"),
-                                resultSet.getString("titre"),
-                                resultSet.getString("description"),
-                                resultSet.getString("image_url"),
-                                resultSet.getDate("date"),
-                                Post.Type.valueOf(resultSet.getString("type")),
-                                resultSet.getString("place"),
-                                resultSet.getInt("user")
-                        );
-                        PostCRUD us = new PostCRUD();
-                        userList.add(post);
-                    }
-                }
-                tableViewUsers.setItems(userList);
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/showPostAdminController.fxml"));
-            Node eventFXML = loader.load();
-
-            vboxdash.getChildren().clear();
-
-            vboxdash.getChildren().add(eventFXML);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void fnReloadData() throws SQLException {
-        // Associer les colonnes du tableau aux propriétés de l'objet User
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        placeColumn.setCellValueFactory(new PropertyValueFactory<>("place"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-
-        // Clear existing items and load new data from the database
         userList.clear();
         userList.addAll(loadDataFromDatabase());
 
-        // Create a new FilteredList based on the user list
         FilteredList<Post> filteredData = new FilteredList<>(userList, e -> true);
 
-        // Set the search functionality
-        tfSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            filteredData.setPredicate((Predicate<? super Post>) post -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-                if (post.getTitre().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (post.getDescription().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (post.getPlace().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (post.getType() != null && post.getType().toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (post.getDate() != null && post.getDate().toString().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
-
-        // Wrap the filtered list in a SortedList
         SortedList<Post> sortedData = new SortedList<>(filteredData);
 
-        // Bind the SortedList comparator to the TableView comparator
-        tableViewUsers.setItems(sortedData);
+        vboxdash.getChildren().clear();
+
+        for (Post post : sortedData) {
+            Label titleLabel = new Label(post.getTitre());
+            Label descriptionLabel = new Label(post.getDescription());
+            Label placeLabel = new Label(post.getPlace());
+            Label typeLabel = new Label(post.getType().toString());
+            Label dateLabel = new Label(post.getDate().toString());
+            int a=post.getUser();
+            UserService s=new UserService();
+            User u1=s.getUserById(a);
+            Label userLabel = new Label(u1.getAddress());
+
+            VBox postBox = new VBox(userLabel,titleLabel, descriptionLabel, placeLabel, typeLabel, dateLabel);
+            postBox.setStyle("-fx-padding: 10px; -fx-background-color: #f0f0f0; -fx-border-color: #ddd; -fx-border-width: 1px;");
+            postBox.setSpacing(5);
+
+            vboxdash.getChildren().add(postBox);
+
+            postBoxes.add(postBox);
+        }
+
+
+        tfSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            for (VBox postBox : postBoxes) {
+                String lowerCaseFilter = newValue.toLowerCase();
+                boolean isVisible = postBox.getChildren().stream()
+                        .filter(Label.class::isInstance)
+                        .map(Label.class::cast)
+                        .anyMatch(label -> label.getText().toLowerCase().contains(lowerCaseFilter));
+                postBox.setVisible(isVisible);
+                postBox.setManaged(isVisible);
+            }
+        });
+
     }
-
-
     private List<Post> loadDataFromDatabase() throws SQLException {
         List<Post> data = new ArrayList<>();
         PostCRUD us = new PostCRUD();
