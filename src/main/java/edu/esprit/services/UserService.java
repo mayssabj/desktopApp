@@ -3,18 +3,7 @@ package edu.esprit.services;
 import edu.esprit.entities.User;
 import edu.esprit.utils.mydb;
 
-<<<<<<< HEAD
 import java.sql.*;
-
-public class UserService {
-    private Connection con ;
-    Statement ste ;
-    public UserService (){
-        con = mydb.getInstance().getCon();
-    }
-
-
-=======
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -186,5 +175,4 @@ public class UserService {
     public User getCurrentLoggedInUser() {
         return currentUser;
     }
->>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
 }

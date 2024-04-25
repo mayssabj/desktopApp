@@ -38,6 +38,8 @@ public class Post_group {
     }
 
 
+
+
     public List<Postcommentaire> getCommentaires() {
         return commentaires;
     }
@@ -101,4 +103,3 @@ public class Post_group {
 
 
 }
-

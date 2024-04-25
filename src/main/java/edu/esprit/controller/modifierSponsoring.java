@@ -16,74 +16,60 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 public class modifierSponsoring {
 
     @FXML
     private TextField nameField;
-
     @FXML
     private TextArea descriptionArea;
-
     @FXML
     private Button selectImage;
-
     @FXML
     private ImageView imageView;
-
     @FXML
     private DatePicker datePicker;
-
     @FXML
     private ComboBox<String> contratComboBox;
-
     @FXML
     private ComboBox<String> typeComboBox;
-
     @FXML
     private Button buttonModifier;
-
     @FXML
     private Text errorname;
-
     @FXML
     private Text errordescription;
 
     private File selectedImageFile;
-
     private Sponsoring sponsoring;
 
     public void initData(Sponsoring sponsoring) {
         this.sponsoring = sponsoring;
         nameField.setText(sponsoring.getName());
         descriptionArea.setText(sponsoring.getDescription());
-        contratComboBox.setValue(sponsoring.getContrat().toString()); // Assuming getContrat() returns a Duration enum value
-        typeComboBox.setValue(sponsoring.getType().toString()); // Assuming getType() returns a TypeSpon enum value
-        try{
-            Image image = new Image(new FileInputStream(sponsoring.getImage()));
-            imageView.setImage(image);
-        }catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        contratComboBox.setValue(sponsoring.getContrat().toString());
+        typeComboBox.setValue(sponsoring.getType().toString());
+
+        if (sponsoring.getImage() != null && !sponsoring.getImage().isEmpty()) {
+            try {
+                Image image = new Image(new FileInputStream(sponsoring.getImage()));
+                imageView.setImage(image);
+            } catch (FileNotFoundException e) {
+                System.err.println("Image file not found, setting default image.");
+                imageView.setImage(new Image("/path/to/default/image.png")); // Set a default or placeholder image
+            }
         }
-
     }
-
 
     @FXML
     public void modifierSponsoring() throws SQLException {
-        // Validate input fields before proceeding
         if (isInputValid()) {
             sponsoring.setName(nameField.getText());
             sponsoring.setDescription(descriptionArea.getText());
-            sponsoring.setDate(Date.valueOf(datePicker.getValue())); // Convert LocalDate to Date
-            sponsoring.setContrat(Sponsoring.Duration.valueOf(contratComboBox.getValue())); // Assuming Contrat is an enum
-            sponsoring.setType(Sponsoring.TypeSpon.valueOf(typeComboBox.getValue())); // Assuming TypeSpon is an enum
-            sponsoring.setImage(String.valueOf(imageView.getImage()));
-            // Update other fields of the sponsoring object
+            sponsoring.setDate(Date.valueOf(datePicker.getValue()));
+            sponsoring.setContrat(Sponsoring.Duration.valueOf(contratComboBox.getValue()));
+            sponsoring.setType(Sponsoring.TypeSpon.valueOf(typeComboBox.getValue()));
 
-            // Update the image if a new one is selected
             if (selectedImageFile != null) {
                 sponsoring.setImage(selectedImageFile.getAbsolutePath());
             }
@@ -95,7 +81,6 @@ public class modifierSponsoring {
         }
     }
 
-
     @FXML
     void selectImageAction(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -103,30 +88,30 @@ public class modifierSponsoring {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-        selectedImageFile = fileChooser.showOpenDialog(null);
-
-        if (selectedImageFile != null) {
-            // Display the selected image in the ImageView
-            Image image = new Image(selectedImageFile.toURI().toString());
+        File newFile = fileChooser.showOpenDialog(null);
+        if (newFile != null) {
+            selectedImageFile = newFile;
+            Image image = new Image(newFile.toURI().toString());
             imageView.setImage(image);
         }
     }
+
     private boolean isInputValid() {
         boolean isValid = true;
-
-        // Validate and display error messages
-        if (nameField.getText().isEmpty() || !nameField.getText().matches("^[a-zA-Z]+$")) {
+        if (nameField.getText().isEmpty() || !nameField.getText().matches("^[a-zA-Z ]+$")) {
             errorname.setText("Name is required and should not contain numbers");
             isValid = false;
         } else {
             errorname.setText("");
         }
-        if (descriptionArea.getText().isEmpty() || !descriptionArea.getText().matches("^[a-zA-Z]+$")) {
-            errordescription.setText("Description is required and should not contain numbers");
+
+        if (descriptionArea.getText().isEmpty()) {
+            errordescription.setText("Description is required");
             isValid = false;
         } else {
             errordescription.setText("");
         }
+
         return isValid;
     }
 }

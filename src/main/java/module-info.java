@@ -6,6 +6,7 @@ module edu.esprit {
     requires jbcrypt;
     requires java.persistence;
     requires javafx.web;
+    requires java.datatransfer;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

@@ -10,80 +10,28 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class showSponsoring implements Initializable {
 
     @FXML
-    private TableView<Sponsoring> sponsoringTable;
-    @FXML
-    private TableColumn<Sponsoring, String> nameColumn;
-    @FXML
-    private TableColumn<Sponsoring, String> descriptionColumn;
-    @FXML
-    private TableColumn<Sponsoring, String> imageColumn;
-    @FXML
-    private TableColumn<Sponsoring, Date> dateColumn;
-    @FXML
-    private TableColumn<Sponsoring, Sponsoring.Duration> contratColumn;
-    @FXML
-    private TableColumn<Sponsoring, Sponsoring.TypeSpon> typeColumn;
-    @FXML
-    private TableColumn<Sponsoring, Void> actionsColumn;
+    private ListView<Sponsoring> sponsoringListView;
     @FXML
     private Button buttonajouter;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialisez vos colonnes ici
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        contratColumn.setCellValueFactory(new PropertyValueFactory<>("contrat"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-
-        // Ajouter la colonne Actions avec les boutons de modification et de suppression
-        actionsColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button editButton = new Button("Edit");
-            private final Button deleteButton = new Button("Delete");
-
-            {
-                editButton.setOnAction(event -> {
-                    Sponsoring sponsoring = getTableView().getItems().get(getIndex());
-                    // Ouvrir la fenêtre de modification avec les détails du sponsoring
-                    openEditSponsoringWindow(sponsoring);
-                });
-
-                deleteButton.setOnAction(event -> {
-                    Sponsoring sponsoring = getTableView().getItems().get(getIndex());
-                    // Supprimer le sponsoring
-                    deleteSponsoring(sponsoring);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    HBox buttons = new HBox(editButton, deleteButton);
-                    buttons.setSpacing(5);
-                    setGraphic(buttons);
-                }
-            }
-        });
-
-        // Chargez vos données
         loadSponsorings();
     }
 
@@ -91,74 +39,111 @@ public class showSponsoring implements Initializable {
         SponsoringService service = new SponsoringService();
         try {
             ObservableList<Sponsoring> data = FXCollections.observableArrayList(service.afficherSponsoring());
-            sponsoringTable.setItems(data);
+            sponsoringListView.setItems(data);
+            sponsoringListView.setCellFactory(param -> new ListCell<Sponsoring>() {
+                @Override
+                protected void updateItem(Sponsoring item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        HBox hbox = new HBox(10);
+                        hbox.setStyle("-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 0 0 1 0; -fx-border-color: #808080;");
+
+                        VBox vbox = new VBox(5);
+                        Text nameText = new Text("Name: " + item.getName());
+                        Text descriptionText = new Text("Description: " + item.getDescription());
+                        Text dateText = new Text("Date: " + item.getDate().toString());
+                        Text contratText = new Text("Contract: " + item.getContrat().toString());
+                        Text typeText = new Text("Type: " + item.getType().toString());
+
+                        ImageView imageView = createImageView(item.getImage());
+
+                        Button editButton = new Button("Edit");
+                        editButton.setOnAction(event -> openEditSponsoringWindow(item));
+                        editButton.getStyleClass().add("button-edit");
+
+                        Button deleteButton = new Button("Delete");
+                        deleteButton.setOnAction(event -> deleteSponsoring(item));
+                        deleteButton.getStyleClass().add("button-delete");
+
+                        vbox.getChildren().addAll(nameText, descriptionText, dateText, contratText, typeText);
+                        hbox.getChildren().addAll(imageView, vbox, editButton, deleteButton);
+                        setGraphic(hbox);
+                    }
+                }
+            });
         } catch (SQLException e) {
             e.printStackTrace();
-            // Gérer l'exception en conséquence
         }
     }
 
-    private Stage editDialogStage;
+    private ImageView createImageView(String imagePath) {
+        ImageView imageView = new ImageView();
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File file = new File(imagePath);
+            if (file.exists()) {
+                Image image = new Image(file.toURI().toString());
+                imageView.setImage(image);
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+            } else {
+                System.err.println("Image file not found: " + imagePath);
+                // Optionally set a default image
+                // Image defaultImage = new Image("path/to/default/image.png");
+                // imageView.setImage(defaultImage);
+            }
+        }
+        return imageView;
+    }
 
     private void openEditSponsoringWindow(Sponsoring sponsoring) {
         try {
-            // Charger le fichier FXML de la nouvelle page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifierSponsoring.fxml"));
             Parent root = loader.load();
 
-            // Obtenir le contrôleur de la nouvelle fenêtre
             modifierSponsoring controller = loader.getController();
             controller.initData(sponsoring);
 
-            // Créer la scène avec la nouvelle page
-            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Edit Sponsoring");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
 
-            // Créer une nouvelle fenêtre de dialogue
-            editDialogStage = new Stage();
-            editDialogStage.setScene(scene);
-            editDialogStage.showAndWait(); // Attendre que la fenêtre soit fermée
-
-            // Mettre à jour la ligne correspondante dans la table
-            sponsoringTable.refresh(); // Rafraîchir la table pour afficher les changements
-        } catch (Exception e) {
-            e.printStackTrace();  // Gérer les exceptions en conséquence
+            loadSponsorings(); // Refresh list after modifications
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-
 
     private void deleteSponsoring(Sponsoring sponsoring) {
-        SponsoringService service = new SponsoringService();
-        try {
-            service.supprimerSponsoring(sponsoring.getId());
-            loadSponsorings(); // Recharger les données après la suppression
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Gérer l'exception en conséquence
-        }
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this sponsoring?", ButtonType.YES, ButtonType.NO);
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    SponsoringService service = new SponsoringService();
+                    service.supprimerSponsoring(sponsoring.getId());
+                    loadSponsorings(); // Refresh list
+                } catch (SQLException e) {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error deleting sponsoring: " + e.getMessage());
+                    errorAlert.showAndWait();
+                }
+            }
+        });
     }
+
     @FXML
     private void handlesponsorButtonClick() {
         try {
-            // Charger le fichier FXML de la nouvelle page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterSponsoring.fxml"));
             Parent root = loader.load();
-
-            // Créer la scène avec la nouvelle page
             Scene scene = new Scene(root);
-
-            // Obtenir la scène actuelle à partir du bouton cliqué
             Stage stage = (Stage) buttonajouter.getScene().getWindow();
-
-            // Remplacer la scène actuelle par la nouvelle scène
             stage.setScene(scene);
             stage.show();
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();  // Gérer les exceptions en conséquence
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
 }

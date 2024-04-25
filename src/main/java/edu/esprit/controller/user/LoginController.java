@@ -84,7 +84,7 @@ public class LoginController implements Initializable {
                 // Set the current user in the session
                 Session.getInstance().setCurrentUser(user);
                 // Proceed with login (e.g., navigate to another page)
-                NavigationUtil.redirectTo("/Post.fxml", event);
+                NavigationUtil.redirectTo("/affichersponsoring.fxml", event);
             } else {
                 loginMessageLabel.setText("Email or password incorrect");
                 loginMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");

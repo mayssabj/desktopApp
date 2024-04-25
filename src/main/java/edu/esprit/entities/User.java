@@ -1,22 +1,6 @@
 package edu.esprit.entities;
 
 public class User {
-<<<<<<< HEAD
-    private int id ;
-    private String username ;
-    private String image ;
-    public User(int id, String username, String image) {
-        this.id = id;
-        this.username = username;
-        this.image = image;
-    }
-
-    public User(String username, String image) {
-        this.username = username;
-        this.image = image;
-    }
-
-=======
     private int id;
     private String email;
     private String password;
@@ -49,8 +33,12 @@ public class User {
         this.gender = gender;
     }
 
+    public User(String email, String profilePicture) {
+        this.email = email;
+        this.profilePicture = profilePicture;
+    }
+
     // Getters and setters
->>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
     public int getId() {
         return id;
     }
@@ -59,22 +47,6 @@ public class User {
         this.id = id;
     }
 
-<<<<<<< HEAD
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-=======
     public String getEmail() {
         return email;
     }
@@ -121,20 +93,12 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
->>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-<<<<<<< HEAD
-                ", username='" + username + '\'' +
-                ", image='" + image + '\'' +
-                '}';
-    }
-
-=======
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
@@ -143,5 +107,4 @@ public class User {
                 ", gender='" + gender + '\'' +
                 '}';
     }
->>>>>>> 560008013e3371a7c394d79c8393560c80ec93e7
 }

@@ -9,8 +9,6 @@ public class Comment {
 
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post")
     private Post post;
 
     public Comment(int id, String text, Post post) {
