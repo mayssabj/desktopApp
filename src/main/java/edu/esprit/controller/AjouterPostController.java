@@ -61,7 +61,6 @@ public class AjouterPostController {
 
     private UserService userService; // Inject UserService
 
-    @FXML
     public void ajouterPost() throws SQLException {
         if (isInputValid()) {
             UserService userService = new UserService();
@@ -72,7 +71,11 @@ public class AjouterPostController {
                 String description = descriptionArea.getText();
                 String image = (selectedImageFile != null) ? selectedImageFile.getPath() : "";
                 Post.Type type = Post.Type.valueOf(typeComboBox.getValue());
-                String place = getPlaceFromMap();
+                String place = ""; // Initialize place variable
+
+                if (mapDataExtractor != null) {
+                    place = mapDataExtractor.getSelectedLocation(mapView.getEngine()); // Get the selected location
+                }
 
                 Post post = new Post(titre, description, image, type, place, u1.getId());
                 PostCRUD service = new PostCRUD();
@@ -89,6 +92,17 @@ public class AjouterPostController {
         }
     }
 
+    private String getSelectedLocation() {
+        JavaConnector javaConnector = (JavaConnector) mapView.getEngine().executeScript("window.javaConnector");
+        if (javaConnector != null) {
+            return javaConnector.getSelectedLocation();
+        } else {
+            return "";
+        }
+    }
+
+
+
     private String getPlaceFromMap() {
         String place = (String) mapView.getEngine().executeScript("getLocationFromMap()");
         return place != null ? place : "";
@@ -99,6 +113,11 @@ public class AjouterPostController {
         public void getLocationFromMap(String location) {
             System.out.println("Location received from map: " + location);
             // Handle the received location data here
+        }
+
+        private String selectedLocation;
+        public String getSelectedLocation() {
+            return selectedLocation;
         }
     }
 
@@ -171,40 +190,32 @@ public class AjouterPostController {
                 "    <meta charset=\"UTF-8\">\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
                 "    <title>Map</title>\n" +
-                "    <script>\n" +
-                "        function getLocationFromMap() {\n" +
-                "            // Fonction d'implémentation\n" +
-                "            // Récupérer les données de localisation depuis la carte et les renvoyer à Java\n" +
-                "            var locationData = \"Données de localisation\"; // Remplacer par les données de localisation réelles\n" +
-                "            javaConnector.getLocationFromMap(locationData);\n" +
-                "        }\n" +
-                "    </script>\n" +
+                "    <!-- Include Leaflet CSS and JS -->\n" +
+                "    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet/dist/leaflet.css\" />\n" +
+                "    <script src=\"https://unpkg.com/leaflet/dist/leaflet.js\"></script>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "    <!-- Exemple de contenu de carte -->\n" +
+                "    <!-- Div for the Map -->\n" +
                 "    <div id=\"map\" style=\"width: 100%; height: 400px;\"></div>\n" +
                 "\n" +
+                "    <!-- Script to Initialize Leaflet Map -->\n" +
                 "    <script>\n" +
-                "        function initMap() {\n" +
-                "            // Créer une nouvelle carte Google Maps\n" +
-                "            var map = new google.maps.Map(document.getElementById('map'), {\n" +
-                "                center: {lat: -34.397, lng: 150.644},\n" +
-                "                zoom: 8\n" +
-                "            });\n" +
+                "        // Initialize Leaflet map\n" +
+                "        var map = L.map('map').setView([51.505, -0.09], 13); // Initial coordinates and zoom level\n" +
                 "\n" +
-                "            // Ajouter un marqueur à la position spécifiée\n" +
-                "            var marker = new google.maps.Marker({\n" +
-                "                position: {lat: -34.397, lng: 150.644},\n" +
-                "                map: map,\n" +
-                "                title: 'Hello World!'\n" +
-                "            });\n" +
-                "        }\n" +
+                "        // Add OpenStreetMap tile layer\n" +
+                "        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n" +
+                "            attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\n" +
+                "        }).addTo(map);\n" +
+                "\n" +
+                "        // Add a marker to the map\n" +
+                "        L.marker([51.5, -0.09]).addTo(map)\n" +
+                "            .bindPopup('A sample popup!')\n" +
+                "            .openPopup();\n" +
                 "    </script>\n" +
-                "\n" +
-                "    <!-- Charger l'API Google Maps -->\n" +
-                "    <script src=\"https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap\" async defer></script>\n" +
                 "</body>\n" +
-                "</html>\n");
+                "</html>"
+        );
 
         // Add a listener to inject the JavaConnector object once the page is loaded
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
@@ -215,4 +226,5 @@ public class AjouterPostController {
             }
         });
     }
+
 }

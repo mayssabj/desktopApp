@@ -56,11 +56,20 @@ public class AfficherPostController {
     UserService U=new UserService();
     User a=U.getCurrentLoggedInUser();
 
+    @FXML
+    private Pagination pagination;
+
+    private final int ITEMS_PER_PAGE = 4;
+    private ObservableList<Post> allPosts;
+
+
 
     @FXML
     private void initialize() {
         grid.getStyleClass().add("grid-pane");
-        afficherPosts();
+        loadAllPosts();
+
+        pagination.setPageFactory(this::createPage);
 /*
         ObservableList<String> listTrier = FXCollections.observableArrayList("Titre", "Description", "Place", "Type", "Date");
         comboBox.setItems(listTrier);
@@ -96,6 +105,42 @@ public class AfficherPostController {
         });
 
      */
+    }
+    private void loadAllPosts() {
+        PostCRUD postCRUD = new PostCRUD();
+        try {
+            allPosts = FXCollections.observableArrayList(postCRUD.afficher());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Node createPage(int pageIndex) {
+        int fromIndex = pageIndex * ITEMS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ITEMS_PER_PAGE, allPosts.size());
+        List<Post> postsForPage = allPosts.subList(fromIndex, toIndex);
+
+        int rowIndex = 0;
+        int columnIndex = 0;
+        grid.setHgap(20);
+        grid.setVgap(20);
+        for (Post post : postsForPage) {
+            VBox postBox;
+            try {
+                postBox = createPostBox(post);
+                grid.add(postBox, columnIndex, rowIndex);
+
+                columnIndex++;
+                if (columnIndex >= 3) {
+                    columnIndex = 0;
+                    rowIndex++;
+                }
+            } catch (FileNotFoundException | SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new ScrollPane(grid);
     }
 
     @FXML
@@ -353,7 +398,9 @@ public class AfficherPostController {
 
     private void loadPosts() {
         grid.getChildren().clear();
-        afficherPosts();
+        loadAllPosts();
+
+        pagination.setPageFactory(this::createPage);
     }
 
     private void deletePost(Post post) {

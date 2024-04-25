@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,14 +12,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.AfficherPostController">
   <children>
     <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" styleClass="primary_color" stylesheets="/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-    <left>
+      <left>
         <VBox prefHeight="200.0" prefWidth="235.0" spacing="20.0" styleClass="secondary-color" stylesheets="/style1.css" BorderPane.alignment="CENTER">
           <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -184,7 +183,10 @@
                     <TextField prefHeight="31.0" prefWidth="173.0" promptText="Search" style="-fx-background-color: transparent;" />
                   </children>
                 </HBox>
-                <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                       <Button layoutX="-11.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleAddPostButton" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" />
+                           </children></Pane>
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" styleClass="upgrade-button" stylesheets="style1.css" text="UPGRADE" textFill="WHITE" />
                 <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0">
                   <children>
@@ -202,7 +204,7 @@
                 </HBox>
               </children>
             </HBox>
-            <HBox prefHeight="50.0" prefWidth="1080.0">
+            <HBox prefHeight="730.0" prefWidth="1060.0">
               <children>
                 <Pane VBox.vgrow="ALWAYS" />
 
@@ -210,24 +212,11 @@
               <VBox.margin>
                 <Insets left="20.0" right="20.0" top="10.0" />
               </VBox.margin>
-              <Button mnemonicParsing="false" onAction="#handleAddPostButton" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" />
+              <Pagination fx:id="pagination" prefHeight="730.0" prefWidth="1059.0" />
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-              <children>
-                <ScrollPane fx:id="scroll" prefHeight="748.0" prefWidth="1351.0" styleClass="transparent" stylesheets="style.css">
-                  <content>
-                    <GridPane fx:id="grid" prefHeight="20.0" prefWidth="40.0">
-                      <rowConstraints>
-                        <RowConstraints />
-                      </rowConstraints>
-                    </GridPane>
-                  </content>
-                  <HBox.margin>
-                    <Insets top="10.0" />
-                  </HBox.margin>
-                </ScrollPane>
-              </children>
-            </HBox>
+
+            <GridPane fx:id="grid" prefHeight="20.0" prefWidth="40.0" />
+
           </children>
         </VBox>
       </center>
