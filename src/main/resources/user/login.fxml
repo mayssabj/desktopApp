@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.user.LoginController">
+   <left>
+      <AnchorPane prefHeight="607.0" prefWidth="348.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="600.0" fitWidth="348.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/bg.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <VBox alignment="TOP_CENTER" prefWidth="452.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox maxWidth="350.0" spacing="5.0">
+               <children>
+                  <Label prefHeight="0.0" prefWidth="350.0" text="Email">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="emailField" maxWidth="350.0" prefHeight="40.0" prefWidth="350.0" promptText="email" />
+                  <VBox fx:id="emailErrorsContainer" maxWidth="350.0" prefHeight="10.0" prefWidth="350.0" />
+               </children>
+            </VBox>
+            <VBox maxWidth="350.0" prefWidth="350.0" spacing="5.0">
+               <children>
+                  <HBox maxHeight="10.0" prefWidth="350.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="255.0" text="Password">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label contentDisplay="RIGHT" prefHeight="26.0" prefWidth="97.0" text="Forgot password?" textAlignment="RIGHT" textFill="#fa1515" underline="true">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
+                     </children>
+                  </HBox>
+                  <PasswordField fx:id="passwordField" maxWidth="350.0" prefHeight="40.0" prefWidth="350.0" promptText="Password" />
+                  <VBox fx:id="passwordErrorsContainer" maxWidth="350.0" prefHeight="0.0" prefWidth="350.0" />
+               </children>
+            </VBox>
+            <Label fx:id="loginMessageLabel" maxWidth="350.0" prefHeight="26.0" prefWidth="350.0" textAlignment="CENTER" textFill="#e83838">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <VBox maxWidth="350.0" spacing="5.0">
+               <children>
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #e84e46;" text="Log in" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <HBox alignment="CENTER" spacing="1.0">
+                     <children>
+                        <Label text="Dont have an account?" />
+                        <Label onMouseClicked="#openRegistration" text="Register" textFill="#e84e46">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets top="120.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>
