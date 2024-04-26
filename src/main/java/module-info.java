@@ -7,8 +7,9 @@ module com.example.pidev {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
+
     opens entities to javafx.base;
     opens Services to javafx.fxml;
+    opens Controllers to javafx.fxml; // Add this line
     exports test;
-
 }

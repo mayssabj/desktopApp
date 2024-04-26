@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" stylesheets="@../css/style1.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ShowQuestionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" stylesheets="@../css/style1.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ShowQuestionController">
     <children>
-        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" styleClass="primary_color" stylesheets="/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" styleClass="primary_color" stylesheets="@../css/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
             <left>
-                <VBox prefHeight="200.0" prefWidth="235.0" spacing="20.0" styleClass="secondary-color" stylesheets="/style1.css" BorderPane.alignment="CENTER">
+                <VBox prefHeight="200.0" prefWidth="235.0" spacing="20.0" styleClass="secondary-color" stylesheets="@../css/style1.css" BorderPane.alignment="CENTER">
                     <children>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -27,7 +27,7 @@
                         </ImageView>
                         <VBox prefHeight="182.0" prefWidth="235.0" spacing="10.0">
                             <children>
-                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="selected" stylesheets="/style1.css">
+                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="selected" stylesheets="@../css/style1.css">
                                     <children>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
