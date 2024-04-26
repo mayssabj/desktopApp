@@ -1,28 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Button?>
 
-<AnchorPane prefHeight="610.0" prefWidth="858.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Services.QuestionService">
-   <children>
-      <Text fill="#999233" fontSmoothingType="LCD" layoutX="276.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions &amp; Answers" textAlignment="CENTER" wrappingWidth="317.0011291503906">
-         <font>
-            <Font name="System Bold Italic" size="28.0" />
-         </font>
-      </Text>
-      <VBox layoutX="-1.0" layoutY="105.0" prefHeight="522.0" prefWidth="858.0">
-         <children>
-            <ListView fx:id="list" prefHeight="400.0" prefWidth="600.0" />
-         </children>
-      </VBox>
-      <Button fx:id="btnask" text="Ask" layoutX="400.0" layoutY="530.0" onAction="#addQuestion"/>
-   </children>
-   <padding>
-      <Insets bottom="10.0" />
-   </padding>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" stylesheets="@../css/style1.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ShowQuestionsController">
+    <children>
+        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" styleClass="primary_color" stylesheets="/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+            <left>
+                <VBox prefHeight="200.0" prefWidth="235.0" spacing="20.0" styleClass="secondary-color" stylesheets="/style1.css" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                            </image>
+                            <VBox.margin>
+                                <Insets left="20.0" top="20.0" />
+                            </VBox.margin>
+                        </ImageView>
+                        <VBox prefHeight="182.0" prefWidth="235.0" spacing="10.0">
+                            <children>
+                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="selected" stylesheets="/style1.css">
+                                    <children>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                                            </image>
+                                        </ImageView>
+                                        <Label prefHeight="21.0" prefWidth="101.0" text="Home" textFill="WHITE">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                                    <children>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </left>
+            <center>
+                <ListView fx:id="listView" BorderPane.alignment="CENTER" />
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>
