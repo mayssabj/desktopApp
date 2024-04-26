@@ -9,6 +9,7 @@ module edu.esprit {
     requires okhttp3;
     requires com.google.gson;
     requires java.mail;
+    requires java.net.http;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

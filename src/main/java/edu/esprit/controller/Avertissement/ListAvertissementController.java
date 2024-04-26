@@ -4,7 +4,6 @@
     import edu.esprit.entities.User;
     import edu.esprit.services.ServiceAvertissement;
     import edu.esprit.services.UserService;
-    import edu.esprit.utils.Session;
     import javafx.collections.FXCollections;
     import javafx.collections.ObservableList;
     import javafx.event.ActionEvent;
@@ -17,12 +16,9 @@
     import javafx.scene.layout.VBox;
     import javafx.scene.text.Text;
 
-    import javax.mail.Message;
-    import javax.mail.MessagingException;
-    import javax.mail.Transport;
+    import javax.mail.*;
     import javax.mail.internet.InternetAddress;
     import javax.mail.internet.MimeMessage;
-    import java.net.PasswordAuthentication;
     import java.net.URL;
     import java.sql.Connection;
     import java.sql.PreparedStatement;
@@ -181,6 +177,7 @@
                     User user = userService.getUserByUsername(selected.getReported_username());
                     if (user != null) {
                         userService.incrementAvertissementCount(user.getId());
+                        sendEmail(user.getEmail(), user.getAvertissements_count());
                         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Compteur d'avertissements incrémenté pour " + user.getUsername() + ". Avertissement confirmé.");
                         infoAlert.showAndWait();
                     } else {
@@ -205,5 +202,36 @@
 
 
         //slwt brqx kzbd lcyq
+        public void sendEmail(String to, int avertissementCount) {
+            String host = "smtp.gmail.com"; // Serveur SMTP de Gmail
+            final String username = "fouedrhaiem882@gmail.com"; // Votre adresse Gmail
+            final String password = "slwt brqx kzbd lcyq"; // Votre mot de passe Gmail ou mot de passe d'application
+
+            Properties properties = new Properties();
+            properties.put("mail.smtp.host", host);
+            properties.put("mail.smtp.port", "587");
+            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.starttls.enable", "true"); // Activez TLS
+
+            javax.mail.Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+                @Override
+                protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+
+            try {
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(username));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                message.setSubject("Notification d'avertissement");
+                message.setText("Cher utilisateur, votre nombre total d'avertissements est maintenant de : " + avertissementCount);
+
+                Transport.send(message);
+                System.out.println("Email envoyé avec succès !");
+            } catch (MessagingException mex) {
+                mex.printStackTrace();
+            }
+        }
 
     }

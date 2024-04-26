@@ -25,8 +25,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 public class ReclamationListController {
@@ -187,5 +193,6 @@ public class ReclamationListController {
     }
 
 
-
 }
+
+

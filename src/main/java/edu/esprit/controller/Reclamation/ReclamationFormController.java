@@ -45,6 +45,7 @@ public class ReclamationFormController {
             showAlert("Error", "All fields must be filled!", Alert.AlertType.ERROR);
             return;
         }
+        
 
         // Create a new reclamation object
         Reclamation reclamation = new Reclamation();
