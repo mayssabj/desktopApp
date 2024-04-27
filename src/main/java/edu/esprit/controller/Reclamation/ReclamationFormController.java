@@ -2,6 +2,7 @@ package edu.esprit.controller.Reclamation;
 
 import edu.esprit.entities.Reclamation;
 import edu.esprit.services.ServiceReclamation;
+import edu.esprit.services.TranslationService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -38,19 +39,31 @@ public class ReclamationFormController {
         typereclamation.setValue("Other");  // Set a default value
     }
 
-    @FXML
     public void saveReclamation() {
         // Validation checks
         if (subject.getText().isEmpty() || description.getText().isEmpty() || repertodusername.getText().isEmpty() || typereclamation.getValue() == null) {
             showAlert("Error", "All fields must be filled!", Alert.AlertType.ERROR);
             return;
         }
-        
 
-        // Create a new reclamation object
+        // Translate both subject and description from English to French
+        String translatedSubject = TranslationService.translateText(subject.getText(), "en", "fr");
+        String translatedDescription = TranslationService.translateText(description.getText(), "en", "fr");
+
+        System.out.println("Translated Subject: " + translatedSubject); // Debug print
+        System.out.println("Translated Description: " + translatedDescription); // Debug print
+
+        // Check if translations are empty and handle it
+        if (translatedSubject.isEmpty() || translatedDescription.isEmpty()) {
+            showAlert("Error", "Translation failed or returned empty.", Alert.AlertType.ERROR);
+            translatedSubject = subject.getText(); // Fallback to original text for subject
+            translatedDescription = description.getText(); // Fallback to original text for description
+        }
+
+        // Create a new reclamation object with translated data
         Reclamation reclamation = new Reclamation();
-        reclamation.setSubjuct(subject.getText());
-        reclamation.setDescription(description.getText());
+        reclamation.setSubjuct(translatedSubject);
+        reclamation.setDescription(translatedDescription);
         reclamation.setReported_username(repertodusername.getText());
         reclamation.setType_reclamation(typereclamation.getValue());
         reclamation.setScreenshot(screenshoot.getText()); // Assuming the screenshot button holds the path temporarily
@@ -64,6 +77,8 @@ public class ReclamationFormController {
             showAlert("Error", "Failed to save reclamation: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
+
 
     @FXML
     public void clear() {
