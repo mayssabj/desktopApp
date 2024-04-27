@@ -94,8 +94,8 @@
                   <ComboBox fx:id="categoryField" layoutX="108.0" layoutY="308.0" prefWidth="150.0" promptText="category" />
                   <TextArea fx:id="typeField" layoutX="305.0" layoutY="288.0" prefHeight="144.0" prefWidth="215.0" promptText="type of coupons ..." />
                   <CheckBox fx:id="isGIvenBox" layoutX="352.0" layoutY="183.0" mnemonicParsing="false" text="Isgiven" />
-                  <Label fx:id="controlValue" layoutX="316.0" layoutY="57.0" prefHeight="24.0" prefWidth="197.0" text="Label" textFill="RED" />
-                  <Label fx:id="dateControll" layoutX="326.0" layoutY="111.0" prefHeight="24.0" prefWidth="150.0" text="Label" textFill="RED" />
+                  <Label fx:id="controlValue" layoutX="316.0" layoutY="57.0" prefHeight="24.0" prefWidth="197.0" textFill="RED" />
+                  <Label fx:id="dateControll" layoutX="326.0" layoutY="111.0" prefHeight="24.0" prefWidth="150.0" textFill="RED" />
                </children>
             </Pane>
             </children>
