@@ -9,6 +9,7 @@ import com.codewarrior.markets_coupons.service.MarketDAO;
 import com.codewarrior.markets_coupons.service.VoucherDAO;
 import com.codewarrior.markets_coupons.service.UserDAO;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.codewarrior.markets_coupons.util.RandomStringGenerator.generateRandomString;
@@ -46,7 +48,7 @@ public class VoucherController {
     private CheckBox isGIvenBox;
 
     @FXML
-    private ComboBox<Market> marketField;
+    private ComboBox<String> marketField;
 
     @FXML
     private TextArea typeField;
@@ -55,7 +57,7 @@ public class VoucherController {
     private ComboBox<Integer> usableField;
 
     @FXML
-    private ComboBox<User> userField;
+    private ComboBox<String> userField;
 
     @FXML
     private CheckBox validityBox;
@@ -80,13 +82,23 @@ public class VoucherController {
     private void loadUsers() {
         // This should be replaced with a database call=
         List<User> listOfUser = userDAO.getAllUsers();
-        userField.setItems(FXCollections.observableArrayList(listOfUser));
+        List<String> listOfEmails = new ArrayList<>();
+        for (User user : listOfUser) {
+            listOfEmails.add(user.getEmail());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(listOfEmails);
+        userField.setItems((ObservableList<String>) items);
     }
 
     private void loadMarkets() {
         // This should be replaced with a database call
         List<Market> markets = marketDAO.getAllMarkets();
-        marketField.setItems(FXCollections.observableArrayList(markets));
+        List<String> listOfNames = new ArrayList<>();
+        for (Market market : markets) {
+            listOfNames.add(market.getName());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(listOfNames);
+        marketField.setItems((ObservableList<String>) items);
     }
 
     private void loadCategories() throws SQLException {
@@ -117,8 +129,10 @@ public class VoucherController {
             Integer usable = usableField.getSelectionModel().getSelectedItem();
             boolean isValid = validityBox.isSelected();
             boolean isGiven = isGIvenBox.isSelected();
-            User user = userField.getValue();
-            Market market = marketField.getValue();
+            User userFound = userDAO.getUserByEmail(userField.getValue());
+            User user = userFound;
+           Market marketFound = marketDAO.getMarketByName(marketField.getValue());
+            Market market = marketFound;
             VoucherCategory category = categoryField.getValue();
             String code = generateRandomString();
             Voucher voucher = new Voucher(value, code , selectedDate,usable,isValid,isGiven,market.getId(),category.getId(),user.getId());

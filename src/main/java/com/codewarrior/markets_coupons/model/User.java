@@ -6,33 +6,12 @@ public class User {
     private String password;
     private String email;
     private String address;
+    private String phone;
+    private String photo; // Assuming 'photo' corresponds to 'image' in the database
 
-    private  String phone;
-
-    private  String image;
-    // Add other fields as needed
-
+    // Constructor
     public User() {
         // Default constructor
-    }
-
-    public User(int id, String username, String password, String email, String address) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.address = address;
-    }
-
-    public User(int id, String username, String passwoard, String mail, String address, String phone, String o) {
-
-        this.id = id;
-        this.username = username;
-        this.password = passwoard;
-        this.email = mail;
-        this.address = address;
-        this.phone = phone;
-        this.image = o;
     }
 
     // Getters and setters
@@ -76,6 +55,22 @@ public class User {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     // Override toString method if needed
     @Override
     public String toString() {
@@ -85,10 +80,8 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", photo='" + photo + '\'' +
                 '}';
-    }
-
-    public String getName() {
-        return this.username;
     }
 }

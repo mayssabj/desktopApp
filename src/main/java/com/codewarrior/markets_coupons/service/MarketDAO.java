@@ -100,6 +100,28 @@ public class MarketDAO {
         return null;
     }
 
+    public Market getMarketByName(String name) {
+        String query = "SELECT * FROM market WHERE name = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, name);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Market market = new Market();
+                    market.setId(resultSet.getInt("id"));
+                    market.setName(resultSet.getString("name"));
+                    market.setAddress(resultSet.getString("address"));
+                    market.setCity(resultSet.getString("city"));
+                    market.setRegion(resultSet.getString("region"));
+                    market.setZipCode(resultSet.getInt("zip_code"));
+                    return market;
+                }
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Method to update an existing market
     public void updateMarket(Market market) {
         System.out.println("in marketDAO :> "+ market.toString());

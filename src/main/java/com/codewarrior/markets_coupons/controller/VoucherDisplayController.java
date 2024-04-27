@@ -6,6 +6,7 @@ import com.codewarrior.markets_coupons.model.Voucher;
 import com.codewarrior.markets_coupons.model.VoucherCategory;
 import com.codewarrior.markets_coupons.service.CategoryDAO;
 import com.codewarrior.markets_coupons.service.MarketDAO;
+import com.codewarrior.markets_coupons.service.UserDAO;
 import com.codewarrior.markets_coupons.service.VoucherDAO;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -92,11 +93,12 @@ public class VoucherDisplayController implements Initializable {
             // Assuming you have instances of MarketDAO, CategoryDAO, and UserDAO
             MarketDAO marketDAO = new MarketDAO();
             CategoryDAO categoryDAO = new CategoryDAO();
+            UserDAO userDAO = new UserDAO();
 
             // Assuming you have a method to retrieve market, category, and user information
             Market market = marketDAO.getMarketById(marketId);
             VoucherCategory category = categoryDAO.getCategoryById(categoryId);
-            User user = new User(1, "salah", "passwoard", "user@gmail.com", "address", "+2165846321", null);
+            User user = userDAO.getUserById(userId);
 
             // Update UI with voucher information
             String s = selectedVoucher.toString();
