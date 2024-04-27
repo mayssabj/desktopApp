@@ -141,15 +141,19 @@ public class CategoryDisplayController implements Initializable {
             controlDescription.setText("require category description");
             isValid = false;
         }
-        if(!("purchase".equals(updateTitle.getText())) || !("discount".equals(updateTitle.getText()))){
-            controllTitle.setText("title must be discount or purchase");
+        if("purchase".equals(updateTitle.getText()) || "discount".equals(updateTitle.getText())){
+            isValid = true;
+        }else {
             isValid = false;
+            controllTitle.setText("title must be purchase or discount");
         }
-        category.setTitre(this.updateTitle.getText());
-        category.setDescription(updateDescription.getText());
-        System.out.println("Update Button :> "+category.toString());
         if (category !=null && isValid){
+            controllTitle.setText("");
+            controlDescription.setText("");
             System.out.println("isValid => "+isValid);
+            category.setTitre(this.updateTitle.getText());
+            category.setDescription(updateDescription.getText());
+            System.out.println("Update Button :> "+category.toString());
             categoryDAO.updateCategory(category);
             System.out.println("Category with id: " + category.getId() + " updated !");
             // Refresh the TableView

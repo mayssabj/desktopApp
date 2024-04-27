@@ -57,58 +57,14 @@ public class VoucherDisplayController implements Initializable {
     private TableColumn<Voucher, User> colUser;
 
     @FXML
+    private TableColumn<Voucher, String> colCode;
+
+    @FXML
     private Pane back;
 
     @FXML
     private ImageView voucherImage;
 
-    @FXML
-    private TextField updateValue;
-
-    @FXML
-    private TextField updateDate;
-
-    @FXML
-    private TextField updateUsable;
-
-    @FXML
-    private TextField updateValid;
-
-    @FXML
-    private TextField updateGiven;
-
-    @FXML
-    private TextField updateMarket;
-
-    @FXML
-    private TextField updateCategory;
-
-    @FXML
-    private TextField updateUser;
-
-    @FXML
-    private Label controlValue;
-
-    @FXML
-    private Label controlDate;
-
-    @FXML
-    private Label controlUsable;
-
-    @FXML
-    private Label controlValid;
-
-    @FXML
-    private Label controlGiven;
-
-    @FXML
-    private Label controlMarket;
-
-    @FXML
-    private Label controlCategory;
-
-    @FXML
-    private Label controlUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -143,15 +99,6 @@ public class VoucherDisplayController implements Initializable {
             User user = new User(1, "salah", "passwoard", "user@gmail.com", "address", "+2165846321", null);
 
             // Update UI with voucher information
-            this.updateValue.setText(String.valueOf(value));
-            this.updateDate.setText(validityDate.toString()); // Convert LocalDate to String
-            this.updateUsable.setText(String.valueOf(usable));
-            this.updateValid.setText(String.valueOf(isValid));
-            this.updateGiven.setText(String.valueOf(isGiven));
-            this.updateMarket.setText(market.getName()); // Assuming market.getName() returns the market name
-            this.updateCategory.setText(category.getTitre()); // Assuming category.getName() returns the category name
-            this.updateUser.setText(user.getName()); // Assuming user.getName() returns the user name
-
             String s = selectedVoucher.toString();
             System.out.println(s);
         }
@@ -168,6 +115,7 @@ public class VoucherDisplayController implements Initializable {
         colMarket.setCellValueFactory(new PropertyValueFactory<>("marketRelatedId"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("categoryId"));
         colUser.setCellValueFactory(new PropertyValueFactory<>("userWonId"));
+        colCode.setCellValueFactory(new PropertyValueFactory<>("Code"));
     }
 
     @FXML
@@ -184,21 +132,7 @@ public class VoucherDisplayController implements Initializable {
     void updateVoucher(MouseEvent event) {
         Voucher selectedVoucher = getSelectedVoucher();
         if (selectedVoucher != null) {
-            // Get the updated values from text fields
-            double value = Double.parseDouble(updateValue.getText());
-            int usable = Integer.parseInt(updateUsable.getText());
-            boolean isValid = Boolean.parseBoolean(updateValid.getText());
-            boolean isGiven = Boolean.parseBoolean(updateGiven.getText());
-            // Update the voucher object
-            selectedVoucher.setValue(value);
-            selectedVoucher.setUsageLimit(usable);
-            selectedVoucher.setValid(isValid);
-            selectedVoucher.setGivenToUser(isGiven);
-            // Update the database
-            voucherDAO.updateVoucher(selectedVoucher);
-            // Refresh the table view
-            displayVouchers();
-            System.out.println("Voucher with id: " + selectedVoucher.getId() + " updated!");
+            System.out.println("added voucher: ");
         }
     }
 

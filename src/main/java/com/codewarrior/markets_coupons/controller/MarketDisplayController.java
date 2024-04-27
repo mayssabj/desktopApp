@@ -201,7 +201,6 @@ public class MarketDisplayController implements Initializable {
         }
     }
 
-
     @FXML
     void updateMarket(MouseEvent event) {
         boolean isValid = true;
@@ -211,7 +210,6 @@ public class MarketDisplayController implements Initializable {
             controllName.setText("name is required 1");
             isValid = false;
         }
-
         if(this.updateAddress.getText().isEmpty()){
             controlAddress.setText("address is required");
             isValid = false;
@@ -228,20 +226,18 @@ public class MarketDisplayController implements Initializable {
             controllZipCode.setText("zipCode is required");
             isValid = false;
         }
-
         if(!isValid){
             System.out.println("Invalid input");
             return;
         }
-        market.setName(this.updateName.getText());
-        market.setImage(displayMarketInfo().getImage());
-        market.setAddress(this.updateAddress.getText());
-        market.setCity(this.updateCity.getText());
-        market.setRegion(this.updateRegion.getText());
-        int zipCode = Integer.parseInt(this.updateZipCode.getText());
-        market.setZipCode(zipCode);
-        System.out.println("Update Button :> "+market.toString());
-        if (market !=null){
+        if (market !=null && isValid){
+            market.setName(this.updateName.getText());
+            market.setImage(displayMarketInfo().getImage());
+            market.setAddress(this.updateAddress.getText());
+            market.setCity(this.updateCity.getText());
+            market.setRegion(this.updateRegion.getText());
+            int zipCode = Integer.parseInt(this.updateZipCode.getText());
+            market.setZipCode(zipCode);
             marketDAO.updateMarket(market);
             System.out.println("Market with id: " + market.getId() + " updated !");
 

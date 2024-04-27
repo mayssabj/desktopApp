@@ -7,6 +7,7 @@ import com.codewarrior.markets_coupons.model.VoucherCategory;
 import com.codewarrior.markets_coupons.service.CategoryDAO;
 import com.codewarrior.markets_coupons.service.MarketDAO;
 import com.codewarrior.markets_coupons.service.VoucherDAO;
+import com.codewarrior.markets_coupons.service.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -30,6 +31,7 @@ public class VoucherController {
     private final MarketDAO marketDAO = new MarketDAO();
     private  final CategoryDAO categoryDAO = new CategoryDAO();
     private  final VoucherDAO voucherDAO = new VoucherDAO();
+    private final UserDAO userDAO = new UserDAO();
 
     @FXML
     private Pane goBack;
@@ -76,9 +78,9 @@ public class VoucherController {
     }
 
     private void loadUsers() {
-        // This should be replaced with a database call
-        User users = new User(1,"salah","passwoard","user@gmail.com", "address", "+2165846321", null);
-        userField.setItems(FXCollections.observableArrayList(users));
+        // This should be replaced with a database call=
+        List<User> listOfUser = userDAO.getAllUsers();
+        userField.setItems(FXCollections.observableArrayList(listOfUser));
     }
 
     private void loadMarkets() {

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -9,19 +12,20 @@
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="925.0" prefWidth="1392.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codewarrior.markets_coupons.controller.VoucherDisplayController">
-    <TableView fx:id="voucherTable" layoutX="39.0" layoutY="34.0" onMouseClicked="#getVoucherInfo" prefHeight="787.0" prefWidth="527.0">
+    <TableView fx:id="voucherTable" layoutX="528.0" layoutY="14.0" onMouseClicked="#getVoucherInfo" prefHeight="622.0" prefWidth="780.0" AnchorPane.bottomAnchor="289.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="14.0">
         <columns>
             <TableColumn fx:id="colValue" text="Value" />
-            <TableColumn fx:id="colDate" text="Date" />
-            <TableColumn fx:id="colUsable" text="Usable" />
-            <TableColumn fx:id="colValid" text="Valid" />
+            <TableColumn fx:id="colDate" prefWidth="103.0" text="Date" />
+            <TableColumn fx:id="colUsable" prefWidth="71.0" text="Usable" />
+            <TableColumn fx:id="colValid" prefWidth="66.0" text="Valid" />
             <TableColumn fx:id="colGiven" text="Given" />
             <TableColumn fx:id="colMarket" text="Market" />
-            <TableColumn fx:id="colCategory" text="Category" />
-            <TableColumn fx:id="colUser" text="User" />
+            <TableColumn fx:id="colCategory" prefWidth="108.0" text="Category" />
+         <TableColumn fx:id="colUser" prefWidth="89.0" text="User" />
+         <TableColumn fx:id="colCode" prefWidth="149.0" text="Code" />
         </columns>
     </TableView>
-    <Pane layoutX="753.0" layoutY="34.0" prefHeight="410.0" prefWidth="368.0">
+    <Pane layoutX="118.0" layoutY="14.0" prefHeight="410.0" prefWidth="368.0">
         <children>
             <ImageView fx:id="voucherImage" fitHeight="384.0" fitWidth="348.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
         </children>
@@ -57,24 +61,17 @@
             </Pane>
         </children>
     </Pane>
-    <Pane layoutX="585.0" layoutY="494.0" prefHeight="418.0" prefWidth="726.0">
+    <Pane layoutX="26.0" layoutY="410.0" prefHeight="427.0" prefWidth="485.0">
         <children>
-            <TextField fx:id="updateValue" layoutX="61.0" layoutY="113.0" prefHeight="24.0" prefWidth="257.0" promptText="Voucher's value" />
-            <TextField fx:id="updateDate" layoutX="390.0" layoutY="113.0" prefHeight="24.0" prefWidth="257.0" promptText="Date" />
-            <TextField fx:id="updateUsable" layoutX="61.0" layoutY="192.0" prefHeight="24.0" prefWidth="257.0" promptText="Usable" />
-            <TextField fx:id="updateValid" layoutX="390.0" layoutY="192.0" prefHeight="24.0" prefWidth="257.0" promptText="Valid" />
-            <TextField fx:id="updateGiven" layoutX="61.0" layoutY="273.0" prefHeight="24.0" prefWidth="257.0" promptText="Given" />
-            <TextField fx:id="updateMarket" layoutX="61.0" layoutY="354.0" prefHeight="24.0" prefWidth="257.0" promptText="Market" />
-            <TextField fx:id="updateCategory" layoutX="390.0" layoutY="354.0" prefHeight="24.0" prefWidth="257.0" promptText="Category" />
-            <TextField fx:id="updateUser" layoutX="61.0" layoutY="435.0" prefHeight="24.0" prefWidth="257.0" promptText="User" />
-            <Label fx:id="controlValue" layoutX="61.0" layoutY="149.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlDate" layoutX="390.0" layoutY="149.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlUsable" layoutX="61.0" layoutY="228.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlValid" layoutX="390.0" layoutY="228.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlGiven" layoutX="61.0" layoutY="309.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlMarket" layoutX="61.0" layoutY="390.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlCategory" layoutX="390.0" layoutY="390.0" prefHeight="24.0" prefWidth="257.0" />
-            <Label fx:id="controlUser" layoutX="61.0" layoutY="471.0" prefHeight="24.0" prefWidth="257.0" />
+            <TextField fx:id="updateValue" layoutX="32.0" layoutY="38.0" prefHeight="24.0" prefWidth="221.0" promptText="Voucher's value" />
+         <DatePicker layoutX="273.0" layoutY="38.0" />
+         <CheckBox layoutX="98.0" layoutY="112.0" mnemonicParsing="false" text="validity" />
+         <CheckBox layoutX="98.0" layoutY="154.0" mnemonicParsing="false" text="owned By" />
+         <ComboBox layoutX="263.0" layoutY="118.0" prefWidth="150.0" promptText="usability" />
+         <ComboBox layoutX="32.0" layoutY="232.0" prefWidth="150.0" promptText="User" />
+         <ComboBox layoutX="263.0" layoutY="232.0" prefWidth="150.0" promptText="Category" />
+         <ComboBox layoutX="36.0" layoutY="302.0" prefWidth="150.0" promptText="Market" />
+         <TextField layoutX="243.0" layoutY="302.0" promptText="type ..." />
         </children>
     </Pane>
 </AnchorPane>

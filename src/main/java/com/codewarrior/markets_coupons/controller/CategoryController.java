@@ -42,9 +42,15 @@ public class CategoryController {
 
     @FXML
     void addButton(MouseEvent event) throws SQLException {
+        boolean isValid = true;
         String title = this.titleField.getText();
         String description = this.descriptionField.getText();
-        if ("purchase".equals(title) || "discount".equals(title) || !this.titleField.getText().isBlank() || !this.descriptionField.getText().isBlank()) {
+        if(title.isEmpty() || description.isEmpty()) {
+            isValid = false;
+        }
+        isValid = "purchase".equals(title) || "discount".equals(title);
+
+        if (isValid) {
             this.titleControll.setText("");
             this.descriptionControll.setText("");
 
