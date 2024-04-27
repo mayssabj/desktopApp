@@ -66,6 +66,23 @@ public class CategoryDAO {
         return null; // Return null if category with given ID not found
     }
 
+    public VoucherCategory getCategoryByTitle(String title) throws SQLException {
+        String sql = "SELECT id, titre, discription FROM voucher_category WHERE titre = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, title);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    System.out.println("ena fi vouchercategory DAO : id => "+ id);
+                    String titre = resultSet.getString("titre");
+                    String description = resultSet.getString("discription");
+                    return new VoucherCategory(id,titre, description);
+                }
+            }
+        }
+        return null; // Return null if category with given ID not found
+    }
+
     // Update operation
     public void updateCategory(VoucherCategory category) throws SQLException {
         String sql = "UPDATE voucher_category SET titre = ?, discription = ? WHERE id = ?";

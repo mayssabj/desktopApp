@@ -39,7 +39,7 @@ public class VoucherController {
     private Pane goBack;
 
     @FXML
-    private ComboBox<VoucherCategory> categoryField;
+    private ComboBox<String> categoryField;
 
     @FXML
     private DatePicker dateField;
@@ -104,10 +104,15 @@ public class VoucherController {
     private void loadCategories() throws SQLException {
         // This should be replaced with a database call
         List<VoucherCategory> categories = categoryDAO.getAllCategories();
-        categoryField.setItems(FXCollections.observableArrayList(categories));
+        List<String> listOfNames = new ArrayList<>();
+        for (VoucherCategory category : categories) {
+            listOfNames.add(category.getTitre());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(listOfNames);
+        categoryField.setItems((ObservableList<String>) items);
     }
     @FXML
-    void addVoucher(MouseEvent event) throws IOException {
+    void addVoucher(MouseEvent event) throws IOException, SQLException {
 
         boolean isValidity = true;
         LocalDate currentDate = LocalDate.now();
@@ -131,9 +136,11 @@ public class VoucherController {
             boolean isGiven = isGIvenBox.isSelected();
             User userFound = userDAO.getUserByEmail(userField.getValue());
             User user = userFound;
-           Market marketFound = marketDAO.getMarketByName(marketField.getValue());
+            Market marketFound = marketDAO.getMarketByName(marketField.getValue());
             Market market = marketFound;
-            VoucherCategory category = categoryField.getValue();
+            VoucherCategory categoryFound = categoryDAO.getCategoryByTitle(categoryField.getValue());
+            VoucherCategory category = categoryFound;
+
             String code = generateRandomString();
             Voucher voucher = new Voucher(value, code , selectedDate,usable,isValid,isGiven,market.getId(),category.getId(),user.getId());
             voucherDAO.addVoucher(voucher);
