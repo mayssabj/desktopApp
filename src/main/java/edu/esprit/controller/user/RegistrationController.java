@@ -131,9 +131,10 @@ public class RegistrationController implements Initializable {
             String hashedPassword = BCrypt.hashpw(passwordField.getText(), BCrypt.gensalt());
             user.setPassword(hashedPassword);
             user.setPhone(phoneField.getText());
-            user.setProfilePicture(getImagePath(profileImageView));
+            user.setPhoto(getImagePath(profileImageView));
             user.setAddress(addressField.getText());
             user.setGender(genderChoiceBox.getValue().toString());
+            user.setUsername(user.getEmail().split("@")[0]);
 
             UserService userService = new UserService();
             boolean registrationSuccessful = userService.registerUser(user);

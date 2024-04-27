@@ -14,15 +14,18 @@ import java.util.List;
 public class UserService {
     public boolean registerUser(User user) {
         Connection con = mydb.getInstance().getCon();
-        String query = "INSERT INTO users (email, password, phone, profile_picture, address, gender) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO user (email, password, phone, photo, address, gender,roles,username) VALUES (?, ?, ?, ?, ?, ?,?,?)";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, user.getEmail());
             pst.setString(2, user.getPassword());
             pst.setString(3, user.getPhone());
-            pst.setString(4, user.getProfilePicture());
+            pst.setString(4, user.getPhoto());
             pst.setString(5, user.getAddress());
             pst.setString(6, user.getGender());
+            pst.setString(7, user.getRolesAsString()); // Use serialized roles
+            pst.setString(8, user.getUsername());
+
 
             int rowsInserted = pst.executeUpdate();
             return rowsInserted > 0;
@@ -34,7 +37,7 @@ public class UserService {
 
     public User updateUserInfo(String phone, String address, int userId) {
         Connection con = mydb.getInstance().getCon();
-        String query = "UPDATE users SET phone = ?, address = ? WHERE id = ?";
+        String query = "UPDATE user SET phone = ?, address = ? WHERE id = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, phone);
@@ -54,7 +57,7 @@ public class UserService {
 
     public User updateUserEmail(String newEmail, int userId) {
         Connection con = mydb.getInstance().getCon();
-        String query = "UPDATE users SET email = ? WHERE id = ?";
+        String query = "UPDATE user SET email = ? WHERE id = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, newEmail);
@@ -73,7 +76,7 @@ public class UserService {
 
     public User updateUserPassword(String newPassword, int userId) {
         Connection con = mydb.getInstance().getCon();
-        String query = "UPDATE users SET password = ? WHERE id = ?";
+        String query = "UPDATE user SET password = ? WHERE id = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, newPassword);
@@ -92,7 +95,7 @@ public class UserService {
 
     private User getUserById(int userId) {
         Connection con = mydb.getInstance().getCon();
-        String query = "SELECT * FROM users WHERE id = ?";
+        String query = "SELECT * FROM user WHERE id = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, userId);
@@ -104,7 +107,7 @@ public class UserService {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setPhone(rs.getString("phone"));
-                user.setProfilePicture(rs.getString("profile_picture"));
+                user.setPhoto(rs.getString("photo"));
                 user.setAddress(rs.getString("address"));
                 return user;
             }
@@ -117,7 +120,7 @@ public class UserService {
 
     public boolean isEmailUsed(String email) {
         Connection con = mydb.getInstance().getCon();
-        String query = "SELECT COUNT(*) FROM users WHERE email = ?";
+        String query = "SELECT COUNT(*) FROM user WHERE email = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, email);
@@ -133,7 +136,7 @@ public class UserService {
 
     public boolean updateUserProfilePicture(String profilePicture, int userId) {
         Connection con = mydb.getInstance().getCon();
-        String query = "UPDATE users SET profile_picture = ? WHERE id = ?";
+        String query = "UPDATE user SET photo = ? WHERE id = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, profilePicture);
@@ -149,7 +152,7 @@ public class UserService {
 
     public boolean deleteUser(int userId) {
         Connection con = mydb.getInstance().getCon();
-        String query = "DELETE FROM users WHERE id = ?";
+        String query = "DELETE FROM user WHERE id = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, userId);

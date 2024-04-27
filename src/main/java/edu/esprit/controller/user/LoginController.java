@@ -1,6 +1,9 @@
 package edu.esprit.controller.user;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import edu.esprit.entities.User;
+import edu.esprit.enums.Role;
 import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.Session;
 import edu.esprit.utils.ValidationUtils;
@@ -19,6 +22,7 @@ import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
 
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,6 +84,7 @@ public class LoginController implements Initializable {
             User user = checkCredentials(emailField.getText(), passwordField.getText());
             if (user != null) {
                 System.out.println("Login successful");
+                System.out.println(user);
                 // Set the current user in the session
                 Session.getInstance().setCurrentUser(user);
                 // Proceed with login (e.g., navigate to another page)
@@ -95,7 +100,7 @@ public class LoginController implements Initializable {
 
     private User checkCredentials(String email, String password) {
         Connection con = mydb.getInstance().getCon();
-        String query = "SELECT * FROM users WHERE email = ?";
+        String query = "SELECT * FROM user WHERE email = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, email);
@@ -110,8 +115,17 @@ public class LoginController implements Initializable {
                     user.setEmail(rs.getString("email"));
                     user.setPassword(hashedPassword);
                     user.setPhone(rs.getString("phone"));
-                    user.setProfilePicture(rs.getString("profile_picture"));
+                    user.setPhoto(rs.getString("photo"));
                     user.setAddress(rs.getString("address"));
+                    user.setGender(rs.getString("gender"));
+                    user.setRoles(parseRoles(rs.getString("roles")));
+                    user.setUsername(rs.getString("username"));
+                    user.setEnabled(rs.getBoolean("is_enabled"));
+                    user.setEmailVerificationToken(rs.getString("email_verification_token"));
+                    user.setVerified(rs.getBoolean("is_verified"));
+                    user.setResetToken(rs.getString("reset_token"));
+                    user.setAvertissementsCount(rs.getInt("avertissements_count"));
+                    user.setReputation(rs.getObject("reputation") != null ? rs.getInt("reputation") : null); // Handle possible null value
                     return user;
                 }
             }
@@ -120,6 +134,14 @@ public class LoginController implements Initializable {
         }
         return null; // User not found or error
     }
+
+    // Helper method to parse roles JSON from database into List<Role>
+    private List<Role> parseRoles(String jsonRoles) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Role>>(){}.getType();
+        return gson.fromJson(jsonRoles, type);
+    }
+
 
 
 
