@@ -23,6 +23,8 @@ public class User {
     private int avertissementsCount;
     private Integer reputation;  // Using Integer to allow null values
 
+    private VerificationCode verificationCode;
+
     public User() {
         // Default constructor initializes roles with a default value
         this.roles = new ArrayList<>(Arrays.asList(Role.ROLE_USER));
@@ -149,6 +151,14 @@ public class User {
         this.reputation = reputation;
     }
 
+    public VerificationCode getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(VerificationCode verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -167,6 +177,7 @@ public class User {
                 ", resetToken='" + resetToken + '\'' +
                 ", avertissementsCount=" + avertissementsCount +
                 ", reputation=" + reputation +
+                ", verificationCode=" + verificationCode +
                 '}';
     }
 

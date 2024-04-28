@@ -3,7 +3,9 @@ package edu.esprit.controller.user;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import edu.esprit.entities.User;
+import edu.esprit.entities.VerificationCode;
 import edu.esprit.enums.Role;
+import edu.esprit.services.UserService;
 import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.Session;
 import edu.esprit.utils.ValidationUtils;
@@ -27,6 +29,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -87,8 +90,13 @@ public class LoginController implements Initializable {
                 System.out.println(user);
                 // Set the current user in the session
                 Session.getInstance().setCurrentUser(user);
-                // Proceed with login (e.g., navigate to another page)
-                NavigationUtil.redirectTo("/user/updateUser.fxml", event);
+                if(user.isVerified()){
+                    // Proceed with login (e.g., navigate to another page)
+                    NavigationUtil.redirectTo("/user/updateUser.fxml", event);
+                }else{
+                    NavigationUtil.redirectTo("/user/verificationCode.fxml", event);
+                }
+
             } else {
                 loginMessageLabel.setText("Email or password incorrect");
                 loginMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
@@ -98,41 +106,25 @@ public class LoginController implements Initializable {
     }
 
 
-    private User checkCredentials(String email, String password) {
+    public User checkCredentials(String email, String password) {
         Connection con = mydb.getInstance().getCon();
-        String query = "SELECT * FROM user WHERE email = ?";
+        String query = "SELECT id, password FROM user WHERE email = ?";
 
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setString(1, email);
-
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                String hashedPassword = rs.getString("password");
-                if (BCrypt.checkpw(password, hashedPassword)) { // Check the hashed password
-                    // Create and return the User object
-                    User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setEmail(rs.getString("email"));
-                    user.setPassword(hashedPassword);
-                    user.setPhone(rs.getString("phone"));
-                    user.setPhoto(rs.getString("photo"));
-                    user.setAddress(rs.getString("address"));
-                    user.setGender(rs.getString("gender"));
-                    user.setRoles(parseRoles(rs.getString("roles")));
-                    user.setUsername(rs.getString("username"));
-                    user.setEnabled(rs.getBoolean("is_enabled"));
-                    user.setEmailVerificationToken(rs.getString("email_verification_token"));
-                    user.setVerified(rs.getBoolean("is_verified"));
-                    user.setResetToken(rs.getString("reset_token"));
-                    user.setAvertissementsCount(rs.getInt("avertissements_count"));
-                    user.setReputation(rs.getObject("reputation") != null ? rs.getInt("reputation") : null); // Handle possible null value
-                    return user;
+                String storedPassword = rs.getString("password");
+                if (BCrypt.checkpw(password, storedPassword)) {
+                    UserService userService = new UserService();
+                    // If password matches, fetch the complete user details using the dedicated method
+                    return userService.getUserById(rs.getInt("id"));
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // User not found or error
+        return null; // User not found or password mismatch
     }
 
     // Helper method to parse roles JSON from database into List<Role>
