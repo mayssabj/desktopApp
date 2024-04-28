@@ -6,6 +6,7 @@ module edu.esprit {
     requires jbcrypt;
     exports edu.esprit.enums to com.google.gson;
     requires com.google.gson;
+    requires javax.mail;
 
     opens edu.esprit.controller.user to javafx.fxml;
 

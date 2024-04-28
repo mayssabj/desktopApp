@@ -1,6 +1,7 @@
 package edu.esprit.controller.user;
 
 import edu.esprit.entities.User;
+import edu.esprit.services.MailService;
 import edu.esprit.services.UserService;
 import edu.esprit.utils.FileChooserUtil;
 import edu.esprit.utils.NavigationUtil;
@@ -140,7 +141,9 @@ public class RegistrationController implements Initializable {
             boolean registrationSuccessful = userService.registerUser(user);
 
             if (registrationSuccessful) {
-                registerMessageLabel.setText("Registration successful.");
+                MailService mailService = new MailService();
+                mailService.sendEmail(user.getEmail(),"Email verification","Please verify your email.");
+                registerMessageLabel.setText("Registration successful, Please verify your email.");
                 registerMessageLabel.setStyle("-fx-text-fill: green; -fx-font-size: 14px;"); // Set text color to green
                 registerMessageLabel.setVisible(true);
             } else {
