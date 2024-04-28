@@ -25,7 +25,7 @@
                             </ImageView>
                         </graphic>
                     </Button>
-                    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Ask a question" />
+                    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Modify your question:" />
                 </HBox>
                 <TextField fx:id="titreField" prefHeight="21.0" prefWidth="384.0" promptText="Title" styleClass="search-box">
                     <padding>
@@ -39,7 +39,7 @@
                     </padding>
                 </TextArea>
                 <Text fx:id="errorDescription" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="367.7367057800293" />
-                <Button fx:id="buttonAjouter" onAction="#ajouterQuestion" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="ASK" />
+                <Button fx:id="btn_modify" onAction="#updateQuestion" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Modify" />
             </children>
         </VBox>
     </children>

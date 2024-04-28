@@ -1,5 +1,6 @@
 package Services;
 
+import entities.Answer;
 import entities.Question;
 import utils.Db;
 import java.sql.*;
@@ -15,14 +16,16 @@ public class QuestionCRUD {
         connection = Db.getInstance().getCnx();
     }
 
-    public void ajouter(Question question) throws SQLException {
-        String req = "INSERT INTO `question`(`userId`, `title`, `body`, `createdAt`) VALUES (?, ?, ?, ?)";
+    public void ajouterQuestion(Question question) {
+        String req = "INSERT INTO `question` (`userId`, `title`, `body`, `createdAt`) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
-            pst.setInt(1, 1); // User ID is always 1
+            pst.setInt(1, question.getUserId());
             pst.setString(2, question.getTitle());
             pst.setString(3, question.getBody());
-            pst.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now())); // Created at is always now
+            pst.setTimestamp(4, Timestamp.valueOf(question.getCreatedAt()));
             pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -35,6 +38,8 @@ public class QuestionCRUD {
             pst.setTimestamp(4, Timestamp.valueOf(question.getCreatedAt()));
             pst.setInt(5, question.getId());
             pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -43,23 +48,30 @@ public class QuestionCRUD {
         try (PreparedStatement pst = connection.prepareStatement(req)) {
             pst.setInt(1, id);
             pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public List<Question> afficher() throws SQLException {
         List<Question> questions = new ArrayList<>();
-        String req = "SELECT * FROM `question`";
-        try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery(req)) {
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                int userId = rs.getInt("userId");
-                String title = rs.getString("title");
-                String body = rs.getString("body");
-                LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
-                questions.add(new Question(id, userId, title, body, createdAt, null));
+        String query = "SELECT q.*, u.username, a.body as answerBody FROM question q INNER JOIN user u ON q.userId = u.id LEFT JOIN answer a ON q.answerId = a.id";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int userId = rs.getInt("userId");
+            String username = rs.getString("username");
+            String title = rs.getString("title");
+            String body = rs.getString("body");
+            LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
+            Answer answer = null;
+            if (rs.getInt("answerId") != 0) {
+                answer = new Answer(rs.getInt("answerId"), rs.getString("answerBody"));
             }
+            questions.add(new Question(id, userId, username, title, body, createdAt, answer));
         }
+
         return questions;
     }
 }

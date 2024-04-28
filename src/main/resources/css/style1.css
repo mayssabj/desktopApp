@@ -1,32 +1,48 @@
-.primary_color{
+.primary-color {
     -fx-background-color: #1f1f1f;
 }
 
-.secondary-color{
+.secondary-color {
     -fx-background-color: #121212;
 }
 
-.selected{
-    -fx-border-color: #1ED760;
-    -fx-border-width: 0 0 0 5
+.selected {
+    -fx-background-color: #1ED760;
+    -fx-text-fill: white;
 }
 
-.top-border{
+.top-border {
     -fx-border-color: #A1A1A1;
     -fx-border-width: 1 0 0 0;
 }
 
-.search-container{
-    -fx-background-color: #fff;
-    -fx-background-radius: 100;
-}
 
-.upgrade-button{
-    -fx-background-color: rgba(0,0,0,0);
+
+.upgrade-button {
+    -fx-background-color: rgba(0, 0, 0, 0);
     -fx-border-color: #fff;
     -fx-border-radius: 50;
 }
 
-.scroll-pane > .viewport{
+.scroll-pane > .viewport {
     -fx-background-color: #e7e5e5;
+}
+
+/* List View Styles */
+.list-view {
+    -fx-background-color: #1f1f1f; /* Same as .primary_color */
+    -fx-control-inner-background: #1f1f1f; /* Same as .primary_color */
+}
+
+.list-view .list-cell {
+    -fx-text-fill: #fff; /* White text */
+    -fx-padding: 10px; /* Padding around text */
+}
+
+.list-view .list-cell:filled:selected {
+    -fx-background-color: #1ED760; /* Same as .selected */
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #121212; /* Same as .secondary-color */
 }

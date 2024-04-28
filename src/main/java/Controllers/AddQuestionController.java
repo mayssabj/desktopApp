@@ -33,28 +33,49 @@ public class AddQuestionController {
             String titre = titreField.getText();
             String body = descriptionArea.getText();
 
-            Question question = new Question(0, 1, titre, body, LocalDateTime.now(), null);
+            Question question = new Question(0, 1, "", titre, body, LocalDateTime.now(), null);
+            QuestionCRUD questionCRUD = new QuestionCRUD();
+            questionCRUD.ajouterQuestion(question); // changed from 'ajouter' to 'ajouterQuestion'
+        }
+    }
+
+    private Question selectedQuestion;
+
+    public void setSelectedQuestion(Question selectedQuestion) {
+        this.selectedQuestion = selectedQuestion;
+    }
+
+
+    @FXML
+    public void updateQuestion(ActionEvent event) {
+        if (isInputValid() && selectedQuestion != null) {
+            String titre = titreField.getText();
+            String body = descriptionArea.getText();
+
+            selectedQuestion.setTitle(titre);
+            selectedQuestion.setBody(body);
+
             QuestionCRUD questionCRUD = new QuestionCRUD();
             try {
-                questionCRUD.ajouter(question);
+                questionCRUD.modifier(selectedQuestion);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private boolean isInputValid() {
+    boolean isInputValid() {
         boolean isValid = true;
 
         if (titreField.getText().isEmpty()) {
-            errorTitre.setText("Title is required");
+            errorTitre.setText("Enter a valid title for your question!");
             isValid = false;
         } else {
             errorTitre.setText("");
         }
 
         if (descriptionArea.getText().isEmpty()) {
-            errorDescription.setText("Description is required");
+            errorDescription.setText("Enter a valid body for your question!");
             isValid = false;
         } else {
             errorDescription.setText("");
@@ -70,5 +91,6 @@ public class AddQuestionController {
             stage.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }    }
+        }
+    }
 }

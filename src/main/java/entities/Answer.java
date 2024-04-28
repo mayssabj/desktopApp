@@ -16,6 +16,11 @@ public class Answer {
         this.body = body;
         this.createdAt = createdAt;
     }
+    public Answer(int id, String body) {
+        this.id = id;
+        this.body = body;
+    }
+
 
     public int getId() {
         return id;
@@ -56,4 +61,9 @@ public class Answer {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+    @Override
+    public String toString() {
+        return  "Response: " + body;
+    }
+
 }
