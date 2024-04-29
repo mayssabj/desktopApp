@@ -8,6 +8,7 @@ import edu.esprit.entities.User;
 import edu.esprit.services.PostCRUD;
 import edu.esprit.services.UserService;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 
 public class showPostAdminController {
 
@@ -46,9 +48,50 @@ public class showPostAdminController {
 
     @FXML
     private void fnReloadData() throws SQLException {
-        int postIndex = 0;
+        int postIndex = 1; // Start post index from 1 to accommodate the header row
         anchorPane.getChildren().clear();
         List<Post> postList = loadDataFromDatabase();
+
+        // Create header row
+        HBox headerRow = new HBox();
+        headerRow.setSpacing(5);
+        headerRow.setPrefWidth(1000);
+        headerRow.setStyle("-fx-background-color: #6b9eef; -fx-padding: 10px; -fx-spacing: 10px;");
+
+        // Header labels
+        Label titleLabel = new Label("Titre");
+        titleLabel.setPrefWidth(150);
+        titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(titleLabel);
+
+        Label dateLabel = new Label("Date");
+        dateLabel.setPrefWidth(150);
+        dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(dateLabel);
+
+        Label localLabel = new Label("Local");
+        localLabel.setPrefWidth(150);
+        localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(localLabel);
+
+        Label sizeLabel = new Label("Type");
+        sizeLabel.setPrefWidth(150);
+        sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(sizeLabel); // Add bold style
+
+        Label desLabel = new Label("Description");
+        desLabel.setPrefWidth(150);
+        desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(desLabel);
+
+        Label userLabel = new Label("User");
+        userLabel.setPrefWidth(150);
+        userLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(userLabel);
+
+        // Add header row to the AnchorPane
+        anchorPane.getChildren().add(headerRow);
+        AnchorPane.setTopAnchor(headerRow, 50.0); // Adjust vertical position as needed
 
         for (Post post : postList) {
             HBox postEntry = createPostEntry(post);
@@ -63,19 +106,23 @@ public class showPostAdminController {
         hbox.setSpacing(5);
         hbox.setPrefWidth(1000);
 
-        Label titleLabel = new Label("Titre : "+post.getTitre());
+        Label titleLabel = new Label( post.getTitre());
+        titleLabel.setPrefWidth(150);
         titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(titleLabel);
 
-        Label dateLabel = new Label("Date : " + post.getDate().toString());
+        Label dateLabel = new Label( post.getDate().toString());
+        dateLabel.setPrefWidth(150);
         dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
         hbox.getChildren().add(dateLabel);
 
-        Label LocalLabel = new Label("Titre : "+post.getPlace());
-        LocalLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
-        hbox.getChildren().add(LocalLabel);
+        Label localLabel = new Label( post.getPlace());
+        localLabel.setPrefWidth(150);
+        localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
+        hbox.getChildren().add(localLabel);
 
-        Label sizeLabel = new Label("Type: " + post.getType());
+        Label sizeLabel = new Label( post.getType().toString());
+        sizeLabel.setPrefWidth(150);
         sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; " + "-fx-font-weight: bold;"); // Add bold style
 
         if ("LOST".equals(post.getType())) {
@@ -86,27 +133,19 @@ public class showPostAdminController {
 
         hbox.getChildren().add(sizeLabel);
 
-        Label deslabel = new Label("Description : " + post.getDescription().toString());
-        deslabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
-        hbox.getChildren().add(deslabel);
+        Label desLabel = new Label( post.getDescription());
+        desLabel.setPrefWidth(150);
+        desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
+        hbox.getChildren().add(desLabel);
 
         int id = post.getuser_id();
-        UserService userService=new UserService();
-        User user= userService.getUserById(id);
+        UserService userService = new UserService();
+        User user = userService.getUserById(id);
 
-        Label nameuser = new Label("User : " + user.getEmail().toString());
+        Label nameuser = new Label(user.getEmail().toString());
+        nameuser.setPrefWidth(150);
         nameuser.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
         hbox.getChildren().add(nameuser);
-
-        ImageView pinImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/icons8_pin_50px.png")));
-        pinImageView.setFitWidth(18);
-        pinImageView.setFitHeight(22);
-        hbox.getChildren().add(pinImageView);
-
-        ImageView ellipsisImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/icons8_ellipsis_50px.png")));
-        ellipsisImageView.setFitWidth(18);
-        ellipsisImageView.setFitHeight(22);
-        hbox.getChildren().add(ellipsisImageView);
 
         hbox.setStyle("-fx-background-color: #FEFFFD; -fx-background-radius: 10px; -fx-padding: 10px; -fx-spacing: 10px;"); // Add background color and padding
 

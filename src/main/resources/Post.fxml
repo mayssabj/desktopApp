@@ -212,7 +212,7 @@
               <VBox.margin>
                 <Insets left="20.0" right="20.0" top="10.0" />
               </VBox.margin>
-              <Pagination fx:id="pagination" prefHeight="730.0" prefWidth="1059.0" />
+              <Pagination fx:id="pagination" prefHeight="730.0" prefWidth="1059.0" id="pagination"/>
             </HBox>
 
             <GridPane fx:id="grid" prefHeight="20.0" prefWidth="40.0" />

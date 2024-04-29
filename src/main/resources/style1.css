@@ -309,3 +309,41 @@
 .like-button {
     /* Add your custom styling for the like button */
 }
+
+
+
+
+.pagination {
+    -fx-page-information-visible: false; /* Hide the page information text */
+    -fx-alignment: center; /* Center align the pagination */
+}
+
+.pagination-button {
+    -fx-background-color: transparent; /* Set the background color of pagination buttons to transparent */
+    -fx-shape: null; /* Remove the shape around pagination buttons */
+}
+
+.pagination-button:hover {
+    -fx-background-color: #f0f0f0; /* Change background color of pagination buttons on hover */
+}
+
+.pagination .arrow-button {
+    -fx-background-color: transparent; /* Set the background color of arrow buttons to transparent */
+    -fx-shape: null; /* Remove the shape around arrow buttons */
+}
+
+.pagination .arrow-button:hover {
+    -fx-background-color: #f0f0f0; /* Change background color of arrow buttons on hover */
+}
+
+.pagination .arrow-button:disabled {
+    -fx-opacity: 0.5; /* Reduce opacity of disabled arrow buttons */
+}
+
+.pagination .page-count {
+    -fx-font-size: 14px; /* Set font size for page count */
+}
+
+.pagination .page-count-label {
+    -fx-font-size: 14px; /* Set font size for page count label */
+}
