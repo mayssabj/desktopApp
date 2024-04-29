@@ -5,11 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import edu.esprit.entities.User;
 import edu.esprit.entities.VerificationCode;
 import edu.esprit.enums.Role;
+import edu.esprit.services.MailService;
 import edu.esprit.services.UserService;
-import edu.esprit.utils.NavigationUtil;
-import edu.esprit.utils.Session;
-import edu.esprit.utils.ValidationUtils;
-import edu.esprit.utils.mydb;
+import edu.esprit.utils.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +22,7 @@ import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.sql.Connection;
@@ -51,6 +50,11 @@ public class LoginController implements Initializable {
     private VBox emailErrorsContainer;
     @FXML
     private VBox passwordErrorsContainer;
+
+    @FXML
+    private TextField forgetEmailField;
+    @FXML
+    private Label forgetMessageLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -138,6 +142,9 @@ public class LoginController implements Initializable {
 
 
 
+
+
+
     private void displayErrors(VBox container, List<String> errors) {
         for (String error : errors) {
             Label errorLabel = new Label(error);
@@ -201,6 +208,67 @@ public class LoginController implements Initializable {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+
+    @FXML
+    public void openForgotPasswordPage(MouseEvent event) {
+        try {
+            // Load the forgot password form FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/forgetPassword.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage from the event
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the new scene to the stage
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception (optional: show an error dialog)
+            showAlert(Alert.AlertType.ERROR, (Stage) ((Node)event.getSource()).getScene().getWindow(), "Load Error", "Cannot load the forgot password page.");
+        }
+    }
+
+
+
+    @FXML
+    public void handleForgotPassword(ActionEvent event) {
+        String email = forgetEmailField.getText();
+        List<String> emailErrors = ValidationUtils.validateEmail(email);
+        if (!emailErrors.isEmpty()) {
+            displayErrors(emailErrorsContainer, emailErrors);
+            return;
+        }
+
+        UserService userService = new UserService();
+        User user = userService.findUserByEmail(email);
+        System.out.println(user+ "🟥🟥🟥🟥🟥🟥");
+        if (user != null) {
+            // Generate a verification code instead of a new password
+            String verificationCode = VerificationCodeUtil.generateVerificationCode();
+            // Create a verification code object and associate it with the user
+            VerificationCode code = new VerificationCode(user, verificationCode, 30); // Valid for 30 minutes
+
+            if (userService.updateVerificationCode(user.getId(), code)) {
+                MailService mailService = new MailService();
+                Session.getInstance().setResetPasswordEmail(email);
+                // Send the verification code instead of the password
+                mailService.sendEmail(user.getEmail(), "Password Reset", "Your password reset code is: " + verificationCode);
+                forgetMessageLabel.setText("Password reset code sent to your email.");
+                forgetMessageLabel.setStyle("-fx-text-fill: green;");
+                NavigationUtil.redirectTo("/user/verificationCodePassword.fxml", event);
+            } else {
+                forgetMessageLabel.setText("Failed to update password reset code. Try again later.");
+                forgetMessageLabel.setStyle("-fx-text-fill: red;");
+            }
+        } else {
+            forgetMessageLabel.setText("No account found with that email.");
+            forgetMessageLabel.setStyle("-fx-text-fill: red;");
         }
     }
 

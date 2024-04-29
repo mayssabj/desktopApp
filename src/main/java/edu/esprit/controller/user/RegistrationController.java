@@ -161,7 +161,7 @@ public class RegistrationController implements Initializable {
         }
     }
 
-    private void displayErrors(VBox container, List<String> errors) {
+    public void displayErrors(VBox container, List<String> errors) {
         for (String error : errors) {
             Label errorLabel = new Label(error);
             errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12;"); // Increase font size to 14px

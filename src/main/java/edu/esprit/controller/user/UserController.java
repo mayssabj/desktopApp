@@ -192,10 +192,11 @@ public class UserController implements Initializable {
         User currentUser = Session.getInstance().getCurrentUser();
         if (currentUser != null && BCrypt.checkpw(oldPassword, currentUser.getPassword())) {
             String hashedNewPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-            User updatedUser = userService.updateUserPassword(hashedNewPassword, currentUser.getId());
-            if (updatedUser != null) {
+            boolean updatedUser = userService.updateUserPassword(hashedNewPassword, currentUser.getId());
+            if (updatedUser) {
                 // Update the current user in the session
-                Session.getInstance().setCurrentUser(updatedUser);
+                User newUser = userService.getUserById(currentUser.getId());
+                Session.getInstance().setCurrentUser(newUser);
                 displayPasswordUpdateSuccess("Password changed successfully.");
                 oldPasswordField.setText(""); // Clear the old password field
                 newPasswordField.setText(""); // Clear the new password field

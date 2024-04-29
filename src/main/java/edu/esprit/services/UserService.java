@@ -15,6 +15,61 @@ import java.sql.*;
 import java.util.List;
 
 public class UserService {
+
+
+    public User findUserBy(String identifier, Object value) {
+        String column = identifier.equals("email") ? "email" : "id";
+        String query = "SELECT u.*, vc.id as vc_id, vc.user_id, vc.code, vc.expiry_date " +
+                "FROM user u LEFT JOIN verification_code vc ON u.id = vc.user_id " +
+                "WHERE u." + column + " = ? LIMIT 1";
+        try (Connection con = mydb.getInstance().getCon();
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setObject(1, value);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return extractUserFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private User extractUserFromResultSet(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        user.setPhone(rs.getString("phone"));
+        user.setPhoto(rs.getString("photo"));
+        user.setAddress(rs.getString("address"));
+        user.setGender(rs.getString("gender"));
+        user.setRoles(parseRoles(rs.getString("roles")));
+        user.setUsername(rs.getString("username"));
+        user.setEnabled(rs.getBoolean("is_enabled"));
+        user.setEmailVerificationToken(rs.getString("email_verification_token"));
+        user.setVerified(rs.getBoolean("is_verified"));
+        user.setResetToken(rs.getString("reset_token"));
+        user.setAvertissementsCount(rs.getInt("avertissements_count"));
+        user.setReputation(rs.getObject("reputation") != null ? rs.getInt("reputation") : null);
+
+        if (rs.getString("code") != null) {
+            VerificationCode verificationCode = new VerificationCode();
+            verificationCode.setId(rs.getInt("vc_id"));
+            verificationCode.setCode(rs.getString("code"));
+            verificationCode.setExpiryDate(rs.getTimestamp("expiry_date").toLocalDateTime());
+            user.setVerificationCode(verificationCode);
+        }
+        return user;
+    }
+
+    public User getUserById(int userId) {
+        return findUserBy("id", userId);
+    }
+
+    public User findUserByEmail(String email) {
+        return findUserBy("email", email);
+    }
     public boolean registerUser(User user, VerificationCode verificationCode) {
         Connection con = mydb.getInstance().getCon();
         try {
@@ -113,7 +168,7 @@ public class UserService {
         return null;
     }
 
-    public User updateUserPassword(String newPassword, int userId) {
+    public boolean updateUserPassword(String newPassword, int userId) {
         Connection con = mydb.getInstance().getCon();
         String query = "UPDATE user SET password = ? WHERE id = ?";
 
@@ -124,53 +179,14 @@ public class UserService {
             int rowsUpdated = pst.executeUpdate();
             if (rowsUpdated > 0) {
                 // Return the updated user object
-                return getUserById(userId);
+                return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 
-    public User getUserById(int userId) {
-        Connection con = mydb.getInstance().getCon();
-        String query = "SELECT u.*, vc.id as vc_id, vc.code, vc.expiry_date " +
-                "FROM user u LEFT JOIN verification_code vc ON u.id = vc.user_id WHERE u.id = ?";
-        try (PreparedStatement pst = con.prepareStatement(query)) {
-            pst.setInt(1, userId);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setPhone(rs.getString("phone"));
-                user.setPhoto(rs.getString("photo"));
-                user.setAddress(rs.getString("address"));
-                user.setGender(rs.getString("gender"));
-                user.setRoles(parseRoles(rs.getString("roles")));
-                user.setUsername(rs.getString("username"));
-                user.setEnabled(rs.getBoolean("is_enabled"));
-                user.setEmailVerificationToken(rs.getString("email_verification_token"));
-                user.setVerified(rs.getBoolean("is_verified"));
-                user.setResetToken(rs.getString("reset_token"));
-                user.setAvertissementsCount(rs.getInt("avertissements_count"));
-                user.setReputation(rs.getObject("reputation") != null ? rs.getInt("reputation") : null);
-
-                if (rs.getString("code") != null) {
-                    VerificationCode verificationCode = new VerificationCode();
-                    verificationCode.setId(rs.getInt("vc_id"));
-                    verificationCode.setCode(rs.getString("code"));
-                    verificationCode.setExpiryDate(rs.getTimestamp("expiry_date").toLocalDateTime());
-                    user.setVerificationCode(verificationCode);
-                }
-                return user;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 
 
@@ -281,5 +297,8 @@ public class UserService {
             return false;
         }
     }
+
+
+
 
 }
