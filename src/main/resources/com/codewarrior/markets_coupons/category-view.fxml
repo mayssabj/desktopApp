@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codewarrior.markets_coupons.controller.CategoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codewarrior.markets_coupons.controller.CategoryController">
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="114.0" prefWidth="840.0" style="-fx-background-color: gray;">
          <children>
@@ -82,5 +82,6 @@
             <Label fx:id="titleControll" layoutX="24.0" layoutY="73.0" prefHeight="53.0" prefWidth="254.0" textFill="RED" />
          </children>
       </Pane>
+      <Label layoutX="678.0" layoutY="492.0" prefHeight="33.0" prefWidth="180.0" text="Powred By CodeWarriors" />
    </children>
 </AnchorPane>

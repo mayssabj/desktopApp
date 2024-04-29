@@ -8,6 +8,7 @@ import com.codewarrior.markets_coupons.service.CategoryDAO;
 import com.codewarrior.markets_coupons.service.MarketDAO;
 import com.codewarrior.markets_coupons.service.UserDAO;
 import com.codewarrior.markets_coupons.service.VoucherDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +31,9 @@ import java.util.ResourceBundle;
 
 public class VoucherDisplayController implements Initializable {
     private final VoucherDAO voucherDAO = new VoucherDAO();
+    private final CategoryDAO categoryDAO = new CategoryDAO();
+    private final UserDAO userDAO = new UserDAO();
+    private final MarketDAO marketDAO = new MarketDAO();
 
     @FXML
     private TableView<Voucher> voucherTable;
@@ -43,19 +48,19 @@ public class VoucherDisplayController implements Initializable {
     private TableColumn<Voucher, Integer> colUsable;
 
     @FXML
-    private TableColumn<Voucher, Boolean> colValid;
+    private TableColumn<Voucher, String> colValid;
 
     @FXML
-    private TableColumn<Voucher, Boolean> colGiven;
+    private TableColumn<Voucher, String> colGiven;
 
     @FXML
-    private TableColumn<Voucher, Market> colMarket;
+    private TableColumn<Voucher, String> colMarket;
 
     @FXML
-    private TableColumn<Voucher, VoucherCategory> colCategory;
+    private TableColumn<Voucher, String> colCategory;
 
     @FXML
-    private TableColumn<Voucher, User> colUser;
+    private TableColumn<Voucher, String> colUser;
 
     @FXML
     private TableColumn<Voucher, String> colCode;
@@ -112,12 +117,100 @@ public class VoucherDisplayController implements Initializable {
         colValue.setCellValueFactory(new PropertyValueFactory<>("value"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("expiration"));
         colUsable.setCellValueFactory(new PropertyValueFactory<>("usageLimit"));
-        colValid.setCellValueFactory(new PropertyValueFactory<>("valid"));
-        colGiven.setCellValueFactory(new PropertyValueFactory<>("givenToUser"));
-        colMarket.setCellValueFactory(new PropertyValueFactory<>("marketRelatedId"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("categoryId"));
-        colUser.setCellValueFactory(new PropertyValueFactory<>("userWonId"));
         colCode.setCellValueFactory(new PropertyValueFactory<>("Code"));
+        colMarket.setCellValueFactory(new PropertyValueFactory<>("marketRelatedId"));
+        colValid.setCellValueFactory(cellData -> {
+            boolean isValid = cellData.getValue().isValid();
+            return isValid ? new SimpleStringProperty("valid") : new SimpleStringProperty("not valid");
+        });
+        colValid.setCellFactory(column -> {
+            return new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty || item == null) {
+                        setText("");
+                    } else {
+                        setText(item);
+                        if (item.equals("valid")) {
+                            setTextFill(Color.GREEN); // Customize text color for valid vouchers
+                        } else {
+                            setTextFill(Color.RED); // Customize text color for invalid vouchers
+                        }
+                    }
+                }
+            };
+        });
+
+        colGiven.setCellValueFactory(cellData -> {
+            boolean isGivenToUser = cellData.getValue().isGivenToUser();
+            return isGivenToUser ? new SimpleStringProperty("given") : new SimpleStringProperty("not given");
+        });
+
+        colGiven.setCellFactory(column -> {
+            return new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty || item == null) {
+                        setText("");
+                    } else {
+                        setText(item);
+                        if (item.equals("given")) {
+                            setTextFill(Color.GREEN); // Customize text color for valid vouchers
+                        } else {
+                            setTextFill(Color.RED); // Customize text color for invalid vouchers
+                        }
+                    }
+                }
+            };
+        });
+
+        colMarket.setCellValueFactory(cellData -> {
+            int id = cellData.getValue().getMarketRelatedId();
+            System.out.println("market id provided by cell :> { "+id+" }");
+            Market market;
+            market = marketDAO.getMarketById(id);
+            if (market != null) {
+                return new SimpleStringProperty(market.getName());
+            } else {
+                // If user is not found (or any error handling), return an empty string
+                return new SimpleStringProperty("");
+            }
+        });
+
+        colCategory.setCellValueFactory(cellData -> {
+            int id = cellData.getValue().getCategoryId();
+            System.out.println("category id provided by cell :> { "+id+" }");
+            VoucherCategory category = new VoucherCategory();
+            try {
+                category = categoryDAO.getCategoryById(id);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if (category != null) {
+                // If user is found, return the email as an ObservableValue<String>
+                return new SimpleStringProperty(category.getTitre());
+            } else {
+                // If user is not found (or any error handling), return an empty string
+                return new SimpleStringProperty("");
+            }
+        });
+
+        colUser.setCellValueFactory(cellData -> {
+            int id = cellData.getValue().getUserWonId();
+            User user = userDAO.getUserById(id);
+            if (user != null) {
+                // If user is found, return the email as an ObservableValue<String>
+                return new SimpleStringProperty(user.getEmail());
+            } else {
+                // If user is not found (or any error handling), return an empty string
+                return new SimpleStringProperty("");
+            }
+        });
+
     }
 
     @FXML
@@ -134,7 +227,7 @@ public class VoucherDisplayController implements Initializable {
     void updateVoucher(MouseEvent event) {
         Voucher selectedVoucher = getSelectedVoucher();
         if (selectedVoucher != null) {
-            System.out.println("added voucher: ");
+            System.out.println("update voucher: ");
         }
     }
 
@@ -142,7 +235,7 @@ public class VoucherDisplayController implements Initializable {
     void goBack(MouseEvent event) {
         System.out.println("redirect to Home");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/hello-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/voucher-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage newStage = new Stage();
             newStage.setScene(scene);

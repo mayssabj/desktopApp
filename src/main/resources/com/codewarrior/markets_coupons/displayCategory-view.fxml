@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="925.0" prefWidth="1392.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codewarrior.markets_coupons.controller.CategoryDisplayController">
-    <TableView fx:id="categoryTable" layoutX="107.0" layoutY="23.0" onMouseClicked="#getCategoryInfo" prefHeight="517.0" prefWidth="1053.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codewarrior.markets_coupons.controller.CategoryDisplayController">
+    <TableView fx:id="categoryTable" layoutX="107.0" layoutY="23.0" onMouseClicked="#getCategoryInfo" prefHeight="480.0" prefWidth="346.0">
         <columns>
             <TableColumn fx:id="colTitle" text="Title" />
             <TableColumn fx:id="colDescription" text="Description" />
         </columns>
     </TableView>
-    <Pane layoutX="20.0" layoutY="830.0" prefHeight="81.0" prefWidth="248.0">
+    <Pane layoutX="32.0" layoutY="553.0" prefHeight="81.0" prefWidth="248.0">
         <children>
             <Pane layoutX="94.0" layoutY="14.0" onMouseClicked="#updateCategory" prefHeight="59.0" prefWidth="60.0">
                 <children>
@@ -48,7 +48,7 @@
             </Pane>
         </children>
     </Pane>
-    <Pane layoutX="370.0" layoutY="546.0" prefHeight="342.0" prefWidth="527.0">
+    <Pane layoutX="417.0" layoutY="23.0" prefHeight="342.0" prefWidth="527.0">
         <children>
             <TextField fx:id="updateTitle" layoutX="135.0" layoutY="42.0" prefHeight="24.0" prefWidth="257.0" promptText="Category title" />
             <Label fx:id="controllTitle" layoutX="113.0" layoutY="76.0" prefHeight="24.0" prefWidth="279.0" textFill="RED" />
@@ -56,4 +56,5 @@
          <TextArea fx:id="updateDescription" layoutX="135.0" layoutY="110.0" prefHeight="136.0" prefWidth="257.0" promptText="Description ..." />
         </children>
     </Pane>
+   <Label layoutX="669.0" layoutY="655.0" prefHeight="33.0" prefWidth="180.0" text="Powred By CodeWarriors" />
 </AnchorPane>

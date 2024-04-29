@@ -6,8 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="2b8feff5-3da8-4dc7-9036-00268fca46c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/VoucherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/CategoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/VoucherDisplayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/VoucherDisplayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/category-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/category-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayCategory-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayCategory-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayMarket-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayMarket-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayVoucher-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/displayVoucher-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/market-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/market-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/voucher-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/voucher-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +146,8 @@
       <workItem from="1713858400403" duration="4564000" />
       <workItem from="1713892172003" duration="74000" />
       <workItem from="1714212644039" duration="783000" />
-      <workItem from="1714238879683" duration="5727000" />
+      <workItem from="1714238879683" duration="6281000" />
+      <workItem from="1714399318044" duration="4379000" />
     </task>
     <servers />
   </component>

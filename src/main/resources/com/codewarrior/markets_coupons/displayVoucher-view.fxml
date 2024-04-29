@@ -3,6 +3,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -74,4 +75,5 @@
          <TextField layoutX="243.0" layoutY="302.0" promptText="type ..." />
         </children>
     </Pane>
+   <Label layoutX="1198.0" layoutY="878.0" prefHeight="33.0" prefWidth="180.0" text="Powred By CodeWarriors" />
 </AnchorPane>
