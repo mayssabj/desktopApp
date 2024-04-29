@@ -90,7 +90,7 @@ public class showPostAdminController {
         deslabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
         hbox.getChildren().add(deslabel);
 
-        int id = post.getUser();
+        int id = post.getuser_id();
         UserService userService=new UserService();
         User user= userService.getUserById(id);
 

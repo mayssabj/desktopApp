@@ -56,9 +56,9 @@ public class PostCRUD implements ServicePost<Post> {
 
     @Override
     public void ajouter(Post post) throws SQLException {
-        UserService userService=new UserService();
-        User u1=userService.getCurrentLoggedInUser();
-        String req = "INSERT INTO `post`(`titre`, `description`, `image_url`, `date`, `type`, `place`, `user`) VALUES (?, ?, ?, ?, ?, ?,?)";
+        UserService user_idService=new UserService();
+        User u1=user_idService.getCurrentLoggedInUser();
+        String req = "INSERT INTO `post`(`titre`, `description`, `image_url`, `date`, `type`, `place`, `user_id`) VALUES (?, ?, ?, ?, ?, ?,?)";
         long millis = System.currentTimeMillis();
         java.sql.Date today = new java.sql.Date(millis);
         try (PreparedStatement pst = connection.prepareStatement(req)) {
@@ -119,9 +119,9 @@ public class PostCRUD implements ServicePost<Post> {
                 Date date = rs.getDate("date");
                 Post.Type type = Post.Type.valueOf(rs.getString("type"));
                 String place = rs.getString("place");
-                int user = rs.getInt("user");
+                int user_id = rs.getInt("user_id");
 
-                Post post = new Post(id, titre, description, imageUrl, date, type, place, user);
+                Post post = new Post(id, titre, description, imageUrl, date, type, place, user_id);
                 posts.add(post);
             }
         }

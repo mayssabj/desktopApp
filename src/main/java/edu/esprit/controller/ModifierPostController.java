@@ -25,7 +25,7 @@ public class ModifierPostController {
     private TextArea descriptionArea;
 
     @FXML
-    private Button selectImage;
+    private Button user_idctImage;
     @FXML
     private ImageView imageView;
 
@@ -41,7 +41,7 @@ public class ModifierPostController {
     @FXML
     private Button buttonModifier;
 
-    private File selectedImageFile;
+    private File user_idctedImageFile;
 
     private Post post;
 
@@ -89,8 +89,8 @@ public class ModifierPostController {
             post.setPlace(placeField.getText());
             post.setType(Post.Type.valueOf(typeComboBox.getValue()));
 
-            if (selectedImageFile != null) {
-                post.setImageUrl(selectedImageFile.getAbsolutePath());
+            if (user_idctedImageFile != null) {
+                post.setImageUrl(user_idctedImageFile.getAbsolutePath());
             }
 
             PostCRUD service = new PostCRUD();
@@ -103,16 +103,16 @@ public class ModifierPostController {
 
 
     @FXML
-    void selectImageAction(ActionEvent event) {
+    void user_idctImageAction(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Image");
+        fileChooser.setTitle("user_idct Image");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-        selectedImageFile = fileChooser.showOpenDialog(null);
+        user_idctedImageFile = fileChooser.showOpenDialog(null);
 
-        if (selectedImageFile != null) {
-            Image image = new Image(selectedImageFile.toURI().toString());
+        if (user_idctedImageFile != null) {
+            Image image = new Image(user_idctedImageFile.toURI().toString());
             imageView.setImage(image);
         }
     }

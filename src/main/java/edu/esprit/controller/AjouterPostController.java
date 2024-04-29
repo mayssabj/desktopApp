@@ -1,5 +1,6 @@
 package edu.esprit.controller;
 
+import edu.esprit.entities.User;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +13,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import edu.esprit.entities.Post;
-import edu.esprit.entities.User;
 import edu.esprit.services.PostCRUD;
 import edu.esprit.services.UserService;
 import netscape.javascript.JSObject;
@@ -59,12 +59,12 @@ public class AjouterPostController {
 
     private MapDataExtractor mapDataExtractor;
 
-    private UserService userService; // Inject UserService
+    private UserService UserService; // Inject user_idService
 
     public void ajouterPost() throws SQLException {
         if (isInputValid()) {
-            UserService userService = new UserService();
-            User u1 = userService.getCurrentLoggedInUser();
+            UserService user_idService = new UserService();
+            User u1 = user_idService.getCurrentLoggedInUser();
 
             if (u1 != null) {
                 String titre = titreField.getText();
@@ -87,7 +87,7 @@ public class AjouterPostController {
                 selectedImageFile = null;
                 typeComboBox.setValue(null);
             } else {
-                System.out.println("User not logged in");
+                System.out.println("user_id not logged in");
             }
         }
     }

@@ -44,7 +44,7 @@ public class DashboardController {
     private NumberAxis yAxis;
 
 
-    ObservableList<Post> userList = FXCollections.observableArrayList();
+    ObservableList<Post> user_idList = FXCollections.observableArrayList();
 
     // Inject StatisticsService
     private StatisticsService statisticsService = new StatisticsService();
@@ -65,8 +65,8 @@ public class DashboardController {
     }
     @FXML
     private void fnReloadData() throws SQLException {
-        userList.clear();
-        userList.addAll(loadDataFromDatabase());
+        user_idList.clear();
+        user_idList.addAll(loadDataFromDatabase());
         displayStatistics();
     }
 

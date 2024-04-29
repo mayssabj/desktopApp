@@ -6,17 +6,17 @@ import javafx.scene.layout.VBox;
 
 public class CommentDesign extends VBox {
 
-    public CommentDesign(String userName, String commentText) {
-        // Create a label for the user name
-        Label userNameLabel = new Label(userName);
-        userNameLabel.setStyle("-fx-font-weight: bold;");
+    public CommentDesign(String user_idName, String commentText) {
+        // Create a label for the user_id name
+        Label user_idNameLabel = new Label(user_idName);
+        user_idNameLabel.setStyle("-fx-font-weight: bold;");
 
         // Create a label for the comment text
         Label commentTextLabel = new Label(commentText);
 
-        // Create an HBox to hold the user name and comment text
+        // Create an HBox to hold the user_id name and comment text
         HBox contentBox = new HBox();
-        contentBox.getChildren().addAll(userNameLabel, commentTextLabel);
+        contentBox.getChildren().addAll(user_idNameLabel, commentTextLabel);
         contentBox.setSpacing(7);
 
         // Style the content box

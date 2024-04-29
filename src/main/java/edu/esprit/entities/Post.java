@@ -18,9 +18,9 @@ public class Post {
         LOST, FOUND
     }
 
-    public int user;
+    public int user_id;
 
-    public Post(int id, String titre, String description, String imageUrl, Date date, Type type, String place ,int user) {
+    public Post(int id, String titre, String description, String imageUrl, Date date, Type type, String place ,int user_id) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -28,25 +28,25 @@ public class Post {
         this.date = date;
         this.type = type;
         this.place = place;
-        this.user = user;
+        this.user_id = user_id;
     }
-    public Post( String titre, String description, String imageUrl, Type type, String place, int user) {
+    public Post( String titre, String description, String imageUrl, Type type, String place, int user_id) {
         this.titre = titre;
         this.description = description;
         this.imageUrl = imageUrl;
         this.type = type;
         this.place = place;
-        this.user = user;
+        this.user_id = user_id;
     }
 
-    public Post(String titre, String description, String imageUrl, Date date, Type type, String place, int user) {
+    public Post(String titre, String description, String imageUrl, Date date, Type type, String place, int user_id) {
         this.titre = titre;
         this.description = description;
         this.imageUrl = imageUrl;
         this.date = date;
         this.type = type;
         this.place = place;
-        this.user = user;
+        this.user_id = user_id;
     }
 
     public int getId() {
@@ -105,20 +105,20 @@ public class Post {
         this.place = place;
     }
 
-    public int getUser() {
-        return user;
+    public int getuser_id() {
+        return user_id;
     }
 
-    public void setUser(int user) {
-        this.user = user;
+    public void setuser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public int user() {
-        return user;
+    public int user_id() {
+        return user_id;
     }
 
-    public void user(int user) {
-        this.user = user;
+    public void user_id(int user_id) {
+        this.user_id = user_id;
     }
 
     @Override
@@ -131,7 +131,7 @@ public class Post {
                 ", date=" + date +
                 ", type=" + type +
                 ", place='" + place + '\'' +
-                ", user=" + user +
+                ", user_id=" + user_id +
                 '}';
     }
 }

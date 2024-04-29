@@ -175,18 +175,18 @@ public class AfficherPostController {
         postBox.setPrefWidth(600);
         postBox.setPadding(new Insets(10));
 
-        int id = post.getUser();
-        UserService userService = new UserService();
-        User u = userService.getUserById(id);
+        int id = post.getuser_id();
+        UserService user_idService = new UserService();
+        User u = user_idService.getUserById(id);
 
         HBox namephotoBox = new HBox();
         namephotoBox.setSpacing(10);
         namephotoBox.setAlignment(Pos.CENTER_LEFT);
 
         String imagePath = u.getProfilePicture();
-        ImageView userPhoto = new ImageView(new Image(new FileInputStream(imagePath)));
-        userPhoto.setFitWidth(30);
-        userPhoto.setFitHeight(30);
+        ImageView user_idPhoto = new ImageView(new Image(new FileInputStream(imagePath)));
+        user_idPhoto.setFitWidth(30);
+        user_idPhoto.setFitHeight(30);
 
         Label labelProfilename = new Label(u.getEmail());
         labelProfilename.setFont(new Font("Cambria", 18));
@@ -197,7 +197,7 @@ public class AfficherPostController {
         Region spring1 = new Region();
         HBox.setHgrow(spring1, Priority.ALWAYS);
 
-        namephotoBox.getChildren().addAll(userPhoto, spring1, labelProfilename);
+        namephotoBox.getChildren().addAll(user_idPhoto, spring1, labelProfilename);
 
 
         HBox titleDateBox = new HBox();
@@ -265,7 +265,7 @@ public class AfficherPostController {
 */
         // commentButton.setOnAction(event -> handlePostClick(post));
         HBox buttonBox = new HBox(10);
-        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
+        if (user_idService.getCurrentLoggedInUser().getId() == u.getId()) {
             Button deleteButton = new Button();
             ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
             deleteIcon.setFitWidth(16);
@@ -274,7 +274,7 @@ public class AfficherPostController {
             deleteButton.getStyleClass().add("add-btn");
             deleteButton.setFont(new Font("System Bold", 18));
             deleteButton.setTextFill(Color.valueOf("#828282"));
-            if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
+            if (user_idService.getCurrentLoggedInUser().getId() == u.getId()) {
                 deleteButton.setOnAction(event -> deletePost(post));
             }
 
@@ -307,8 +307,8 @@ public class AfficherPostController {
         // Inside createPostBox method
         VBox commentsBox = new VBox();
         String commentCount = new CommentCRUD().countComment(post);
-        Label userNameLabel = new Label("Comments (" + commentCount + ")");
-        commentsBox.getChildren().add(userNameLabel);
+        Label user_idNameLabel = new Label("Comments (" + commentCount + ")");
+        commentsBox.getChildren().add(user_idNameLabel);
         commentsBox.setSpacing(10);
         commentsBox.setStyle("-fx-background-color: #ffffff; -fx-padding: 20px;");
 
@@ -320,7 +320,7 @@ public class AfficherPostController {
             commentsBox.getChildren().addAll(
                     new CommentDesign(comment.getId_u().getEmail(), comment.getText())
             );
-            if (userService.getCurrentLoggedInUser().getId() == comment.getId_u().getId()) {
+            if (user_idService.getCurrentLoggedInUser().getId() == comment.getId_u().getId()) {
                 Button deleteButton2 = new Button();
                 ImageView deleteIcon2 = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
                 deleteIcon2.setFitWidth(10);
@@ -347,7 +347,7 @@ public class AfficherPostController {
 
 
 // Add the comments VBox to the postBox
-// Create a TextField for the user to enter the comment
+// Create a TextField for the user_id to enter the comment
         TextField commentField = new TextField();
         commentField.setPromptText("Write a comment...");
         commentField.setStyle("-fx-pref-width: 280px; -fx-pref-height: 30px;");
@@ -367,8 +367,8 @@ public class AfficherPostController {
             String commentText = commentField.getText();
             if (!commentText.isEmpty()) {
                 try {
-                    User currentUser = userService.getCurrentLoggedInUser();
-                    Comment comment = new Comment(commentText, post, currentUser);
+                    User currentuser_id = user_idService.getCurrentLoggedInUser();
+                    Comment comment = new Comment(commentText, post, currentuser_id);
                     commentCRUD.ajouter(comment);
                     // Reload the posts to reflect the new comment
                     loadPosts();
@@ -386,10 +386,10 @@ public class AfficherPostController {
 
 
 
-        HBox userBox = new HBox(10);
-        userBox.getChildren().addAll(userPhoto, labelProfilename);
+        HBox user_idBox = new HBox(10);
+        user_idBox.getChildren().addAll(user_idPhoto, labelProfilename);
 
-        postBox.getChildren().addAll(userBox, titleDateBox, fruitImg, labelType, labelDescription, labelPlace, buttonBox, new Region(), commentsBox, commentInputBox);
+        postBox.getChildren().addAll(user_idBox, titleDateBox, fruitImg, labelType, labelDescription, labelPlace, buttonBox, new Region(), commentsBox, commentInputBox);
 
 
         return postBox;
@@ -459,13 +459,13 @@ public class AfficherPostController {
     }
 /*
     private void commentOnPost(Post post) {
-        // Create a TextInputDialog for the user to enter the comment
+        // Create a TextInputDialog for the user_id to enter the comment
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Add Comment");
         dialog.setHeaderText("Enter your comment:");
-        // Show the dialog and wait for the user's response
+        // Show the dialog and wait for the user_id's response
         dialog.showAndWait().ifPresent(commentText -> {
-            // When the user submits the comment, create a new Comment object
+            // When the user_id submits the comment, create a new Comment object
             Comment comment = new Comment(commentText, post,a);
 
             // Call the ajouter method to add the comment to the database
@@ -557,7 +557,7 @@ public class AfficherPostController {
                                 resultSet.getDate("date"),
                                 Post.Type.valueOf(resultSet.getString("type")),
                                 resultSet.getString("place"),
-                                resultSet.getInt("user")
+                                resultSet.getInt("user_id")
                         );
 
                         retrievedPosts.add(post); // Add the Post object to the ObservableList
