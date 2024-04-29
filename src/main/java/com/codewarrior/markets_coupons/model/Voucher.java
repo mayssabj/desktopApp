@@ -1,5 +1,6 @@
 package com.codewarrior.markets_coupons.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Voucher {
@@ -19,7 +20,7 @@ public class Voucher {
     public Voucher() {
     }
 
-    public Voucher(double value, String code, Date selectedDate, int usable, boolean isValid, boolean isGiven, int marketId, int categoryId, int userId) {
+    public Voucher(double value, String code, Date selectedDate, int usable, boolean isValid, boolean isGiven, int marketId, int categoryId, int userId, String type) {
         this.value = value;
         this.code = code;
         this.expiration = selectedDate;
@@ -29,6 +30,20 @@ public class Voucher {
         this.marketRelatedId = marketId;
         this.categoryId = categoryId;
         this.userWonId = userId;
+        this.type = type;
+    }
+
+    public Voucher(int id, double value, String code, Date selectedDate, int usable, boolean isValid, boolean isGiven, int marketId, int categoryId, int userId, String type) {
+        this.value = value;
+        this.code = code;
+        this.expiration = selectedDate;
+        this.usageLimit = usable;
+        this.isValid = isValid;
+        this.isGivenToUser = isGiven;
+        this.marketRelatedId = marketId;
+        this.categoryId = categoryId;
+        this.userWonId = userId;
+        this.type = type;
     }
 
     // Getters and setters for each property

@@ -140,9 +140,10 @@ public class VoucherController {
             Market market = marketFound;
             VoucherCategory categoryFound = categoryDAO.getCategoryByTitle(categoryField.getValue());
             VoucherCategory category = categoryFound;
+            String type = typeField.getText();
 
             String code = generateRandomString();
-            Voucher voucher = new Voucher(value, code , selectedDate,usable,isValid,isGiven,market.getId(),category.getId(),user.getId());
+            Voucher voucher = new Voucher(value, code , selectedDate,usable,isValid,isGiven,market.getId(),category.getId(),user.getId(),type);
             voucherDAO.addVoucher(voucher);
             System.out.println(voucher.toString());
             displayRoute(event);

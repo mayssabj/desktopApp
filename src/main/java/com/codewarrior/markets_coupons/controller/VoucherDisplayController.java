@@ -9,6 +9,7 @@ import com.codewarrior.markets_coupons.service.MarketDAO;
 import com.codewarrior.markets_coupons.service.UserDAO;
 import com.codewarrior.markets_coupons.service.VoucherDAO;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class VoucherDisplayController implements Initializable {
@@ -66,6 +71,34 @@ public class VoucherDisplayController implements Initializable {
     private TableColumn<Voucher, String> colCode;
 
     @FXML
+    private TextField updateValue;
+
+    @FXML
+    private ComboBox<String> updatedCategoryBox;
+
+    @FXML
+    private DatePicker updatedDate;
+
+    @FXML
+    private ComboBox<String> updatedMarketBox;
+
+    @FXML
+    private CheckBox updatedOwnedByBox;
+
+    @FXML
+    private TextField updatedTypeField;
+
+    @FXML
+    private ComboBox<Integer> updatedUsabilityBox;
+
+    @FXML
+    private ComboBox<String> updatedUserBox;
+
+    @FXML
+    private CheckBox updatedValidBox;
+
+
+    @FXML
     private Pane back;
 
     @FXML
@@ -74,11 +107,54 @@ public class VoucherDisplayController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         displayVouchers();
+        loadUsers();
+        loadMarkets();
+        try {
+            loadCategories();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        updatedUsabilityBox.getItems().add(0);
+        updatedUsabilityBox.getItems().add(1);
     }
 
     public ObservableList<Voucher> getVouchers() {
         return voucherDAO.getAllVouchersOb();
+    }
+
+    private void loadUsers() {
+        // This should be replaced with a database call=
+        List<User> listOfUser = userDAO.getAllUsers();
+        List<String> listOfEmails = new ArrayList<>();
+        for (User user : listOfUser) {
+            listOfEmails.add(user.getEmail());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(listOfEmails);
+        updatedUserBox.setItems((ObservableList<String>) items);
+    }
+
+    private void loadMarkets() {
+        // This should be replaced with a database call
+        List<Market> markets = marketDAO.getAllMarkets();
+        List<String> listOfNames = new ArrayList<>();
+        for (Market market : markets) {
+            listOfNames.add(market.getName());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(listOfNames);
+        updatedMarketBox.setItems((ObservableList<String>) items);
+    }
+
+    private void loadCategories() throws SQLException {
+        // This should be replaced with a database call
+        List<VoucherCategory> categories = categoryDAO.getAllCategories();
+        List<String> listOfNames = new ArrayList<>();
+        for (VoucherCategory category : categories) {
+            listOfNames.add(category.getTitre());
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(listOfNames);
+        updatedCategoryBox.setItems((ObservableList<String>) items);
     }
 
     @FXML
@@ -94,6 +170,7 @@ public class VoucherDisplayController implements Initializable {
             int marketId = selectedVoucher.getMarketRelatedId();
             int categoryId = selectedVoucher.getCategoryId();
             int userId = selectedVoucher.getUserWonId();
+            String type = selectedVoucher.getType();
 
             // Assuming you have instances of MarketDAO, CategoryDAO, and UserDAO
             MarketDAO marketDAO = new MarketDAO();
@@ -105,9 +182,28 @@ public class VoucherDisplayController implements Initializable {
             VoucherCategory category = categoryDAO.getCategoryById(categoryId);
             User user = userDAO.getUserById(userId);
 
+            String marketName = market.getName();
+            String userEmail = user.getEmail();
+            String categoryName = category.getTitre();
             // Update UI with voucher information
+            updatedMarketBox.setPromptText(marketName);
+            updatedCategoryBox.setPromptText(categoryName);
+            updatedUserBox.setPromptText(userEmail);
+
+            updatedOwnedByBox.setSelected(isGiven);
+            updatedValidBox.setSelected(isValid);
+            updatedUsabilityBox.setPromptText(Integer.toString(usable));
+            if (validityDate != null) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(validityDate);
+                updatedDate.setPromptText(formattedDate);
+            }
+            updateValue.setText(String.valueOf(value));
+            updatedTypeField.setText(type);
             String s = selectedVoucher.toString();
             System.out.println(s);
+
+            //QR CODE API !
         }
     }
 
@@ -224,10 +320,37 @@ public class VoucherDisplayController implements Initializable {
     }
 
     @FXML
-    void updateVoucher(MouseEvent event) {
+    void updateVoucher(MouseEvent event) throws SQLException {
         Voucher selectedVoucher = getSelectedVoucher();
-        if (selectedVoucher != null) {
-            System.out.println("update voucher: ");
+        int id = selectedVoucher.getId();
+        Integer usable = updatedUsabilityBox.getSelectionModel().getSelectedItem();
+        if(usable == null ){
+           usable = 0 ;
+        }
+        String _value = updateValue.getText();
+        int value = Integer.parseInt(_value);
+        LocalDate expirationDate = updatedDate.getValue();
+        java.sql.Date selectedDate = java.sql.Date.valueOf(expirationDate);
+        boolean isGivenToUser = updatedOwnedByBox.isSelected();
+        boolean isValid = updatedValidBox.isSelected();
+        User user = userDAO.getUserByEmail(updatedUserBox.getValue());
+        if(user == null){
+            user.setId(selectedVoucher.getUserWonId());
+        }
+        String type = updatedTypeField.getText();
+        Market marketFound = marketDAO.getMarketByName(updatedMarketBox.getValue());
+        if(marketFound == null){
+            marketFound.setId(selectedVoucher.getMarketRelatedId());
+        }
+        VoucherCategory categoryFound = categoryDAO.getCategoryByTitle(updatedCategoryBox.getValue());
+        if(categoryFound == null){
+            categoryFound.setId(selectedVoucher.getCategoryId());
+        }
+        String code = selectedVoucher.getCode();
+        Voucher voucher = new Voucher(id, value, code, selectedDate, usable,isValid,isGivenToUser,marketFound.getId(),categoryFound.getId(),user.getId(),type);
+        if (voucher != null) {
+            System.out.println("update voucher: " + voucher.toString());
+            voucherDAO.updateVoucher(voucher);
         }
     }
 

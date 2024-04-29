@@ -100,6 +100,31 @@ public class MarketDAO {
         return null;
     }
 
+    public ObservableList<Market> getMarketByIdOb(int id) {
+        ObservableList<Market> markets = FXCollections.observableArrayList();
+        String query = "SELECT * FROM market WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Market market = new Market();
+                    market.setId(resultSet.getInt("id"));
+                    market.setName(resultSet.getString("name"));
+                    market.setAddress(resultSet.getString("address"));
+                    market.setCity(resultSet.getString("city"));
+                    market.setRegion(resultSet.getString("region"));
+                    market.setZipCode(resultSet.getInt("zip_code"));
+                    markets.add(market);
+                    return markets;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public Market getMarketByName(String name) {
         String query = "SELECT * FROM market WHERE name = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
