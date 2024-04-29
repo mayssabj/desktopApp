@@ -1,5 +1,7 @@
 package edu.esprit.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.User;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
@@ -18,7 +20,9 @@ import edu.esprit.services.UserService;
 import netscape.javascript.JSObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class AjouterPostController {
 
@@ -27,12 +31,6 @@ public class AjouterPostController {
 
     @FXML
     private TextArea descriptionArea;
-
-    @FXML
-    private Button selectImage;
-
-    @FXML
-    private ImageView imageView;
 
     @FXML
     private ComboBox<String> typeComboBox;
@@ -55,21 +53,33 @@ public class AjouterPostController {
     @FXML
     private Text errorPlace;
 
+    @FXML
+    private ImageView imageView;
+
     private File selectedImageFile;
 
     private MapDataExtractor mapDataExtractor;
 
-    private UserService UserService; // Inject user_idService
+    private UserService userService; // Inject UserService
 
-    public void ajouterPost() throws SQLException {
+    private Cloudinary cloudinary;
+
+    public AjouterPostController() {
+        cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dx5cteclw",
+                "api_key", "489998819632647",
+                "api_secret", "b_TAcmWLYB6jDor9fK9KZ3KalXQ"));
+    }
+
+    public void ajouterPost() throws SQLException, IOException {
         if (isInputValid()) {
-            UserService user_idService = new UserService();
-            User u1 = user_idService.getCurrentLoggedInUser();
+            UserService userService = new UserService();
+            User u1 = userService.getCurrentLoggedInUser();
 
             if (u1 != null) {
                 String titre = titreField.getText();
                 String description = descriptionArea.getText();
-                String image = (selectedImageFile != null) ? selectedImageFile.getPath() : "";
+                String imageUrl = ""; // Initialize imageUrl variable
                 Post.Type type = Post.Type.valueOf(typeComboBox.getValue());
                 String place = ""; // Initialize place variable
 
@@ -77,7 +87,13 @@ public class AjouterPostController {
                     place = mapDataExtractor.getSelectedLocation(mapView.getEngine()); // Get the selected location
                 }
 
-                Post post = new Post(titre, description, image, type, place, u1.getId());
+                if (selectedImageFile != null) {
+                    // Upload image to Cloudinary
+                    Map uploadResult = cloudinary.uploader().upload(selectedImageFile, ObjectUtils.emptyMap());
+                    imageUrl = (String) uploadResult.get("url");
+                }
+
+                Post post = new Post(titre, description, imageUrl, type, place, u1.getId());
                 PostCRUD service = new PostCRUD();
                 service.ajouter(post);
 
@@ -87,25 +103,9 @@ public class AjouterPostController {
                 selectedImageFile = null;
                 typeComboBox.setValue(null);
             } else {
-                System.out.println("user_id not logged in");
+                System.out.println("User not logged in");
             }
         }
-    }
-
-    private String getSelectedLocation() {
-        JavaConnector javaConnector = (JavaConnector) mapView.getEngine().executeScript("window.javaConnector");
-        if (javaConnector != null) {
-            return javaConnector.getSelectedLocation();
-        } else {
-            return "";
-        }
-    }
-
-
-
-    private String getPlaceFromMap() {
-        String place = (String) mapView.getEngine().executeScript("getLocationFromMap()");
-        return place != null ? place : "";
     }
 
     public class JavaConnector {
@@ -113,11 +113,6 @@ public class AjouterPostController {
         public void getLocationFromMap(String location) {
             System.out.println("Location received from map: " + location);
             // Handle the received location data here
-        }
-
-        private String selectedLocation;
-        public String getSelectedLocation() {
-            return selectedLocation;
         }
     }
 

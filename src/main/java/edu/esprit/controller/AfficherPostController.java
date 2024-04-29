@@ -33,6 +33,8 @@ import edu.esprit.services.PostCRUD;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -222,10 +224,18 @@ public class AfficherPostController {
         fruitImg.setFitHeight(170);
         fruitImg.setFitWidth(285);
         try {
-            Image image = new Image(new FileInputStream(post.getImageUrl()));
-            fruitImg.setImage(image);
-        } catch (FileNotFoundException e) {
-            System.out.println("Image file not found: " + e.getMessage());
+            // Try to load image from local file
+            InputStream inputStream = new FileInputStream(post.getImageUrl());
+            fruitImg.setImage(new Image(inputStream));
+        } catch (FileNotFoundException e1) {
+            try {
+                // If loading from local file fails, try to load from web URL
+                InputStream inputStream = new URL(post.getImageUrl()).openStream();
+                fruitImg.setImage(new Image(inputStream));
+            } catch (Exception e2) {
+                // Handle any exceptions
+                e2.printStackTrace();
+            }
         }
 
 
