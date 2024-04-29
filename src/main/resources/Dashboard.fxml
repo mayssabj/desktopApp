@@ -201,6 +201,6 @@
                     <Image url="@images/icons8_slider_50px.png" />
                 </image>
             </ImageView>
-            <VBox fx:id="vboxdash" layoutX="249.0" layoutY="123.0" prefHeight="454.0" prefWidth="989.0" BorderPane.alignment="CENTER" />
+            <VBox fx:id="vboxdash" layoutX="249.0" layoutY="123.0" prefHeight="691.0" prefWidth="1225.0" BorderPane.alignment="CENTER" />
         </children>
     </AnchorPane>
