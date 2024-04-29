@@ -1,0 +1,43 @@
+.root {
+    -fx-font-family: 'Arial';
+    -fx-base: #ffffff;
+    -fx-background-color: #f4f4f4;
+}
+
+.label {
+    -fx-font-size: 24px;
+    -fx-text-fill: #333;
+}
+
+.bar-chart {
+    -fx-bar-fill: #0073e6;
+}
+
+.chart-legend {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 10px;
+}
+
+.button {
+    -fx-background-color: #0073e6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #0057b8;
+}
+
+.hbox {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.vbox {
+    -fx-spacing: 20px;
+    -fx-padding: 20px;
+    -fx-alignment: top-center;
+}

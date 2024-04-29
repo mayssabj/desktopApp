@@ -9,6 +9,7 @@
     import javafx.event.ActionEvent;
     import javafx.fxml.FXML;
     import javafx.fxml.Initializable;
+    import javafx.scene.Node;
     import javafx.scene.control.*;
     import javafx.scene.image.Image;
     import javafx.scene.image.ImageView;
@@ -30,6 +31,7 @@
     import java.util.stream.Collectors;
 
     public class ListAvertissementController implements Initializable {
+        private static final int ITEMS_PER_PAGE = 10;
 
         Connection connection = null;
         PreparedStatement st = null;
@@ -71,8 +73,11 @@
         public void initialize(URL url, ResourceBundle resourceBundle) {
             serviceAvertissement = new ServiceAvertissement();
             setupListView();
-            loadAvertissements();
+            int totalAvertissements = serviceAvertissement.countAvertissements();
+            pagination.setPageCount((int) Math.ceil((double) totalAvertissements / ITEMS_PER_PAGE));
+            loadAvertissements(0); // Load the warnings for the first page
         }
+
 
         private void setupListView() {
             avertissementListView.setCellFactory(listView -> new ListCell<Avertissement>() {
@@ -135,7 +140,7 @@
                     if (response.isPresent() && response.get() == ButtonType.OK) {
                         try {
                             serviceAvertissement.supprimerAvertissement(avertissement.getId());
-                            loadAvertissements();
+                            loadAvertissements(0);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
@@ -144,9 +149,10 @@
             });
         }
 
-        private void loadAvertissements() {
+        private void loadAvertissements(int pageIndex) {
             try {
-                ObservableList<Avertissement> list = serviceAvertissement.afficherAvertissement();
+                int offset = pageIndex * ITEMS_PER_PAGE;
+                ObservableList<Avertissement> list = serviceAvertissement.afficherAvertissement(offset, ITEMS_PER_PAGE);
                 avertissementListView.setItems(list);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -163,6 +169,7 @@
                     .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
             avertissementListView.setItems(filteredList);
+
         }
 
         private void validateAvertissement(ActionEvent event) {
@@ -233,5 +240,13 @@
                 mex.printStackTrace();
             }
         }
+
+
+        @FXML
+        void handlePageChange() {
+            int pageIndex = pagination.getCurrentPageIndex();
+            loadAvertissements(pageIndex);
+        }
+
 
     }

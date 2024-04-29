@@ -12,9 +12,20 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 import java.io.File;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 
 public class ReclamationFormController {
 
@@ -35,6 +46,7 @@ public class ReclamationFormController {
 
     @FXML
     public void initialize() {
+  
         typereclamation.getItems().addAll("Violation", "Inappropriate Content", "Other");  // Populate the choice box with example items
         typereclamation.setValue("Other");  // Set a default value
     }
@@ -79,7 +91,6 @@ public class ReclamationFormController {
     }
 
 
-
     @FXML
     public void clear() {
         subject.clear();
@@ -113,4 +124,9 @@ public class ReclamationFormController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    //function pour l'auto complete
+
+
+
 }

@@ -35,7 +35,7 @@
       </Text>
 
       <!-- Pagination ajustée pour correspondre à la nouvelle position du ListView -->
-      <Pagination fx:id="pagination" currentPageIndex="0" layoutX="339.0" layoutY="700.0" pageCount="0" prefWidth="600" />
+      <Pagination fx:id="pagination" currentPageIndex="0" layoutX="339.0" layoutY="700.0" pageCount="0" prefWidth="600" onMouseClicked="#handlePageChange"/>
    </children>
    <!-- Footer -->
    <HBox prefHeight="60.0" prefWidth="1000.0" style="-fx-background-color: #333; -fx-padding: 10px 20px;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">

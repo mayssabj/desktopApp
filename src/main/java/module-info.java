@@ -11,6 +11,7 @@ module edu.esprit {
     requires java.mail;
     requires java.net.http;
     requires org.json;
+    requires org.controlsfx.controls;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;
@@ -20,4 +21,9 @@ module edu.esprit {
     opens edu.esprit.controller.Avertissement to javafx.fxml;
 
     exports edu.esprit;
+    // Exporte le package contenant StatisticsController au module javafx.fxml
+    exports edu.esprit.controller.Statistique to javafx.fxml;
+
+    // Ouvre le package pour la réflexion par javafx.fxml
+    opens edu.esprit.controller.Statistique to javafx.fxml;
 }
