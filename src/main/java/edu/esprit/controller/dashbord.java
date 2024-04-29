@@ -62,6 +62,23 @@ public class dashbord {
             e.printStackTrace();  // Handle IOException
         }
     }
+
+    @FXML
+    void showuser(MouseEvent event) {
+        try {
+            // Load showPostAdminController.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/showPostAdminController.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException
+        }
+    }
     @FXML
     void showpostad(MouseEvent event) {
         try {
