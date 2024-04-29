@@ -16,6 +16,12 @@ public class Answer {
         this.body = body;
         this.createdAt = createdAt;
     }
+    public Answer(int userId, int questionId, String body, LocalDateTime createdAt) {
+        this.userId = userId;
+        this.questionId = questionId;
+        this.body = body;
+        this.createdAt = createdAt;
+    }
     public Answer(int id, String body) {
         this.id = id;
         this.body = body;

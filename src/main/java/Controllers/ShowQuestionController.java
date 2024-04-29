@@ -30,6 +30,8 @@ public class ShowQuestionController {
     private ListView<Question> listView;
     @FXML
     private Button btn_ask;
+    private Button btn_stats;
+
 
     // Observable list to hold the questions
     ObservableList<Question> questionlist = FXCollections.observableArrayList();
@@ -133,9 +135,42 @@ public class ShowQuestionController {
                     });
 
 
+                    answerButton.setUserData(item); // item is the current question
                     answerButton.setOnAction(event -> {
-                        // TODO: handle update action here
+                        // Get the question associated with the clicked answer button
+                        Question selectedQuestion = (Question) ((Button) event.getSource()).getUserData();
+
+                        if (selectedQuestion != null) {
+                            try {
+                                // Load the fxml file
+                                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/addAnswer.fxml"));
+                                Parent parent = fxmlLoader.load();
+
+                                // Get the controller of the scene
+                                AddAnswerController controller = fxmlLoader.getController();
+
+                                // Set the selected question's ID to the controller
+                                controller.setQuestionId(selectedQuestion.getId());
+
+                                // Create a new stage
+                                Stage stage = new Stage();
+                                stage.initModality(Modality.APPLICATION_MODAL);
+                                stage.setScene(new Scene(parent, 600, 600)); // Set the size of the dialog to 600x600
+
+                                // Show the dialog and wait
+                                stage.showAndWait();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            // Show an error message if no question is selected
+                            System.out.println("No question selected to answer.");
+                        }
                     });
+
+// ... rest of your code ...
+
 
 
                     Label label = new Label(item.toString());
@@ -160,6 +195,23 @@ public class ShowQuestionController {
 
         // Show the questions in the list view
         showQuestions();
+    }
+    public void showQuestionStatsDialog() {
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/QuestionStats.fxml")); // Replace with the actual path to your FXML file
+            Parent root = loader.load();
+
+            // Create a new stage for the dialog
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Question Statistics");
+            dialogStage.setScene(new Scene(root));
+
+            // Show the dialog
+            dialogStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

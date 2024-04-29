@@ -52,6 +52,30 @@ public class QuestionCRUD {
             e.printStackTrace();
         }
     }
+    public Question getQuestionById(int id) {
+        String query = "SELECT q.*, u.username, a.body as answerBody FROM question q INNER JOIN user u ON q.userId = u.id LEFT JOIN answer a ON q.answerId = a.id WHERE q.id = ?";
+        try (PreparedStatement pst = connection.prepareStatement(query)) {
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int userId = rs.getInt("userId");
+                String username = rs.getString("username");
+                String title = rs.getString("title");
+                String body = rs.getString("body");
+                LocalDateTime createdAt = rs.getTimestamp("createdAt").toLocalDateTime();
+                Answer answer = null;
+                if (rs.getInt("answerId") != 0) {
+                    answer = new Answer(rs.getInt("answerId"), rs.getString("answerBody"));
+                }
+                return new Question(id, userId, username, title, body, createdAt, answer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // return null if there was an error or the question was not found
+    }
+
+
 
     public List<Question> afficher() throws SQLException {
         List<Question> questions = new ArrayList<>();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox stylesheets="@../css/stylestats.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="Controllers.QuestionStatsController">
+    <BarChart fx:id="barChart">
+        <xAxis>
+            <CategoryAxis label="Time Period" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Number of Questions" />
+        </yAxis>
+    </BarChart>
+</VBox>

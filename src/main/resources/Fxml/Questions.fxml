@@ -26,6 +26,11 @@
                                         </Label>
                                     </children>
                                 </HBox>
+                        <Button fx:id="btn_stats" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="81.0" mnemonicParsing="false" onAction="#showQuestionStatsDialog" prefHeight="37.0" prefWidth="214.0" style="-fx-background-color: #1ED760;" text="Show stats" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
                                   <Button fx:id="btn_ask" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleask" prefHeight="37.0" prefWidth="214.0" style="-fx-background-color: #1ED760;" text="Ask" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" translateY="600.0" wrapText="true">
                                       <font>
                                           <Font name="System Bold" size="26.0" />
