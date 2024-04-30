@@ -1,0 +1,349 @@
+.primary_color{
+    -fx-background-color: #1f1f1f;
+}
+
+.secondary-color{
+    -fx-background-color: #121212;
+}
+
+.selected{
+    -fx-border-color: #1ED760;
+    -fx-border-width: 0 0 0 5
+}
+
+.top-border{
+    -fx-border-color: #A1A1A1;
+    -fx-border-width: 1 0 0 0;
+}
+
+.search-container{
+    -fx-background-color: #fff;
+    -fx-background-radius: 100;
+}
+
+.upgrade-button{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: #fff;
+    -fx-border-radius: 50;
+}
+
+.scroll-pane > .viewport{
+    -fx-background-color: #e7e5e5;
+}
+
+.search-box{
+    -fx-background-color:#FFFFFF;
+    -fx-background-radius: 100;
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.search-button{
+    -fx-font-weight: bold;
+    -fx-padding: 5px 15px; /* Adjust padding to your preference */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.0, 0.0, 1.0); /* subtle shadow effect */
+    -fx-cursor: hand; /* Changes the cursor to a hand when hovered over the button */
+    -fx-background-color: #4E9F3D; /* An inviting green color */
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+
+.right-bar{
+    -fx-background-color: #D3D3D3;
+}
+
+.shadow{
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+}
+
+.chosen-fruit-card {
+    -fx-background-color: #F5F5F5; /* Light gray background */
+    -fx-border-color: #E0E0E0; /* Slightly darker border color for definition */
+    /* Border rounded corners to match the background */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 8);
+
+    -fx-padding: 15; /* Space inside the card */
+}
+
+
+.comboBox{
+    -fx-background-color: rgba(255,255,255,0.3);
+    -fx-background-radius: 30;
+}
+
+.add-btn{
+    -fx-font-weight: bold;
+    -fx-padding: 5px 15px; /* Adjust padding to your preference */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.0, 0.0, 1.0); /* subtle shadow effect */
+    -fx-cursor: hand; /* Changes the cursor to a hand when hovered over the button */
+    -fx-background-color: #4E9F3D; /* An inviting green color */
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+}
+
+.free-delivery-card{
+    -fx-background-color: #D3D3D3;
+    -fx-background-radius: 30;
+}
+
+.shopping-online-card{
+    -fx-background-color: #BAEAC3;
+    -fx-background-radius: 30;
+}
+
+.fruit-item{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 30;
+}
+.chosen-fruit-card:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0.1, 0, 12);
+}
+.back-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.back-button .graphic {
+    -fx-max-width: 16;
+    -fx-max-height: 16;
+}
+
+
+.submit-button {
+    -fx-background-color: #2196f3; /* Set background color */
+    -fx-text-fill: white; /* Set text color */
+    -fx-font-size: 14px; /* Set font size */
+    -fx-padding: 10px 20px; /* Add padding */
+    -fx-border-radius: 5px; /* Set border radius */
+    -fx-border-color: transparent; /* Set border color */
+}
+
+.submit-button:hover {
+    -fx-background-color: #1976d2; /* Set background color on hover */
+}
+
+
+
+
+
+.blue-panel {
+    -fx-background-color: #2196f3; /* Set background color */
+    -fx-padding: 20px; /* Add padding */
+}
+
+.search-box {
+    -fx-background-color: #f0f0f0; /* Set background color */
+    -fx-border-color: #ccc; /* Set border color */
+    -fx-border-width: 1px; /* Set border width */
+    -fx-border-radius: 5px; /* Set border radius */
+}
+
+.sponsor-button {
+    -fx-background-color: #4caf50; /* Set background color */
+    -fx-text-fill: white; /* Set text color */
+    -fx-font-size: 14px; /* Set font size */
+    -fx-padding: 10px 20px; /* Add padding */
+    -fx-border-radius: 5px; /* Set border radius */
+    -fx-border-color: transparent; /* Set border color */
+}
+
+.eco-card {
+    -fx-background-color: #f9f7f7; /* Light background color */
+    -fx-padding: 20px; /* Add padding */
+    -fx-border-color: #dcdcdc; /* Light border color */
+    -fx-border-width: 1px; /* Set border width */
+    -fx-border-radius: 5px; /* Add border radius for rounded corners */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 0); /* Add drop shadow effect */
+}
+
+.eco-card:hover {
+    -fx-background-color: #f2f2f2; /* Lighter background color on hover */
+}
+
+
+.back-button {
+    -fx-background-color: transparent; /* Set background color */
+    -fx-border-color: transparent; /* Set border color */
+}
+
+.back-button:hover {
+    -fx-background-color: transparent; /* Set background color on hover */
+    -fx-border-color: transparent; /* Set border color on hover */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.comments-popup {
+    background-color: #f9f9f9;
+    padding: 20px;
+    -fx-font-family: "Arial", sans-serif;
+}
+
+.comment-container {
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: #dcdcdc;
+    -fx-padding: 10px;
+    -fx-background-color: #f9f7f7;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+    -fx-margin-bottom: 15px;
+}
+
+.comment-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.input-field {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.text-area {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.select-button, .submit--button {
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-border: none;
+    -fx-color: white;
+    -fx-padding: 10px 20px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+}
+
+.combo-box {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.back--button {
+    -fx-background-color: transparent;
+    -fx-border: none;
+    -fx-cursor: hand;
+}
+
+.back--button:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.error-text {
+    -fx-fill: red;
+    -fx-font-size: 12px;
+}
+/* Style for commenter name */
+.commenter-name {
+    font-weight: bold;
+    color: #333333;
+}
+
+/* Style for comment text */
+.comment-text {
+    color: #333333;
+}
+
+/* Style for comment timestamp */
+.comment-timestamp {
+    color: #888888;
+}
+
+/* Style for reply button */
+.reply-button {
+    /* Add your custom styling for the reply button */
+}
+
+/* Style for like button */
+.like-button {
+    /* Add your custom styling for the like button */
+}
+
+
+
+
+.pagination {
+    -fx-page-information-visible: false; /* Hide the page information text */
+    -fx-alignment: center; /* Center align the pagination */
+}
+
+.pagination-button {
+    -fx-background-color: transparent; /* Set the background color of pagination buttons to transparent */
+    -fx-shape: null; /* Remove the shape around pagination buttons */
+}
+
+.pagination-button:hover {
+    -fx-background-color: #f0f0f0; /* Change background color of pagination buttons on hover */
+}
+
+.pagination .arrow-button {
+    -fx-background-color: transparent; /* Set the background color of arrow buttons to transparent */
+    -fx-shape: null; /* Remove the shape around arrow buttons */
+}
+
+.pagination .arrow-button:hover {
+    -fx-background-color: #f0f0f0; /* Change background color of arrow buttons on hover */
+}
+
+.pagination .arrow-button:disabled {
+    -fx-opacity: 0.5; /* Reduce opacity of disabled arrow buttons */
+}
+
+.pagination .page-count {
+    -fx-font-size: 14px; /* Set font size for page count */
+}
+
+.pagination .page-count-label {
+    -fx-font-size: 14px; /* Set font size for page count label */
+}

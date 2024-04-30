@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.image.ImageView?>
+<AnchorPane prefHeight="589.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.ModifierPostController">
+    <children>
+        <Pane layoutX="98.0" layoutY="11.0" prefHeight="566.0" prefWidth="438.0" styleClass="eco-card" stylesheets="style.css">
+            <children>
+                <VBox alignment="CENTER" layoutX="27.0" layoutY="11.0" prefHeight="539.0" prefWidth="384.0" spacing="10">
+                    <children>
+                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Modifier un post" />
+                        <TextField fx:id="titreField" prefHeight="21.0" prefWidth="384.0" promptText="Titre" styleClass="search-box">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </TextField>
+                        <Text fx:id="errorTitre" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                        <TextArea fx:id="descriptionArea" prefHeight="9.0" prefWidth="366.0" promptText="Description" styleClass="search-box">
+                            <padding>
+                                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                            </padding>
+                        </TextArea>
+                        <Text fx:id="errorDescription" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <HBox prefHeight="115.0" prefWidth="379.0">
+                                    <children>
+                                        <Button fx:id="selectImage" onAction="#selectImageAction" text="Select Image" />
+                                        <ImageView fx:id="imageView" fitHeight="150" fitWidth="150" preserveRatio="true" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <ComboBox fx:id="typeComboBox" promptText="Type" styleClass="search-box">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="LOST" />
+                                    <String fx:value="FOUND" />
+                                </FXCollections>
+                            </items>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </ComboBox>
+                        <Text fx:id="errorType" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                        <TextField fx:id="placeField" prefHeight="21.0" prefWidth="384.0" promptText="Place" styleClass="search-box">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </TextField>
+                        <Text fx:id="errorPlace" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                        <Button fx:id="buttonModifier" onAction="#modifierPost" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Edit Post" />
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

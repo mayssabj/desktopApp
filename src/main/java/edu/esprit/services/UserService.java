@@ -7,7 +7,6 @@ import edu.esprit.entities.VerificationCode;
 import edu.esprit.enums.Role;
 import edu.esprit.utils.FileChooserUtil;
 import edu.esprit.utils.mydb;
-import javafx.scene.image.Image;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -297,8 +296,5 @@ public class UserService {
             return false;
         }
     }
-
-
-
 
 }
