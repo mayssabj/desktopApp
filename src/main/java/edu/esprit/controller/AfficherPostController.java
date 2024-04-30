@@ -2,6 +2,7 @@ package edu.esprit.controller;
 
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,7 +55,7 @@ public class AfficherPostController {
     ObservableList<Post> postlist = FXCollections.observableArrayList();
 
     UserService U=new UserService();
-    User a=U.getCurrentLoggedInUser();
+    User a= Session.getInstance().getCurrentUser();
 
 
     @FXML
@@ -138,7 +139,7 @@ public class AfficherPostController {
         namephotoBox.setSpacing(10);
         namephotoBox.setAlignment(Pos.CENTER_LEFT);
 
-        String imagePath = u.getProfilePicture();
+        String imagePath = u.getPhoto();
         ImageView userPhoto = new ImageView(new Image(new FileInputStream(imagePath)));
         userPhoto.setFitWidth(30);
         userPhoto.setFitHeight(30);

@@ -4,6 +4,7 @@ import edu.esprit.entities.Comment;
 import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
+import edu.esprit.utils.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
@@ -24,7 +25,7 @@ public class CommentDialogController {
     @FXML
     private void submitComment() {
         UserService U1=new UserService();
-        User U=U1.getCurrentLoggedInUser();
+        User U= Session.getInstance().getCurrentUser();
         String commentText = commentTextArea.getText();
         if (!commentText.isEmpty()) {
             Comment comment = new Comment(commentText, post,U);
