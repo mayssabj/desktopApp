@@ -1,10 +1,13 @@
 package edu.esprit.controller.user;
 
 import edu.esprit.entities.User;
+import edu.esprit.entities.VerificationCode;
+import edu.esprit.services.MailService;
 import edu.esprit.services.UserService;
 import edu.esprit.utils.FileChooserUtil;
 import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.ValidationUtils;
+import edu.esprit.utils.VerificationCodeUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -131,15 +134,22 @@ public class RegistrationController implements Initializable {
             String hashedPassword = BCrypt.hashpw(passwordField.getText(), BCrypt.gensalt());
             user.setPassword(hashedPassword);
             user.setPhone(phoneField.getText());
-            user.setProfilePicture(getImagePath(profileImageView));
+            user.setPhoto(getImagePath(profileImageView));
             user.setAddress(addressField.getText());
             user.setGender(genderChoiceBox.getValue().toString());
+            user.setUsername(user.getEmail().split("@")[0]);
+
+
 
             UserService userService = new UserService();
-            boolean registrationSuccessful = userService.registerUser(user);
+            String verificationCode = VerificationCodeUtil.generateVerificationCode();
+            VerificationCode code = new VerificationCode(user, verificationCode, 30); // Expiry time in minutes
+            boolean registrationSuccessful = userService.registerUser(user, code);
 
             if (registrationSuccessful) {
-                registerMessageLabel.setText("Registration successful.");
+                MailService mailService = new MailService();
+                mailService.sendEmail(user.getEmail(), "Email verification", "Your verification code is: " + code.getCode());
+                registerMessageLabel.setText("Registration successful, Please verify your email.");
                 registerMessageLabel.setStyle("-fx-text-fill: green; -fx-font-size: 14px;"); // Set text color to green
                 registerMessageLabel.setVisible(true);
             } else {
@@ -151,7 +161,7 @@ public class RegistrationController implements Initializable {
         }
     }
 
-    private void displayErrors(VBox container, List<String> errors) {
+    public void displayErrors(VBox container, List<String> errors) {
         for (String error : errors) {
             Label errorLabel = new Label(error);
             errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12;"); // Increase font size to 14px

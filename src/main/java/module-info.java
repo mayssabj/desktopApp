@@ -12,6 +12,7 @@ module edu.esprit {
     requires java.net.http;
     requires org.json;
     requires org.controlsfx.controls;
+    exports edu.esprit.enums to com.google.gson;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

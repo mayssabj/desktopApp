@@ -1,32 +1,36 @@
 package edu.esprit.entities;
+import com.google.gson.Gson;
+import edu.esprit.enums.Role;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class User {
     private int id;
-    private String username;
-    private String email;
+    private List<Role> roles;
     private String password;
-    private String phone;
-    private String profilePicture;
+    private String email;
     private String address;
+    private String phone;
+    private String photo;
+    private boolean isEnabled;
+    private String emailVerificationToken;
+    private boolean isVerified;
+    private String username;
     private String gender;
-    private int avertissements_count;
+    private String resetToken;
+    private int avertissementsCount;
+    private Integer reputation;  // Using Integer to allow null values
 
-    public User(int id, String username, String email, String password, String phone, String profilePicture, String address, String gender, int avertissements_count) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.profilePicture = profilePicture;
-        this.address = address;
-        this.gender = gender;
-        this.avertissements_count = avertissements_count;
-    }
+    private VerificationCode verificationCode;
 
     public User() {
-        // Default constructor
+        // Default constructor initializes roles with a default value
+        this.roles = new ArrayList<>(Arrays.asList(Role.ROLE_USER));
+        this.isEnabled = true;
     }
-
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -35,20 +39,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public String getPassword() {
@@ -59,20 +55,12 @@ public class User {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
@@ -83,6 +71,54 @@ public class User {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
+    public String getEmailVerificationToken() {
+        return emailVerificationToken;
+    }
+
+    public void setEmailVerificationToken(String emailVerificationToken) {
+        this.emailVerificationToken = emailVerificationToken;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getGender() {
         return gender;
     }
@@ -91,26 +127,63 @@ public class User {
         this.gender = gender;
     }
 
-    public int getAvertissements_count() {
-        return avertissements_count;
+    public String getResetToken() {
+        return resetToken;
     }
 
-    public void setAvertissements_count(int avertissements_count) {
-        this.avertissements_count = avertissements_count;
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public int getAvertissementsCount() {
+        return avertissementsCount;
+    }
+
+    public void setAvertissementsCount(int avertissementsCount) {
+        this.avertissementsCount = avertissementsCount;
+    }
+
+    public Integer getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(Integer reputation) {
+        this.reputation = reputation;
+    }
+
+    public VerificationCode getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(VerificationCode verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
+                ", roles=" + roles +
                 ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", profilePicture='" + profilePicture + '\'' +
+                ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", photo='" + photo + '\'' +
+                ", isEnabled=" + isEnabled +
+                ", emailVerificationToken='" + emailVerificationToken + '\'' +
+                ", isVerified=" + isVerified +
+                ", username='" + username + '\'' +
                 ", gender='" + gender + '\'' +
-                ", avertissements_count=" + avertissements_count +
+                ", resetToken='" + resetToken + '\'' +
+                ", avertissementsCount=" + avertissementsCount +
+                ", reputation=" + reputation +
+                ", verificationCode=" + verificationCode +
                 '}';
     }
+
+    public String getRolesAsString() {
+        Gson gson = new Gson();
+        return gson.toJson(this.roles);
+    }
+
 }
