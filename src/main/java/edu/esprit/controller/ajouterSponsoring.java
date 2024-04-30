@@ -5,19 +5,38 @@ import edu.esprit.services.SponsoringService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.net.ssl.SSLContext;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
 
 public class ajouterSponsoring {
 
@@ -50,14 +69,44 @@ public class ajouterSponsoring {
     @FXML
     private Text errordescription;
     private File selectedImageFile;
+    public void uploadImage(File imageFile) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        HttpPost httpPost = new HttpPost("http://localhost:8000/upload-image");
+
+        HttpEntity requestEntity = MultipartEntityBuilder.create()
+                .addBinaryBody("image", imageFile, ContentType.APPLICATION_OCTET_STREAM, imageFile.getName())
+                .build();
+
+        httpPost.setEntity(requestEntity);
+        SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(new TrustSelfSignedStrategy()).build();
+
+        HttpClient httpClient = HttpClients.custom().setSSLContext(sslContext).build();
+        HttpResponse response = httpClient.execute(httpPost);
+        System.out.println(response);
+
+        int statusCode = response.getStatusLine().getStatusCode();
+
+        if (statusCode == 200) {
+            Header contentDispositionHeader = response.getFirstHeader("Content-Disposition");
+            if (contentDispositionHeader != null) {
+                String contentDisposition = contentDispositionHeader.getValue();
+                System.out.println("Success upload. Filename: ");
+            } else {
+                System.out.println("Success upload, but filename not found in the response");
+            }
+        } else {
+            System.out.println("Failed upload");
+        }
+    }
+
 
     @FXML
-    public void ajouterSponsoring() throws SQLException {
+    public void ajouterSponsoring() throws SQLException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         // Validate input fields before proceeding
         if (isInputValid()) {
             String name = nameField.getText();
             String description = descriptionArea.getText();
-            String image = (selectedImageFile != null) ? selectedImageFile.getPath() : "";
+            uploadImage(selectedImageFile);
+            String image = (selectedImageFile != null) ? selectedImageFile.getName() : "";
             // Assuming datePicker.getValue() returns a LocalDate, not a Date. If it returns a Date, then keep it as it was.
             LocalDate localDate = datePicker.getValue();
             Date date = Date.valueOf(localDate); // Utilisez la méthode valueOf de java.sql.Date pour la conversion
@@ -69,7 +118,7 @@ public class ajouterSponsoring {
             // Traiter les données comme vous le souhaitez, par exemple, les envoyer à une méthode de service
             System.out.println("Name: " + name);
             System.out.println("Description: " + description);
-            System.out.println("Image: " + image);
+            System.out.println("Image: " + selectedImageFile.getName());
             System.out.println("Date: " + date);
             System.out.println("Contrat: " + contrat);
             System.out.println("Type: " + type);
@@ -106,13 +155,13 @@ public class ajouterSponsoring {
         boolean isValid = true;
 
         // Validate and display error messages
-        if (nameField.getText().isEmpty() || !nameField.getText().matches("^[a-zA-Z]+$")) {
+        if (nameField.getText().isEmpty() || !nameField.getText().matches("^[\\p{L} \\s]+$")) {
             errorname.setText("Name is required and should not contain numbers");
             isValid = false;
         } else {
             errorname.setText("");
         }
-        if (descriptionArea.getText().isEmpty() || !descriptionArea.getText().matches("^[a-zA-Z]+$")) {
+        if (descriptionArea.getText().isEmpty() || !descriptionArea.getText().matches("^[\\p{L} \\s]+$")) {
             errordescription.setText("Description is required and should not contain numbers");
             isValid = false;
         } else {

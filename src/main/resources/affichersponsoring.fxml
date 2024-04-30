@@ -9,15 +9,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="622.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.afficherSponsoring">
-    <Label layoutX="359.0" layoutY="14.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Forum" />
-    <HBox alignment="CENTER" layoutX="1.0" layoutY="99.0" prefHeight="516.0" prefWidth="863.0" VBox.vgrow="ALWAYS">
+<AnchorPane prefHeight="649.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.afficherSponsoring">
+    <Label layoutX="472.0" layoutY="14.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Forum" />
+    <HBox alignment="CENTER" layoutX="17.0" layoutY="99.0" prefHeight="516.0" prefWidth="1022.0" VBox.vgrow="ALWAYS">
         <children>
-            <ScrollPane fx:id="scroll" prefHeight="506.0" prefWidth="826.0" styleClass="scroll-pane" stylesheets="@style/styleafficher.css">
+            <ScrollPane fx:id="scroll" prefHeight="506.0" prefWidth="978.0" styleClass="scroll-pane" stylesheets="@style/styleafficher.css">
                 <content>
-                    <GridPane fx:id="grid" prefHeight="503.0" prefWidth="824.0" styleClass="grid-pane">
+                    <GridPane fx:id="grid" prefHeight="536.0" prefWidth="962.0" styleClass="grid-pane">
                         <columnConstraints>
-                            <ColumnConstraints hgrow="ALWAYS" />
                             <ColumnConstraints hgrow="ALWAYS" />
                             <ColumnConstraints hgrow="ALWAYS" />
                         </columnConstraints>

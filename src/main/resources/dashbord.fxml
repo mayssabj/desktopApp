@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -18,7 +19,7 @@
                         <Insets bottom="60.0" top="40.0" />
                     </VBox.margin>
                 </ImageView>
-                <HBox prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -32,7 +33,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="392.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox layoutX="30.0" layoutY="392.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -46,7 +47,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="416.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox layoutX="30.0" layoutY="416.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fx:id="eventView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -60,7 +61,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="438.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox layoutX="30.0" layoutY="438.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -74,7 +75,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="461.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox layoutX="30.0" layoutY="461.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -88,7 +89,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="484.0" onMouseClicked="#showsponsor" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox layoutX="30.0" layoutY="484.0" onMouseClicked="#showsponsor" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -102,7 +103,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="279.0" prefHeight="45.0" onMouseClicked="#showspostgroup" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox layoutX="30.0" layoutY="279.0" onMouseClicked="#showspostgroup" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -116,7 +117,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="279.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button" stylesheets="@style/styleafficher.css">
+                <HBox layoutX="30.0" layoutY="279.0" onMouseClicked="#showcomment" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -138,6 +139,26 @@
         </VBox>
     </left>
     <center>
-        <VBox fx:id="vboxdash" prefHeight="810.0" prefWidth="1062.0" BorderPane.alignment="CENTER" />
+        <VBox fx:id="vboxdash" prefHeight="810.0" prefWidth="1062.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets right="10.0" top="10.0" />
+         </BorderPane.margin></VBox>
+
+
     </center>
+    <right>
+        <BarChart fx:id="statisticsChart" prefHeight="274.0" prefWidth="313.0">
+            <xAxis>
+                <CategoryAxis label="Type" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Count" prefHeight="749.0" prefWidth="0.0" />
+            </yAxis>
+         <BorderPane.margin>
+            <Insets bottom="500.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+            <!-- Ajoutez des séries de données si nécessaire -->
+        </BarChart>
+    </right>
+
 </BorderPane>

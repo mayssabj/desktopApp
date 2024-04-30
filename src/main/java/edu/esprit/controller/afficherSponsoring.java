@@ -40,63 +40,63 @@ public class afficherSponsoring {
             int row = 0;
             int column = 0;
             for (Sponsoring sponsoring : sponsorings) {
-                // Créer une carte (card) pour chaque sponsoring
-                VBox sponsoringBox = new VBox();
-                sponsoringBox.setAlignment(Pos.CENTER);
-                sponsoringBox.setSpacing(5); // Espacement vertical entre les éléments
-                sponsoringBox.getStyleClass().add("card"); // Appliquer le style CSS de la carte
-                // Set the margin around the VBox
-                VBox.setMargin(sponsoringBox, new Insets(10, 10, 10, 10));
+                // Vérifier si le sponsoring est de type actif
+                if (sponsoring.getType() == Sponsoring.TypeSpon.ACTIVE) {
+                    // Créer une carte (card) pour chaque sponsoring
+                    VBox sponsoringBox = new VBox();
+                    sponsoringBox.setAlignment(Pos.CENTER);
+                    sponsoringBox.setSpacing(10); // Espacement vertical entre les éléments
+                    sponsoringBox.getStyleClass().add("card"); // Appliquer le style CSS de la carte
+                    // Set the margin around the VBox
+                    VBox.setMargin(sponsoringBox, new Insets(20, 20, 20, 20));
 
-                // Créer un ImageView pour afficher l'image du sponsoring
-                String imageUrl = sponsoring.getImage(); // Supposons que getImageUrl() renvoie le chemin d'accès à l'image
-                Image image = new Image(new FileInputStream(imageUrl));
-                ImageView imageView = new ImageView(image);
-                imageView.setFitWidth(100); // Ajuster la largeur de l'image
-                imageView.setFitHeight(100); // Ajuster la hauteur de l'image
-                sponsoringBox.getChildren().add(imageView);
+                    // Créer un ImageView pour afficher l'image du sponsoring
+                    Image image = new Image("http://localhost:8000/uploads/" + sponsoring.getImage());
 
-                // Créer un Label pour afficher le nom du sponsoring
-                Label nameLabel = new Label(sponsoring.getName());
-                sponsoringBox.getChildren().add(nameLabel);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitWidth(150);
+                    imageView.setFitHeight(150);
+                    sponsoringBox.getChildren().add(imageView);
 
-                // Ajouter la carte à votre GridPane
-                grid.add(sponsoringBox, column, row);
+                    // Créer un Label pour afficher le nom du sponsoring
+                    Label nameLabel = new Label(sponsoring.getName());
+                    sponsoringBox.getChildren().add(nameLabel);
 
-                // Incrémenter l'indice de colonne
-                column++;
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
-                sponsoringBox.setOnMouseClicked(event -> {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherPostgroup.fxml"));
-                        Parent root = loader.load();
+                    // Ajouter la carte à votre GridPane
+                    grid.add(sponsoringBox, column, row);
 
-                        // Passer le nom du sponsoring à la nouvelle fenêtre
-                        afficherPostgroup controller = loader.getController();
-                        controller.setSponsoringName(sponsoring.getName());
-                        controller.setSponsoringId(sponsoring.getId());
-
-                        // Charger les posts du sponsoring
-                        controller.afficherPostsSponsoring(sponsoring.getName());
-
-                        // Remplacer la racine de la scène actuelle par le nouveau contenu
-                        sponsoringBox.getScene().setRoot(root);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    // Incrémenter l'indice de colonne
+                    column++;
+                    if (column == 2) {
+                        column = 0;
+                        row++;
                     }
-                });
+                    sponsoringBox.setOnMouseClicked(event -> {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherPostgroup.fxml"));
+                            Parent root = loader.load();
 
+                            // Passer le nom du sponsoring à la nouvelle fenêtre
+                            afficherPostgroup controller = loader.getController();
+                            controller.setSponsoringName(sponsoring.getName());
+                            controller.setSponsoringId(sponsoring.getId());
 
+                            // Charger les posts du sponsoring
+                            controller.afficherPostsSponsoring(sponsoring.getName());
 
+                            // Remplacer la racine de la scène actuelle par le nouveau contenu
+                            sponsoringBox.getScene().setRoot(root);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
             }
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+
 
 
 

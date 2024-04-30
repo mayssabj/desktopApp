@@ -80,8 +80,8 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
         try (PreparedStatement ps = con.prepareStatement(req)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getInt("user_id"), rs.getString("email"), null, null, null, null, null);
-                Post_group post = new Post_group(rs.getInt("postgroup_id"), rs.getString("post_content"));
+                User user = new User(rs.getInt("user_id"), null, null, null, null, null, null);
+                Post_group post = new Post_group(rs.getInt("postgroup_id"), null);
                 // This line fetches the likes count from the ResultSet, it should correctly reflect what's in your database
                 Postcommentaire commentaire = new Postcommentaire(
                         rs.getInt("id"),

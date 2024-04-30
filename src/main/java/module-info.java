@@ -7,6 +7,9 @@ module edu.esprit {
     requires java.persistence;
     requires javafx.web;
     requires java.datatransfer;
+    requires org.apache.httpcomponents.httpcore;
+    requires httpclient;
+    requires httpmime;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

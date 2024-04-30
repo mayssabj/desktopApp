@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.esprit.controller.showcommentairegroup"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox alignment="CENTER" layoutX="6.0" layoutY="-24.0" prefHeight="515.0" prefWidth="951.0" stylesheets="@style/styleafficher.css" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.showcommentairegroup">
+    <VBox alignment="CENTER" layoutX="211.0" layoutY="-25.0" prefHeight="722.0" prefWidth="742.0" stylesheets="@style/styleafficher.css" xmlns:fx="http://javafx.com/fxml">
         <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="List Commentaire PostGroup" />
 
-        <ListView fx:id="commentairegroupListView" prefHeight="410.0" prefWidth="951.0" />
+        <ListView fx:id="commentairegroupListView" prefHeight="603.0" prefWidth="885.0" />
     </VBox>
 
 </AnchorPane>

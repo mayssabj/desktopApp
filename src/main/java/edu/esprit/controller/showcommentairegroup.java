@@ -2,6 +2,7 @@ package edu.esprit.controller;
 
 import edu.esprit.entities.Post_group;
 import edu.esprit.entities.Postcommentaire;
+import edu.esprit.entities.User;
 import edu.esprit.services.CommentaireService;
 import edu.esprit.services.PostgroupService;
 import javafx.collections.FXCollections;

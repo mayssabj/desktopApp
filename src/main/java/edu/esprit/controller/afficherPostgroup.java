@@ -213,12 +213,13 @@ public class afficherPostgroup {
         // Ajouter un champ de texte et un bouton pour les nouveaux commentaires
         TextField newCommentField = new TextField();
         newCommentField.setPromptText("Add a comment...");
+
         Button commentButton = new Button("Post Comment");
         commentButton.setOnAction(event -> addComment(post, newCommentField.getText()));
 
         HBox commentInputBox = new HBox(newCommentField, commentButton);
         commentInputBox.setSpacing(10);
-        commentInputBox.setPadding(new Insets(5));
+        commentInputBox.setPadding(new Insets(10));
         commentairesBox.getChildren().add(commentInputBox);
 
             return commentairesBox;

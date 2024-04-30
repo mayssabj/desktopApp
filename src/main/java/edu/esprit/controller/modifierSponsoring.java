@@ -10,10 +10,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
 
+import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -51,18 +66,15 @@ public class modifierSponsoring {
         typeComboBox.setValue(sponsoring.getType().toString());
 
         if (sponsoring.getImage() != null && !sponsoring.getImage().isEmpty()) {
-            try {
-                Image image = new Image(new FileInputStream(sponsoring.getImage()));
-                imageView.setImage(image);
-            } catch (FileNotFoundException e) {
-                System.err.println("Image file not found, setting default image.");
-                imageView.setImage(new Image("/path/to/default/image.png")); // Set a default or placeholder image
-            }
+            Image image = new Image("http://localhost:8000/uploads/" + sponsoring.getImage());
+
+            imageView.setImage(image);
+
         }
     }
 
     @FXML
-    public void modifierSponsoring() throws SQLException {
+    public void modifierSponsoring() throws SQLException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         if (isInputValid()) {
             sponsoring.setName(nameField.getText());
             sponsoring.setDescription(descriptionArea.getText());
@@ -71,7 +83,8 @@ public class modifierSponsoring {
             sponsoring.setType(Sponsoring.TypeSpon.valueOf(typeComboBox.getValue()));
 
             if (selectedImageFile != null) {
-                sponsoring.setImage(selectedImageFile.getAbsolutePath());
+                uploadImage(selectedImageFile);
+                sponsoring.setImage(selectedImageFile.getName());
             }
 
             SponsoringService service = new SponsoringService();
@@ -98,7 +111,7 @@ public class modifierSponsoring {
 
     private boolean isInputValid() {
         boolean isValid = true;
-        if (nameField.getText().isEmpty() || !nameField.getText().matches("^[a-zA-Z ]+$")) {
+        if (nameField.getText().isEmpty() || !nameField.getText().matches("^[\\p{L} \\s]+$")) {
             errorname.setText("Name is required and should not contain numbers");
             isValid = false;
         } else {
@@ -113,5 +126,33 @@ public class modifierSponsoring {
         }
 
         return isValid;
+    }
+    public void uploadImage(File imageFile) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        HttpPost httpPost = new HttpPost("http://localhost:8000/upload-image");
+
+        HttpEntity requestEntity = MultipartEntityBuilder.create()
+                .addBinaryBody("image", imageFile, ContentType.APPLICATION_OCTET_STREAM, imageFile.getName())
+                .build();
+
+        httpPost.setEntity(requestEntity);
+        SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(new TrustSelfSignedStrategy()).build();
+
+        HttpClient httpClient = HttpClients.custom().setSSLContext(sslContext).build();
+        HttpResponse response = httpClient.execute(httpPost);
+        System.out.println(response);
+
+        int statusCode = response.getStatusLine().getStatusCode();
+
+        if (statusCode == 200) {
+            Header contentDispositionHeader = response.getFirstHeader("Content-Disposition");
+            if (contentDispositionHeader != null) {
+                String contentDisposition = contentDispositionHeader.getValue();
+                System.out.println("Success upload. Filename: ");
+            } else {
+                System.out.println("Success upload, but filename not found in the response");
+            }
+        } else {
+            System.out.println("Failed upload");
+        }
     }
 }

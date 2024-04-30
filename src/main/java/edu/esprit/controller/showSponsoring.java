@@ -81,21 +81,15 @@ public class showSponsoring implements Initializable {
 
     private ImageView createImageView(String imagePath) {
         ImageView imageView = new ImageView();
-        if (imagePath != null && !imagePath.isEmpty()) {
-            File file = new File(imagePath);
-            if (file.exists()) {
-                Image image = new Image(file.toURI().toString());
+                //Image image = new Image(file.toURI().toString());
+                System.out.println("http://localhost:8000/uploads/" + imagePath);
+
+                Image image = new Image("http://localhost:8000/uploads/" + imagePath);
+
                 imageView.setImage(image);
                 imageView.setFitHeight(100);
                 imageView.setFitWidth(100);
-            } else {
-                System.err.println("Image file not found: " + imagePath);
-                // Optionally set a default image
-                // Image defaultImage = new Image("path/to/default/image.png");
-                // imageView.setImage(defaultImage);
-            }
-        }
-        return imageView;
+         return imageView;
     }
 
     private void openEditSponsoringWindow(Sponsoring sponsoring) {

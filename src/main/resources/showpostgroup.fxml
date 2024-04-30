@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.esprit.controller.showpostgroup"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox alignment="CENTER" layoutX="6.0" layoutY="-24.0" prefHeight="515.0" prefWidth="951.0" stylesheets="@style/styleafficher.css" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane prefHeight="707.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.showpostgroup">
+    <VBox alignment="CENTER" layoutX="184.0" layoutY="-48.0" prefHeight="762.0" prefWidth="761.0" stylesheets="@style/styleafficher.css" xmlns:fx="http://javafx.com/fxml">
         <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="List PostGroup" />
 
-        <ListView fx:id="postgroupListView" prefHeight="410.0" prefWidth="951.0" />
+        <ListView fx:id="postgroupListView" prefHeight="602.0" prefWidth="791.0" />
     </VBox>
 
 </AnchorPane>

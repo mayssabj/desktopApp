@@ -20,6 +20,9 @@ public class SponsoringService implements ServiceSponsoring<Sponsoring> {
     public SponsoringService (){
         con = mydb.getInstance().getCon();
     }
+
+
+
     @Override
     public void ajouterSponsoring (Sponsoring sponsoring) throws SQLException {
         String req = "INSERT INTO `sponsoring`(`name`, `description`, `image`, `date`, `contrat`, `type`) VALUES (?,?,?,?,?,?)";
@@ -63,7 +66,7 @@ public class SponsoringService implements ServiceSponsoring<Sponsoring> {
     @Override
     public List<Sponsoring> afficherSponsoring() throws SQLException {
         List<Sponsoring> sponsoringList = new ArrayList<>();
-        String req = "SELECT * FROM `sponsoring`";
+        String req = "SELECT * FROM `sponsoring`" ;
         try (Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(req)) {
             while (rs.next()) {
