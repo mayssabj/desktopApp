@@ -93,7 +93,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.5</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.googlecode</groupId>
+            <artifactId>google-api-translate-java</artifactId>
+            <version>0.92</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
@@ -103,6 +107,11 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.4.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sosorevgm.profanityfilter</groupId>
+            <artifactId>profanityfilter</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
 
