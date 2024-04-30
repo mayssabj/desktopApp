@@ -11,9 +11,9 @@
 
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane fx:id="myBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.Reclamation.Dashboard2Cpntroller">
-    <left>
-        <VBox prefHeight="200.0" prefWidth="235.0" spacing="20.0" styleClass="secondary-color" stylesheets="style/style1.css" BorderPane.alignment="CENTER">
+<BorderPane  fx:id="myBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.Reclamation.Dashboard2Cpntroller">
+    <left >
+        <VBox style="-fx-background-color: #000000;" prefHeight="200.0" prefWidth="235.0" spacing="20.0" styleClass="secondary-color" stylesheets="style/style1.css" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -46,7 +46,7 @@
                                         <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label prefHeight="21.0" prefWidth="101.0" text="Explore" textFill="#a1a1a1">
+                                <Label prefHeight="21.0" prefWidth="101.0" text="Ajouter Reclamation" textFill="#a1a1a1">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -84,9 +84,9 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <Label prefHeight="40.0" prefWidth="192.0" text="Recently Played" textFill="#a1a1a1">
+                        <Label fx:id="recentlyPlayedLabel" prefHeight="40.0" prefWidth="192.0" text="Recently Played" textFill="#a1a1a1" style="-fx-cursor: hand;">
                             <font>
-                                <Font name="System Bold" size="18.0" />
+                                <Font name="System Bold" size="18.0"/>
                             </font>
                         </Label>
                         <Label prefHeight="40.0" prefWidth="192.0" text="Liked Songs" textFill="#a1a1a1">

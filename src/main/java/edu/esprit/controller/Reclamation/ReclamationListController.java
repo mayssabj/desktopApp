@@ -10,6 +10,7 @@ import edu.esprit.utils.OpenAIService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
 import javafx.collections.ObservableList;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -59,7 +61,7 @@ public class ReclamationListController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        listView.setStyle("-fx-padding: 10px 10px 50px 10px;"); // Increase bottom padding
         listView.setItems(list);
         listView.setCellFactory(param -> new ListCell<Reclamation>() {
             @Override
@@ -70,7 +72,9 @@ public class ReclamationListController {
                     setGraphic(null);
                 } else {
                     VBox vbox = new VBox(10);
-                    vbox.setStyle("-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: #666; -fx-background-color: #f4f4f4;");
+                    // Set the background to white
+                    vbox.setStyle("-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: #666; -fx-background-color: #ffffff;");
+
                     Text subject = new Text("Subject: " + rec.getSubjuct());
                     subject.setStyle("-fx-fill: #333; -fx-font-weight: bold;");
                     Text description = new Text("Description: " + rec.getDescription());
@@ -83,7 +87,8 @@ public class ReclamationListController {
                     ImageView imageView = new ImageView();
                     if (rec.getScreenshot() != null && !rec.getScreenshot().isEmpty()) {
                         imageView.setImage(new Image(rec.getScreenshot()));
-                        imageView.setFitWidth(100);
+                        // Set the image to be as wide as the VBox
+                        imageView.setFitWidth(350); // You can adjust this width based on your VBox width
                         imageView.setPreserveRatio(true);
                     }
                     imageView.setStyle("-fx-padding: 10;");
@@ -92,8 +97,17 @@ public class ReclamationListController {
                     deleteButton.setStyle("-fx-background-color: #c00; -fx-text-fill: white;");
                     deleteButton.setOnAction(e -> deleteReclamation(rec));
                     Button modifyButton = new Button("Modify");
-                    modifyButton.setStyle("-fx-background-color: #00c; -fx-text-fill: white;");
-                    modifyButton.setOnAction(e -> modifyReclamation(rec));
+                    modifyButton.setOnAction(e -> {
+                        // Assuming listView is your ListView containing Reclamation objects
+                        Reclamation selectedReclamation = listView.getSelectionModel().getSelectedItem();
+                        if (selectedReclamation != null) {
+                            Stage currentStage = (Stage) modifyButton.getScene().getWindow();
+                            modifyReclamation(selectedReclamation, currentStage);
+                        } else {
+                            // Handle case where no reclamation is selected (show an error message or disable the button)
+                            System.out.println("No reclamation selected");
+                        }
+                    });
 
                     HBox buttonBox = new HBox(10, deleteButton, modifyButton);
                     buttonBox.setStyle("-fx-alignment: center;");
@@ -104,6 +118,8 @@ public class ReclamationListController {
             }
         });
     }
+
+
 
     private void deleteReclamation(Reclamation reclamation) {
         // Implement deletion logic
@@ -116,54 +132,28 @@ public class ReclamationListController {
         loadReclamations(); // Refresh the grid
     }
 
-    private void modifyReclamation(Reclamation reclamation) {
+    private void modifyReclamation(Reclamation reclamation, Stage currentStage) {
         try {
-            // Ensure the path starts with a forward slash if it's an absolute path from the classpath root
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReclamationEditForm.fxml"));
             Parent root = loader.load();
 
             ReclamationEditFormController controller = loader.getController();
             controller.initData(reclamation);
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Modify Reclamation");
-            stage.show();
+            // Close the current stage (list view)
+            currentStage.close();
+
+            // Create a new stage for the edit form
+            Stage editStage = new Stage();
+            editStage.setScene(new Scene(root));
+            editStage.setTitle("Modify Reclamation");
+            editStage.show();
         } catch (IOException e) {
             e.printStackTrace();  // Properly handle the exception
         }
-
     }
-    @FXML
-    private void handleSendMessage() {
-        String message = chatInput.getText();
-        if (!message.isEmpty()) {
-            try {
-                String jsonResponse = openAIService.getChatGPTResponse(message);
-                JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
 
-                if (jsonObject.has("choices") && jsonObject.getAsJsonArray("choices").size() > 0) {
-                    String response = jsonObject.getAsJsonArray("choices").get(0).getAsJsonObject().get("text").getAsString();
-                    chatArea.appendText("You: " + message + "\n");
-                    chatArea.appendText("Bot: " + response + "\n");
-                } else if (jsonObject.has("error")) {
-                    String errorMessage = jsonObject.getAsJsonObject("error").get("message").getAsString();
-                    chatArea.appendText("Error: " + errorMessage + "\n");
-                    // Optionally, provide additional guidance or actions for the user here
-                } else {
-                    System.err.println("Unexpected JSON format: " + jsonResponse);
-                    chatArea.appendText("Received unexpected data from OpenAI\n");
-                }
-            } catch (IOException e) {
-                chatArea.appendText("Failed to get response from OpenAI\n");
-                e.printStackTrace();
-            } catch (Exception e) {
-                chatArea.appendText("Error processing the response: " + e.getMessage() + "\n");
-                e.printStackTrace();
-            }
-            chatInput.clear();
-        }
-    }
+
     @FXML
     private ListView<Avertissement> avertissementListView;
     @FXML

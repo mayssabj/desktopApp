@@ -11,7 +11,7 @@ import java.net.URL;
 public class MainFX extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainFX.class.getResource("/Avertissement/ListAvertissement.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainFX.class.getResource("/Reclamation/ReclamationForm.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Hello!");
@@ -24,7 +24,9 @@ public class MainFX extends Application {
             System.out.println("Le fichier CSS a été trouvé : " + url);
         }
 
+
     }
+
 
 
     public static void main(String[] args) {

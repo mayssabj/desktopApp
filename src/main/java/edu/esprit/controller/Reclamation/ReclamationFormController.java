@@ -4,6 +4,9 @@ import edu.esprit.entities.Reclamation;
 import edu.esprit.services.ServiceReclamation;
 import edu.esprit.services.TranslationService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ChoiceBox;
@@ -12,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -46,7 +50,7 @@ public class ReclamationFormController {
 
     @FXML
     public void initialize() {
-  
+
         typereclamation.getItems().addAll("Violation", "Inappropriate Content", "Other");  // Populate the choice box with example items
         typereclamation.setValue("Other");  // Set a default value
     }
@@ -62,14 +66,11 @@ public class ReclamationFormController {
         String translatedSubject = TranslationService.translateText(subject.getText(), "en", "fr");
         String translatedDescription = TranslationService.translateText(description.getText(), "en", "fr");
 
-        System.out.println("Translated Subject: " + translatedSubject); // Debug print
-        System.out.println("Translated Description: " + translatedDescription); // Debug print
-
         // Check if translations are empty and handle it
         if (translatedSubject.isEmpty() || translatedDescription.isEmpty()) {
             showAlert("Error", "Translation failed or returned empty.", Alert.AlertType.ERROR);
-            translatedSubject = subject.getText(); // Fallback to original text for subject
-            translatedDescription = description.getText(); // Fallback to original text for description
+            translatedSubject = subject.getText(); // Fallback to original text
+            translatedDescription = description.getText(); // Fallback to original text
         }
 
         // Create a new reclamation object with translated data
@@ -80,11 +81,23 @@ public class ReclamationFormController {
         reclamation.setType_reclamation(typereclamation.getValue());
         reclamation.setScreenshot(screenshoot.getText()); // Assuming the screenshot button holds the path temporarily
 
-        // Save reclamation using service
         try {
             serviceReclamation.ajouterReclamation(reclamation);
             showAlert("Success", "Reclamation saved successfully!", Alert.AlertType.INFORMATION);
             clear();  // Clear form after save
+
+            // Close the current form
+            Stage currentStage = (Stage) subject.getScene().getWindow();
+            currentStage.close();
+
+            // Redirect to the listReclamation view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReclamationList.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("List of Reclamations");
+            stage.setScene(new Scene(root));
+            stage.show();
+
         } catch (Exception e) {
             showAlert("Error", "Failed to save reclamation: " + e.getMessage(), Alert.AlertType.ERROR);
         }
