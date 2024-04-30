@@ -15,11 +15,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.Request;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MarketController{
+public class MarketController {
 
     private final MarketDAO marketDAO = new MarketDAO();
 
@@ -117,8 +123,9 @@ public class MarketController{
             e.printStackTrace();
         }
     }
+
     @FXML
-    void addMarket(MouseEvent event) {
+    void addMarket(MouseEvent event) throws IOException {
 
         boolean isValid = true;
 
@@ -184,10 +191,22 @@ public class MarketController{
         }
         Market newMarket = new Market(name, image, address, city, region, zipCode);
         marketDAO.addMarket(newMarket);
-        System.out.println("take rout to display market");
-        displayRoute(event);
+        OkHttpClient client = new OkHttpClient();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, "{\"messages\":[{\"destinations\":[{\"to\":\"21658450148\"}],\"from\":\"ServiceSMS\",\"text\":\""+newMarket.getName() + newMarket.getAddress() + newMarket.getCity() + newMarket.getRegion() + String.valueOf(newMarket.getZipCode()) + "\"}]}");
+
+        Request request = new Request.Builder()
+                .url("https://ggeryw.api.infobip.com/sms/2/text/advanced")
+                .post(body)
+                .addHeader("Authorization", "App 85a3a918a66e2c017ce57a5678d6b6e7-7b713c47-9ed6-4175-b543-df955333f4ff")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        System.out.println(response.body().string());
+
+
     }
-
-
-
 }

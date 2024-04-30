@@ -8,6 +8,10 @@ import com.codewarrior.markets_coupons.service.CategoryDAO;
 import com.codewarrior.markets_coupons.service.MarketDAO;
 import com.codewarrior.markets_coupons.service.UserDAO;
 import com.codewarrior.markets_coupons.service.VoucherDAO;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,12 +22,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -204,6 +211,18 @@ public class VoucherDisplayController implements Initializable {
             System.out.println(s);
 
             //QR CODE API !
+            String str = "";
+            String voucherCode = selectedVoucher.getCode(); // Example: Get voucher code
+            String price = String.valueOf(selectedVoucher.getValue());
+            String _userEmail = user.getEmail();
+            String _categoryName = category.getTitre();
+            String _marketName = market.getName();
+
+            str = "code : " + voucherCode + "\n" + "price :" + price + " DT" + "\n" + "user email : " + _userEmail + "\n" + "category name : " + _categoryName;
+            int qrCodeWidth = 200;
+            int qrCodeHeight = 200;
+            Image qrCode = generateQRCode(str, qrCodeWidth, qrCodeHeight);
+            voucherImage.setImage(qrCode);
         }
     }
 
@@ -373,6 +392,17 @@ public class VoucherDisplayController implements Initializable {
         }
     }
 
+    public static Image generateQRCode(String content, int width, int height) {
+        try {
+            BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+            return new Image(new ByteArrayInputStream(outputStream.toByteArray()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private Voucher getSelectedVoucher() {
         return voucherTable.getSelectionModel().getSelectedItem();
