@@ -44,7 +44,7 @@
                             <Insets left="5.0" />
                         </padding>
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" layoutX="32.0" layoutY="154.0" onMouseClicked="#showuser" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
+                    <HBox alignment="CENTER_LEFT" layoutX="32.0" layoutY="154.0" onMouseClicked="#showUsers" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                         <children>
                             <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
@@ -54,7 +54,7 @@
                                     <Insets right="10.0" />
                                 </HBox.margin>
                             </ImageView>
-                            <Label text="User" textFill="#a2bee8">
+                            <Label text="Users" textFill="#a2bee8">
                                 <font>
                                     <Font name="Cambria" size="14.0" />
                                 </font>

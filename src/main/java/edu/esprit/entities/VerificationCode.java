@@ -55,13 +55,18 @@ public class VerificationCode {
         return LocalDateTime.now().isAfter(expiryDate);
     }
 
+//    @Override
+//    public String toString() {
+//        return "VerificationCode{" +
+//                "id=" + id +
+//                ", user=" + user +
+//                ", code='" + code + '\'' +
+//                ", expiryDate=" + expiryDate +
+//                '}';
+//    }
+
     @Override
     public String toString() {
-        return "VerificationCode{" +
-                "id=" + id +
-                ", user=" + user +
-                ", code='" + code + '\'' +
-                ", expiryDate=" + expiryDate +
-                '}';
+        return code;
     }
 }

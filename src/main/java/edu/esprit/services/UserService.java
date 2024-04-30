@@ -11,6 +11,7 @@ import edu.esprit.utils.mydb;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -295,6 +296,47 @@ public class UserService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT u.*, vc.code as verification_code " +
+                "FROM user u LEFT JOIN verification_code vc ON u.id = vc.user_id";
+        try (Connection con = mydb.getInstance().getCon();
+             PreparedStatement pst = con.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                users.add(extractFullUserFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    private User extractFullUserFromResultSet(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        user.setPhone(rs.getString("phone"));
+        user.setPhoto(rs.getString("photo"));
+        user.setAddress(rs.getString("address"));
+        user.setGender(rs.getString("gender"));
+        user.setRoles(parseRoles(rs.getString("roles")));
+        user.setUsername(rs.getString("username"));
+        user.setEnabled(rs.getBoolean("is_enabled"));
+        user.setAvertissementsCount(rs.getInt("avertissements_count"));
+        user.setReputation(rs.getObject("reputation") != null ? rs.getInt("reputation") : null);
+        user.setEmailVerificationToken(rs.getString("email_verification_token"));
+        user.setVerified(rs.getBoolean("is_verified"));
+        user.setResetToken(rs.getString("reset_token"));
+        if (rs.getString("verification_code") != null) {
+            VerificationCode verificationCode = new VerificationCode();
+            verificationCode.setCode(rs.getString("verification_code"));
+            user.setVerificationCode(verificationCode);
+        }
+        return user;
     }
 
 }

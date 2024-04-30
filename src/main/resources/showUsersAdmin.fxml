@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane stylesheets="@stylesheet.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="edu.esprit.controller.user.AdminController">
+    <ScrollPane layoutX="30.0" layoutY="90" prefHeight="580.0" prefWidth="1050" fitToWidth="true" hbarPolicy="ALWAYS">
+        <content>
+            <AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="580.0">
+                <!-- Width will be dynamically set based on content -->
+            </AnchorPane>
+        </content>
+    </ScrollPane>
+</AnchorPane>
