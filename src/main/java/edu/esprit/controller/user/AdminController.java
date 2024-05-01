@@ -82,7 +82,6 @@ public class AdminController {
 
 //        fnReloadData();
         List<User> users = userService.getAllUsers();
-        System.out.println(users);
         List<String> labels = ReflectionUtil.getFieldNamesFromList(users);
         setupTable(labels,users);
 //        tfSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
