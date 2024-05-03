@@ -2,6 +2,7 @@ package edu.esprit.services;
 
 import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -58,7 +59,7 @@ public class PostCRUD implements ServicePost<Post> {
     @Override
     public void ajouter(Post post) throws SQLException {
         UserService userService=new UserService();
-        User u1=userService.getCurrentLoggedInUser();
+        User u1= Session.getInstance().getCurrentUser();
         String req = "INSERT INTO `post`(`titre`, `description`, `image_url`, `date`, `type`, `place`, `user`) VALUES (?, ?, ?, ?, ?, ?,?)";
         long millis = System.currentTimeMillis();
         java.sql.Date today = new java.sql.Date(millis);

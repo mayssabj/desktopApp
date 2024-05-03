@@ -230,7 +230,7 @@ public class AfficherPostController {
         deleteButton.getStyleClass().add("add-btn");
         deleteButton.setFont(new Font("System Bold", 18));
         deleteButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
+        if (Session.getInstance().getCurrentUser().getId() == u.getId()) {
             deleteButton.setOnAction(event -> deletePost(post));
         }
 
@@ -242,7 +242,7 @@ public class AfficherPostController {
         modifierButton.getStyleClass().add("add-btn");
         modifierButton.setFont(new Font("System Bold", 18));
         modifierButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId() == u.getId()) {
+        if (Session.getInstance().getCurrentUser().getId() == u.getId()) {
             modifierButton.setOnAction(event -> modifierPost(post));
         }
 
@@ -298,7 +298,7 @@ public class AfficherPostController {
             String commentText = commentField.getText();
             if (!commentText.isEmpty()) {
                 try {
-                    User currentUser = userService.getCurrentLoggedInUser();
+                    User currentUser = Session.getInstance().getCurrentUser();
                     Comment comment = new Comment(commentText, post, currentUser);
                     commentCRUD.ajouter(comment);
                     // Reload the posts to reflect the new comment

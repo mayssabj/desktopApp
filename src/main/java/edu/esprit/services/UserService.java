@@ -50,7 +50,7 @@ public class UserService {
         user.setEmailVerificationToken(rs.getString("email_verification_token"));
         user.setVerified(rs.getBoolean("is_verified"));
         user.setResetToken(rs.getString("reset_token"));
-        user.setAvertissementsCount(rs.getInt("avertissements_count"));
+        user.setAvertissements_count(rs.getInt("avertissements_count"));
         user.setReputation(rs.getObject("reputation") != null ? rs.getInt("reputation") : null);
 
         if (rs.getString("code") != null) {
@@ -299,6 +299,39 @@ public class UserService {
     }
 
 
+    public User getUserByUsername(String reportedUsername) throws SQLException {
+        Connection con = mydb.getInstance().getCon();
+        User user = null;
+        try (PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user WHERE username = ?")) {
+            preparedStatement.setString(1,reportedUsername);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setPhone(resultSet.getString("phone"));
 
+                user.setAddress(resultSet.getString("address"));
+                user.setGender(resultSet.getString("gender"));
+                user.setAvertissements_count(resultSet.getInt("avertissements_count"));
+            }
+        }
+        return user;
+    }
+
+    //incrementer le nombre d'avertissements d'un utilisateur
+    public void incrementAvertissementCount(int id) throws SQLException {
+        Connection con = mydb.getInstance().getCon();
+        try (PreparedStatement preparedStatement = con.prepareStatement("UPDATE user SET avertissements_count = avertissements_count + 1 WHERE id = ?")) {
+            preparedStatement.setInt(1, id);
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Updating avertissements_count failed, no rows affected.");
+            }
+        }
+    }
 }
+

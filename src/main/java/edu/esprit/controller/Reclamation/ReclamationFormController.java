@@ -3,6 +3,7 @@ package edu.esprit.controller.Reclamation;
 import edu.esprit.entities.Reclamation;
 import edu.esprit.services.ServiceReclamation;
 import edu.esprit.services.TranslationService;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,20 +17,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.controlsfx.control.textfield.TextFields;
-import org.controlsfx.control.textfield.AutoCompletionBinding;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 public class ReclamationFormController {
 
@@ -53,6 +53,7 @@ public class ReclamationFormController {
 
         typereclamation.getItems().addAll("Violation", "Inappropriate Content", "Other");  // Populate the choice box with example items
         typereclamation.setValue("Other");  // Set a default value
+
     }
 
     public void saveReclamation() {
@@ -139,7 +140,6 @@ public class ReclamationFormController {
     }
 
     //function pour l'auto complete
-
 
 
 }

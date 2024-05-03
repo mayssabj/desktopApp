@@ -154,33 +154,8 @@ public class ReclamationListController {
     }
 
 
-    @FXML
-    private ListView<Avertissement> avertissementListView;
-    @FXML
-    private void validateAvertissement(ActionEvent event) {
-        Avertissement selected = avertissementListView.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            try {
-                User user = userService.getUserByUsername(selected.getReported_username());
-                if (user != null) {
-                    userService.incrementAvertissementCount(user.getId());
-                    Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Compteur d'avertissements incrémenté pour " + user.getUsername());
-                    infoAlert.showAndWait();
-                    // Vous pouvez aussi mettre à jour l'interface ici si nécessaire
-                } else {
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Utilisateur non trouvé.");
-                    errorAlert.showAndWait();
-                }
-            } catch (Exception e) {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la validation de l'avertissement.");
-                errorAlert.showAndWait();
-                e.printStackTrace();
-            }
-        } else {
-            Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Veuillez sélectionner un avertissement à valider.");
-            infoAlert.showAndWait();
-        }
-    }
+
+
 
 
 }

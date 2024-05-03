@@ -2,8 +2,11 @@
 
     import edu.esprit.entities.Avertissement;
     import edu.esprit.entities.User;
+    import edu.esprit.services.ActivityMonitor;
     import edu.esprit.services.ServiceAvertissement;
     import edu.esprit.services.UserService;
+
+    import javafx.application.Platform;
     import javafx.collections.FXCollections;
     import javafx.collections.ObservableList;
     import javafx.event.ActionEvent;
@@ -68,6 +71,7 @@
         void validerAvertissement(ActionEvent event) {
 
         }
+        private ActivityMonitor activityMonitor = new ActivityMonitor();
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,6 +94,7 @@
                 private Button supprimerButton = new Button("Supprimer");
 
                 {
+                    activityMonitor.recordActivity();
                     // Appliquer des styles aux boutons
                     validerButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;");
                     supprimerButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;");
@@ -173,6 +178,7 @@
         }
 
         private void validateAvertissement(ActionEvent event) {
+            activityMonitor.recordActivity();
             Avertissement selected = avertissementListView.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 try {
@@ -184,6 +190,10 @@
                     User user = userService.getUserByUsername(selected.getReported_username());
                     if (user != null) {
                         userService.incrementAvertissementCount(user.getId());
+                        //verifier si l'avertissement cout a ete incrementer
+
+
+
                         sendEmail(user.getEmail(), user.getAvertissements_count());
                         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Compteur d'avertissements incrémenté pour " + user.getUsername() + ". Avertissement confirmé.");
                         infoAlert.showAndWait();
@@ -247,6 +257,7 @@
             int pageIndex = pagination.getCurrentPageIndex();
             loadAvertissements(pageIndex);
         }
+
 
 
     }
