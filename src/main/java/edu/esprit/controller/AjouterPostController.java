@@ -64,6 +64,9 @@ public class AjouterPostController {
 
     private Cloudinary cloudinary;
 
+    @FXML
+    private WebView mapWebView;
+
     public AjouterPostController() {
         cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "dx5cteclw",
@@ -178,48 +181,76 @@ public class AjouterPostController {
     @FXML
     private void initialize() {
         // Load the HTML content into the WebView
-        WebEngine webEngine = mapView.getEngine();
-        webEngine.loadContent("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "    <title>Map</title>\n" +
-                "    <!-- Include Leaflet CSS and JS -->\n" +
-                "    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet/dist/leaflet.css\" />\n" +
-                "    <script src=\"https://unpkg.com/leaflet/dist/leaflet.js\"></script>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <!-- Div for the Map -->\n" +
-                "    <div id=\"map\" style=\"width: 100%; height: 400px;\"></div>\n" +
-                "\n" +
-                "    <!-- Script to Initialize Leaflet Map -->\n" +
-                "    <script>\n" +
-                "        // Initialize Leaflet map\n" +
-                "        var map = L.map('map').setView([51.505, -0.09], 13); // Initial coordinates and zoom level\n" +
-                "\n" +
-                "        // Add OpenStreetMap tile layer\n" +
-                "        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\n" +
-                "            attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\n" +
-                "        }).addTo(map);\n" +
-                "\n" +
-                "        // Add a marker to the map\n" +
-                "        L.marker([51.5, -0.09]).addTo(map)\n" +
-                "            .bindPopup('A sample popup!')\n" +
-                "            .openPopup();\n" +
-                "    </script>\n" +
-                "</body>\n" +
-                "</html>"
-        );
+        loadMap(0, 0);
+    }
 
-        // Add a listener to inject the JavaConnector object once the page is loaded
+    private void loadMap(float latitude, float longitude) {
+        WebEngine webEngine = mapWebView.getEngine();
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
-                // Once the page is loaded, inject a Java object into the JavaScript context
+                // Inject JavaScript code to retrieve user's location
                 JSObject window = (JSObject) webEngine.executeScript("window");
-                window.setMember("javaConnector", new JavaConnector());
+                window.setMember("javaBridge", new JavaBridge()); // JavaBridge is a class defined below
+
+                // Call JavaScript function to get user's location
+                webEngine.executeScript("navigator.geolocation.getCurrentPosition(function(position) {" +
+                        "javaBridge.updateLocation(position.coords.latitude, position.coords.longitude);" +
+                        "});");
             }
         });
+
+        String html = "<html>"
+                + "<head>"
+                + "<link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet/dist/leaflet.css\" />"
+                + "<script src=\"https://unpkg.com/leaflet/dist/leaflet.js\"></script>"
+                + "</head>"
+                + "<body>"
+                + "<div id=\"map\" style=\"height: 400px;\"></div>"
+                + "<script>"
+                + "var map = L.map('map').setView([" + latitude + ", " + longitude + "], 13);"
+                + "L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {"
+                + "attribution: '© OpenStreetMap contributors'"
+                + "}).addTo(map);"
+                + "map.on('click', function(e) {" +
+                "javaBridge.onMapClick(e.latlng.lat, e.latlng.lng);" +
+                "});" +
+                "</script>"
+                + "</body>"
+                + "</html>";
+        webEngine.loadContent(html);
+        System.out.println("Initial location: " + latitude + ", " + longitude);
     }
+
+    // Define a Java class to bridge between Java and JavaScript
+    public class JavaBridge {
+        public void onMapClick(double latitude, double longitude) {
+            System.out.println("Clicked location: " + latitude + ", " + longitude);
+            // You can handle the clicked location here
+        }
+    }
+
+
+
+    /*private void loadMap(float latitude, float longitude) {
+        WebEngine webEngine = mapWebView.getEngine();
+        String html = "<html>"
+                + "<head>"
+                + "<link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet/dist/leaflet.css\" />"
+                + "<script src=\"https://unpkg.com/leaflet/dist/leaflet.js\"></script>"
+                + "</head>"
+                + "<body>"
+                + "<div id=\"map\" style=\"height: 400px;\"></div>"
+                + "<script>"
+                + "var map = L.map('map').setView([" + latitude + ", " + longitude + "], 13);"
+                + "L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {"
+                + "attribution: '© OpenStreetMap contributors'"
+                + "}).addTo(map);"
+                + "L.marker([" + latitude + ", " + longitude + "]).addTo(map)"
+                + ".bindPopup('Your event').openPopup();"
+                + "</script>"
+                + "</body>"
+                + "</html>";
+        webEngine.loadContent(html);
+    }*/
 
 }

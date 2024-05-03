@@ -238,7 +238,6 @@ public class AfficherPostController {
             }
         }
 
-
         Label labelType = new Label(" " + post.getType());
         labelType.setFont(Font.font("Cambria", FontWeight.BOLD, 17));
         if ("LOST".equals(post.getType().toString())) {
