@@ -3,6 +3,7 @@ package edu.esprit.services;
 import edu.esprit.entities.Comment;
 import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -32,7 +33,7 @@ public class CommentCRUD implements ServicePost<Comment> {
     @Override
     public void ajouter(Comment comment) throws SQLException {
         UserService userService=new UserService();
-        User a =userService.getCurrentLoggedInUser();
+        User a = Session.getInstance().getCurrentUser();
         String req = "INSERT INTO `comment`(`text`,`post`,`id_u`) VALUES (?,?,?)";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
             pst.setString(1, comment.getText());

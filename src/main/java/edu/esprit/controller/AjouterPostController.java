@@ -3,6 +3,7 @@ package edu.esprit.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.User;
+import edu.esprit.utils.Session;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,7 +78,7 @@ public class AjouterPostController {
     public void ajouterPost() throws SQLException, IOException {
         if (isInputValid()) {
             UserService userService = new UserService();
-            User u1 = userService.getCurrentLoggedInUser();
+            User u1 = Session.getInstance().getCurrentUser();
 
             if (u1 != null) {
                 String titre = titreField.getText();

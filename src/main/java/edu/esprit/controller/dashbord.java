@@ -64,21 +64,20 @@ public class dashbord {
     }
 
     @FXML
-    void showuser(MouseEvent event) {
+    void showUsers(MouseEvent event) {
         try {
-            // Load showPostAdminController.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/showPostAdminController.fxml"));
+            // Ensure the path starts with a slash indicating it's relative to the classpath root
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/showUsersAdmin.fxml"));
             Node eventFXML = loader.load();
 
-            // Clear existing content from vboxdash
+            // Assuming vboxdash is already defined and part of your scene
             vboxdash.getChildren().clear();
-
-            // Add the loaded eventFXML to vboxdash
             vboxdash.getChildren().add(eventFXML);
         } catch (IOException e) {
-            e.printStackTrace();  // Handle IOException
+            e.printStackTrace();  // Log the exception to understand what went wrong
         }
     }
+
     @FXML
     void showpostad(MouseEvent event) {
         try {

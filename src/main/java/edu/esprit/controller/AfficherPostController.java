@@ -2,6 +2,7 @@ package edu.esprit.controller;
 
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,13 +57,14 @@ public class AfficherPostController {
     ObservableList<Post> postlist = FXCollections.observableArrayList();
 
     UserService U=new UserService();
-    User a=U.getCurrentLoggedInUser();
 
     @FXML
     private Pagination pagination;
 
     private final int ITEMS_PER_PAGE = 4;
     private ObservableList<Post> allPosts;
+
+
 
 
 
@@ -185,7 +187,7 @@ public class AfficherPostController {
         namephotoBox.setSpacing(10);
         namephotoBox.setAlignment(Pos.CENTER_LEFT);
 
-        String imagePath = u.getProfilePicture();
+        String imagePath = u.getPhoto();
         ImageView user_idPhoto = new ImageView(new Image(new FileInputStream(imagePath)));
         user_idPhoto.setFitWidth(30);
         user_idPhoto.setFitHeight(30);
@@ -274,7 +276,7 @@ public class AfficherPostController {
 */
         // commentButton.setOnAction(event -> handlePostClick(post));
         HBox buttonBox = new HBox(10);
-        if (user_idService.getCurrentLoggedInUser().getId() == u.getId()) {
+        if (Session.getInstance().getCurrentUser().getId() == u.getId()) {
             Button deleteButton = new Button();
             ImageView deleteIcon = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
             deleteIcon.setFitWidth(16);
@@ -283,7 +285,7 @@ public class AfficherPostController {
             deleteButton.getStyleClass().add("add-btn");
             deleteButton.setFont(new Font("System Bold", 18));
             deleteButton.setTextFill(Color.valueOf("#828282"));
-            if (user_idService.getCurrentLoggedInUser().getId() == u.getId()) {
+            if (Session.getInstance().getCurrentUser().getId() == u.getId()) {
                 deleteButton.setOnAction(event -> deletePost(post));
             }
 
@@ -329,7 +331,7 @@ public class AfficherPostController {
             commentsBox.getChildren().addAll(
                     new CommentDesign(comment.getId_u().getEmail(), comment.getText())
             );
-            if (user_idService.getCurrentLoggedInUser().getId() == comment.getId_u().getId()) {
+            if (Session.getInstance().getCurrentUser().getId() == comment.getId_u().getId()) {
                 Button deleteButton2 = new Button();
                 ImageView deleteIcon2 = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete-icon.png")));
                 deleteIcon2.setFitWidth(10);
@@ -376,7 +378,7 @@ public class AfficherPostController {
             String commentText = commentField.getText();
             if (!commentText.isEmpty()) {
                 try {
-                    User currentuser_id = user_idService.getCurrentLoggedInUser();
+                    User currentuser_id = Session.getInstance().getCurrentUser();
                     Comment comment = new Comment(commentText, post, currentuser_id);
                     commentCRUD.ajouter(comment);
                     // Reload the posts to reflect the new comment

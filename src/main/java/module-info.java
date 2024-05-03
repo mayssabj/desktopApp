@@ -4,6 +4,9 @@ module edu.esprit {
     requires javafx.fxml;
     requires java.sql;
     requires jbcrypt;
+    exports edu.esprit.enums to com.google.gson;
+    requires com.google.gson;
+    requires javax.mail;
     requires java.persistence;
     requires javafx.web;
     requires jdk.jsobject;
