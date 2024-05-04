@@ -11,6 +11,8 @@ module edu.esprit {
     requires javafx.web;
     requires jdk.jsobject;
     requires cloudinary.core;
+    requires itextpdf;
+    requires java.desktop;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

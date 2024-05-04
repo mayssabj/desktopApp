@@ -1,8 +1,14 @@
 package edu.esprit.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import com.itextpdf.text.pdf.qrcode.WriterException;
 import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
 import edu.esprit.services.PostCRUD;
@@ -17,6 +23,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+
+import java.awt.Desktop;
+
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 
 public class showPostAdminController {
 
@@ -155,5 +170,62 @@ public class showPostAdminController {
     private List<Post> loadDataFromDatabase() throws SQLException {
         PostCRUD postCRUD = new PostCRUD();
         return postCRUD.afficher();
+    }
+
+
+
+    @FXML
+    void handleSaveFile() throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException, WriterException {
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+        PdfWriter.getInstance((com.itextpdf.text.Document) doc, new FileOutputStream("User_list.pdf"));
+        ((com.itextpdf.text.Document) doc).open();
+        String format = "dd/mm/yy hh:mm";
+        SimpleDateFormat formater = new SimpleDateFormat(format);
+        java.util.Date date = new java.util.Date();
+        Paragraph paragraph = new Paragraph("LOST & FOUND");
+        paragraph.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+        paragraph.setAlignment(BaseColor.BLUE.getBlue());
+        ((com.itextpdf.text.Document) doc).add(paragraph);
+        ((com.itextpdf.text.Document) doc).add(new Paragraph("\n"));
+        ((com.itextpdf.text.Document) doc).add(new Paragraph("All Post information in this table :" + "\n"));
+        ((com.itextpdf.text.Document) doc).add(new Paragraph("\n"));
+        PdfPTable t = new PdfPTable(5); // Augmentez le nombre de colonnes pour inclure le QR code
+        PdfPCell cell = new PdfPCell(new Phrase("titre"));
+        cell.setBackgroundColor(BaseColor.ORANGE);
+        t.addCell(cell);
+
+        PdfPCell cell1 = new PdfPCell(new Phrase("Description"));
+        cell1.setBackgroundColor(BaseColor.ORANGE);
+        t.addCell(cell1);
+
+        PdfPCell cell2 = new PdfPCell(new Phrase("place"));
+        cell2.setBackgroundColor(BaseColor.ORANGE);
+        t.addCell(cell2);
+
+        PdfPCell cell3 = new PdfPCell(new Phrase("type post"));
+        cell3.setBackgroundColor(BaseColor.ORANGE);
+        t.addCell(cell3);
+
+        PdfPCell cell4 = new PdfPCell(new Phrase("date"));
+        cell4.setBackgroundColor(BaseColor.ORANGE);
+        t.addCell(cell4);
+
+
+        // Set the total width of the table to the width of the page
+        t.setTotalWidth(((com.itextpdf.text.Document) doc).getPageSize().getWidth() - ((com.itextpdf.text.Document) doc).leftMargin() - ((com.itextpdf.text.Document) doc).rightMargin());
+
+
+        // Récupérez la liste des utilisateurs
+        List<Post> userList = loadDataFromDatabase();
+        for (Post post : userList) {
+            t.addCell(post.getTitre());
+            t.addCell(post.getDescription());
+            t.addCell(post.getPlace());
+            t.addCell(post.getType().toString());
+            t.addCell(post.getDate().toString());
+        }
+        ((com.itextpdf.text.Document) doc).add(t);
+        Desktop.getDesktop().open(new File("User_list.pdf"));
+        ((com.itextpdf.text.Document) doc).close();
     }
 }

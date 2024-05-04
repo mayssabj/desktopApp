@@ -61,8 +61,8 @@
                   <ComboBox fx:id="typeComboBox" promptText="Type" styleClass="search-box">
                     <items>
                       <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="LOST" />
-                        <String fx:value="FOUND" />
+                        <String fx:value="Lost" />
+                        <String fx:value="Found" />
                       </FXCollections>
                     </items>
                     <padding>

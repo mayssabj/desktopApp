@@ -15,7 +15,7 @@ public class Post {
     private String place;
 
     public enum Type {
-        LOST, FOUND
+        Lost, Found
     }
 
     public int user_id;

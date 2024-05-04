@@ -24,7 +24,6 @@ public class CommentDialogController {
 
     @FXML
     private void submitComment() {
-        UserService U1=new UserService();
         User U= Session.getInstance().getCurrentUser();
         String commentText = commentTextArea.getText();
         if (!commentText.isEmpty()) {
