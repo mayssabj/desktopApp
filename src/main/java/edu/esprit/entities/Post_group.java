@@ -10,10 +10,10 @@ public class Post_group {
     private String contenu ;
     private Date date ;
     private Sponsoring sponsoring_id;
-    private User user_id ;
+    private int user_id ;
     private List<Postcommentaire> commentaires;
 
-    public Post_group(int id, String contenu, Date date, Sponsoring sponsoring_id, User user_id) {
+    public Post_group(int id, String contenu, Date date, Sponsoring sponsoring_id, int user_id) {
         this.id = id;
         this.contenu = contenu;
         this.date = date;
@@ -23,7 +23,7 @@ public class Post_group {
 
     }
 
-    public Post_group(String contenu, Date date, Sponsoring sponsoring_id, User user_id) {
+    public Post_group(String contenu, Date date, Sponsoring sponsoring_id, int user_id) {
         this.contenu = contenu;
         this.date = date;
         this.sponsoring_id = sponsoring_id;
@@ -78,11 +78,11 @@ public class Post_group {
         this.sponsoring_id = sponsoring_id;
     }
 
-    public User getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(User user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 

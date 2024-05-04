@@ -2,6 +2,7 @@ package edu.esprit.controller;
 
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
+import edu.esprit.utils.Session;
 import javafx.scene.control.TextInputDialog;
 import edu.esprit.entities.Comment;
 import edu.esprit.entities.Post;
@@ -87,7 +88,7 @@ public class AfficherPostController {
         namephotoBox.setSpacing(10);
         namephotoBox.setAlignment(Pos.CENTER_LEFT);
 
-        String imagePath = u.getProfilePicture();
+        String imagePath = u.getPhoto();
         ImageView userPhoto = new ImageView(new Image(new FileInputStream(imagePath)));
         userPhoto.setFitWidth(30);
         userPhoto.setFitHeight(30);
@@ -178,7 +179,7 @@ public class AfficherPostController {
         deleteButton.getStyleClass().add("add-btn");
         deleteButton.setFont(new Font("System Bold", 18));
         deleteButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId()==u.getId()){
+        if (Session.getInstance().getCurrentUser().getId()==u.getId()){
             deleteButton.setOnAction(event -> deletePost(post));
         }
 
@@ -190,7 +191,7 @@ public class AfficherPostController {
         modifierButton.getStyleClass().add("add-btn");
         modifierButton.setFont(new Font("System Bold", 18));
         modifierButton.setTextFill(Color.valueOf("#828282"));
-        if (userService.getCurrentLoggedInUser().getId()==u.getId()) {
+        if (Session.getInstance().getCurrentUser().getId()==u.getId()) {
             modifierButton.setOnAction(event -> modifierPost(post));
         }
 

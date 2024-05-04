@@ -4,7 +4,7 @@ import java.sql.*;
 public class mydb {
     static mydb instance ;
     Connection con ;
-    String url = "jdbc:mysql://root:@127.0.0.1:3306/pidevv";
+    String url = "jdbc:mysql://root:@127.0.0.1:3306/pidev";
     String user="root" ;
     String pwd="" ;
     private mydb() {

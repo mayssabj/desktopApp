@@ -27,7 +27,7 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
             pg.setString(1, postGroup.getContenu());
             pg.setDate(2, new java.sql.Date(postGroup.getDate().getTime()));
             pg.setInt(3, postGroup.getSponsoring_id().getId());
-            pg.setInt(4, postGroup.getUser_id().getId());
+            pg.setInt(4, postGroup.getUser_id());
             pg.executeUpdate();
         }
     }
@@ -74,7 +74,7 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
                 int userId = rs.getInt("user_id");
                 Sponsoring sponsoring = getSponsoringById(sponsoringId);
                 User user = getUserById(userId);
-                Post_group post = new Post_group(id, contenu,date, sponsoring,user);
+                Post_group post = new Post_group(id, contenu,date, sponsoring,user.getId());
                 posts.add(post);
             }
         }
@@ -97,26 +97,26 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
     }
 
     public User getUserById(int id) throws SQLException {
-        String req = "SELECT * FROM `users` WHERE `id`=?";
+        String req = "SELECT * FROM `user` WHERE `id`=?";
         try (PreparedStatement ps = con.prepareStatement(req)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String username = rs.getString("email");
-                String image = rs.getString("profile_picture");
+                String image = rs.getString("photo");
                 return new User(username,image); // Assuming User constructor takes id, username, and image
             }
+            else return null;
         }
-        return null;
     }
 
 
     public List<Post_group> afficherBySponsoring(String sponsoringName) throws SQLException {
         List<Post_group> posts = new ArrayList<>();
-        String req = "SELECT pg.*, pc.id AS comment_id, pc.commentaire, pc.likes, pc.liked_by, pc.user_id AS comment_user_id, u.email AS comment_user_email, u.profile_picture AS comment_user_profile_picture "
+        String req = "SELECT pg.*, pc.id AS comment_id, pc.commentaire, pc.likes, pc.liked_by, pc.user_id AS comment_user_id, u.username AS comment_user_username, u.photo AS comment_user_photo "
                 + "FROM post_group pg "
                 + "LEFT JOIN postcommentaire pc ON pg.id = pc.postgroup_id "
-                + "LEFT JOIN users u ON pc.user_id = u.id "
+                + "LEFT JOIN user u ON pc.user_id = u.id "
                 + "WHERE pg.sponsoring_id IN (SELECT id FROM sponsoring WHERE name = ?)";
         try (PreparedStatement pg = con.prepareStatement(req)) {
             pg.setString(1, sponsoringName);
@@ -125,11 +125,11 @@ public class PostgroupService implements ServicePostgroup<Post_group> {
             while (rs.next()) {
                 int postId = rs.getInt("id");
                 Post_group post = postsMap.getOrDefault(postId,
-                        new Post_group(postId, rs.getString("contenu"), rs.getDate("date"), getSponsoringById(rs.getInt("sponsoring_id")), getUserById(rs.getInt("user_id"))));
+                        new Post_group(postId, rs.getString("contenu"), rs.getDate("date"), getSponsoringById(rs.getInt("sponsoring_id")),  rs.getInt("user_id")));
 
                 int commentId = rs.getInt("comment_id");
                 if (commentId != 0) { // Check if there is a comment
-                    User commentUser = new User(rs.getInt("comment_user_id"), rs.getString("comment_user_email"), null, null, rs.getString("comment_user_profile_picture"), null, null);
+                    User commentUser = new User(rs.getInt("comment_user_id"), rs.getString("comment_user_photo"),rs.getString("comment_user_username"));
                     int likes = rs.getInt("likes");
                     String likedBySerialized = rs.getString("liked_by");
                     Postcommentaire comment = new Postcommentaire(commentId, rs.getString("commentaire"), post, commentUser, likes);

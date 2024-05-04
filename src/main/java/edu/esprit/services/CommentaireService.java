@@ -80,7 +80,8 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
         try (PreparedStatement ps = con.prepareStatement(req)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getInt("user_id"), null, null, null, null, null, null);
+                User user = new User();
+                user.setId(rs.getInt("user_id"));
                 Post_group post = new Post_group(rs.getInt("postgroup_id"), null);
                 // This line fetches the likes count from the ResultSet, it should correctly reflect what's in your database
                 Postcommentaire commentaire = new Postcommentaire(
@@ -99,7 +100,7 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
     public List<Postcommentaire> afficherCommentaires(Post_group pst) throws SQLException {
         List<Postcommentaire> commentaires = new ArrayList<>();
         String req = "SELECT pc.*, u.email, p.contenu AS post_content FROM postcommentaire pc " +
-                "JOIN users u ON pc.user_id = u.id " +
+                "JOIN user u ON pc.user_id = u.id " +
                 "JOIN post_group p ON pc.postgroup_id = p.id " +
                 "WHERE pc.postgroup_id = ?";
 
@@ -110,7 +111,9 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
                 int id = rs.getInt("id");
                 String commentaireText = rs.getString("commentaire");
                 // Other user and post attributes should be set appropriately
-                User user = new User(rs.getInt("user_id"), rs.getString("email"), null, null, null, null, null);
+                User user = new User();
+                user.setId(rs.getInt("comment_user_id"));
+                user.setUsername(rs.getString("comment_user_email"));
                 Post_group post = new Post_group(rs.getInt("postgroup_id"), rs.getString("post_content"));
                 Postcommentaire commentaire = new Postcommentaire(
                         rs.getInt("id"),

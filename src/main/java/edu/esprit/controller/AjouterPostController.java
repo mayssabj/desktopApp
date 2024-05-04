@@ -3,6 +3,7 @@ package edu.esprit.controller;
 import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
+import edu.esprit.utils.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,7 +78,7 @@ public class AjouterPostController {
     public void ajouterPost() throws SQLException {
         if (isInputValid()) {
             UserService userService = new UserService();
-            User u1 = userService.getCurrentLoggedInUser();
+            User u1 = Session.getInstance().getCurrentUser();
 
             // Check if user is logged in
             if (u1 != null) {

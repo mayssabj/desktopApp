@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.showSponsoring">
-    <VBox alignment="CENTER" layoutX="125.0" layoutY="-18.0" prefHeight="734.0" prefWidth="725.0" stylesheets="@style/styleafficher.css" xmlns:fx="http://javafx.com/fxml">
-        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="List Sponsoring" />
-        <Button fx:id="buttonajouter" mnemonicParsing="false" onAction="#handlesponsorButtonClick" text="ADD NEW SPONSOR" />
-        <ListView fx:id="sponsoringListView" prefHeight="632.0" prefWidth="951.0" />
-    </VBox>
+<AnchorPane stylesheets="@stylesheet.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="edu.esprit.controller.showSponsoring">
+    <TextField fx:id="tfSearch" />
+    <AnchorPane layoutX="375.0" layoutY="15.0" prefHeight="120.0" prefWidth="191.0" style="-fx-border-radius: 0px 50px 0px 0px; -fx-border-color: #F1F2F7;">
+        <effect>
+            <DropShadow color="#9a9696" />
+        </effect>
+        <children>
+            <ImageView fitHeight="44.0" fitWidth="60.0" layoutX="24.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="https://static.vecteezy.com/system/resources/previews/023/234/824/non_2x/pdf-icon-red-and-white-color-for-free-png.png" />
+                </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="27.0" layoutY="79.0" text="Project Summary" textFill="#2262c6">
+                <font>
+                    <Font name="Berlin Sans FB" size="14.0" />
+                </font>
+            </Label>
+        </children>
+    </AnchorPane>
+    <ScrollPane prefHeight="1000.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"> <content> <AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="630.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"> <!-- Contenu de votre AnchorPane --> </AnchorPane> </content>
+    </ScrollPane>
 </AnchorPane>

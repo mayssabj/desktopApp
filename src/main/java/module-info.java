@@ -11,6 +11,10 @@ module edu.esprit {
     requires httpclient;
     requires httpmime;
 
+    exports edu.esprit.enums to com.google.gson;
+    requires com.google.gson;
+    requires javax.mail;
+
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;
 

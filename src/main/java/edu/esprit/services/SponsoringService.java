@@ -66,27 +66,25 @@ public class SponsoringService implements ServiceSponsoring<Sponsoring> {
     @Override
     public List<Sponsoring> afficherSponsoring() throws SQLException {
         List<Sponsoring> sponsoringList = new ArrayList<>();
-        String req = "SELECT * FROM `sponsoring`" ;
-        try (Statement st = con.createStatement();
+        String req = "SELECT * FROM `sponsoring`";
+        try (Connection con = mydb.getInstance().getCon();
+             Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(req)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
-                String imagePath = rs.getString("image"); // Chemin de l'image
+                String imagePath = rs.getString("image");
                 Date date = rs.getDate("date");
                 Sponsoring.Duration contrat = Sponsoring.Duration.valueOf(rs.getString("contrat"));
                 Sponsoring.TypeSpon type = Sponsoring.TypeSpon.valueOf(rs.getString("type"));
-
-                // Utiliser le chemin de l'image pour créer un objet Image
-                Image image = new Image("file:" + imagePath); // Utilisation de "file:" pour spécifier un chemin de fichier local
-
-                Sponsoring sponsoring = new Sponsoring(id, name, description, imagePath, date, contrat, type); // Utilisation du chemin de l'image
+                Sponsoring sponsoring = new Sponsoring(id, name, description, imagePath, date, contrat, type);
                 sponsoringList.add(sponsoring);
             }
         }
         return sponsoringList;
     }
+
 
 
 
@@ -110,8 +108,3 @@ public class SponsoringService implements ServiceSponsoring<Sponsoring> {
         return null;
     }
 }
-
-
-
-
-

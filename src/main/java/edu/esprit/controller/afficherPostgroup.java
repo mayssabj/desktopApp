@@ -5,6 +5,7 @@ import edu.esprit.entities.*;
 import edu.esprit.services.CommentaireService;
 import edu.esprit.services.PostgroupService;
 import edu.esprit.services.UserService;
+import edu.esprit.utils.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -60,20 +61,17 @@ public class afficherPostgroup {
         try {
             List<Post_group> posts = postgroupService.afficherBySponsoring(sponsoringName);
             for (Post_group post : posts) {
-                User user = post.getUser_id();
+                UserService userserv=new UserService();
+                    User user = userserv.getUserById(post.getUser_id());
                 if (user != null) {
-                    Label userNameLabel = new Label(user.getEmail());
+                    Label userNameLabel = new Label(user.getUsername());
                     ImageView userImageView = new ImageView();
 
-                    if (user.getProfilePicture() != null && !user.getProfilePicture().isEmpty()) {
-                        try {
-                            Image image = new Image(new FileInputStream(user.getProfilePicture()));
-                            userImageView.setImage(image);
-                            userImageView.setFitWidth(20);
-                            userImageView.setFitHeight(20);
-                        } catch (FileNotFoundException e) {
-                            System.out.println("Profile picture not found: " + e.getMessage());
-                        }
+                    if (user.getPhoto() != null && !user.getPhoto().isEmpty()) {
+                        Image image = new Image("http://localhost:8000/uploads/" + user.getPhoto());
+                        userImageView.setImage(image);
+                        userImageView.setFitWidth(20);
+                        userImageView.setFitHeight(20);
                     }
 
                     Label contenuLabel = new Label(post.getContenu());
@@ -82,13 +80,12 @@ public class afficherPostgroup {
 
                     HBox postControls = createPostControls(post);
                     VBox postDetails = new VBox(userInfo, contenuLabel, postControls);
-                    postDetails.setSpacing(10); ;
+                    postDetails.setSpacing(10);
 
                     VBox commentairesBox = createCommentsBox(post);
                     VBox postContainer = new VBox(postDetails, commentairesBox);
                     postContainer.getStyleClass().add("post-card");
                     postContainer.setSpacing(10);
-
 
                     postbox.getChildren().add(postContainer);
                 }
@@ -99,14 +96,15 @@ public class afficherPostgroup {
     }
     private HBox createPostControls(Post_group post) {
         UserService userService = new UserService();
-        User currentUser = userService.getCurrentLoggedInUser();  // Récupérer l'utilisateur actuel
+        User currentUser = Session.getInstance().getCurrentUser();
 
         HBox postControls = new HBox();
         postControls.setSpacing(10);
         postControls.setAlignment(Pos.CENTER_RIGHT);
 
-        // Ajouter des boutons uniquement si l'utilisateur actuel est l'auteur du post
-        if (post.getUser_id().getEmail().equals(currentUser.getEmail())) {
+
+            // Ajouter des boutons uniquement si l'utilisateur actuel est l'auteur du post
+        if ((post.getUser_id()==currentUser.getId())) {
             Image deleteIcon = new Image(getClass().getResourceAsStream("/images/delete.png"));
             ImageView deleteImageView = new ImageView(deleteIcon);
             deleteImageView.setFitWidth(15);
@@ -131,25 +129,21 @@ public class afficherPostgroup {
         commentairesBox.setSpacing(5);  // Espacement entre les commentaires
 
         UserService userService = new UserService();
-        User currentUser = userService.getCurrentLoggedInUser();  // Récupérer l'utilisateur actuel
+        User currentUser = Session.getInstance().getCurrentUser();  // Récupérer l'utilisateur actuel
 
         for (Postcommentaire commentaire : post.getCommentaires()) {
             User user = commentaire.getUser_id();
             ImageView commentUserImageView =new ImageView();
-            if (user.getProfilePicture() != null && !user.getProfilePicture().isEmpty()) {
-                try {
-                    Image image = new Image(new FileInputStream(user.getProfilePicture()));
-                    commentUserImageView.setImage(image);
-                    commentUserImageView.setFitWidth(20);
-                    commentUserImageView.setFitHeight(20);
-                } catch (FileNotFoundException e) {
-                    System.out.println("Profile picture not found: " + e.getMessage());
-                }
+            if (user.getPhoto() != null && !user.getPhoto().isEmpty()) {
+                Image image = new Image("http://localhost:8000/uploads/" + user.getPhoto());
+                commentUserImageView.setImage(image);
+                commentUserImageView.setFitWidth(20);
+                commentUserImageView.setFitHeight(20);
             }
 
 
             // Supposé déjà configuré
-            Label commentUserNameLabel = new Label(commentaire.getUser_id().getEmail());
+            Label commentUserNameLabel = new Label(commentaire.getUser_id().getUsername());
             Label commentaireLabel = new Label(commentaire.getCommentaire());
             Label likesLabel = new Label("Likes: " + commentaire.getLikes());
             System.out.println("Likes from DB for comment ID " + commentaire.getId() + ": " + commentaire.getLikes());
@@ -173,7 +167,7 @@ public class afficherPostgroup {
 
 
             // Ajouter des boutons uniquement si l'utilisateur actuel est l'auteur du commentaire
-            if (commentaire.getUser_id().getEmail().equals(currentUser.getEmail())) {
+            if (commentaire.getUser_id() != null  && commentaire.getUser_id().getId()==(currentUser.getId())) {
 
                 Image delete = new Image(getClass().getResourceAsStream("/images/delete.png"));
                 ImageView deleteImageView = new ImageView(delete);
@@ -236,8 +230,7 @@ public class afficherPostgroup {
             }
             // Assuming UserService can give us the current user
             UserService userService = new UserService();
-            User currentUser = userService.getCurrentLoggedInUser();
-
+            User currentUser = Session.getInstance().getCurrentUser();
             Postcommentaire newComment = new Postcommentaire(commentText, post, currentUser);
 
             // Add the comment through your service layer
@@ -254,11 +247,11 @@ public class afficherPostgroup {
 
     public void supprimerCommentaire(Postcommentaire commentaire) {
         UserService userService = new UserService();
-        User u1 = userService.getCurrentLoggedInUser();
+        User currentUser = Session.getInstance().getCurrentUser();
         CommentaireService commentaireService = new CommentaireService();
         try {
             // Vérifier si l'utilisateur actuel est l'auteur du commentaire
-            if (commentaire.getUser_id().getEmail() .equals(u1.getEmail())) {
+            if (commentaire.getUser_id().getId()==currentUser.getId()) {
                 commentaireService.supprimerCommentaire(commentaire.getId());
                 afficherPostsSponsoring(sponsoringName); // Réafficher les posts après la suppression
             } else {
@@ -272,10 +265,10 @@ public class afficherPostgroup {
 
     public void modifierCommentaire(Postcommentaire commentaire) {
         UserService userService = new UserService();
-        User u1 = userService.getCurrentLoggedInUser();
+        User currentUser = Session.getInstance().getCurrentUser();
 
         // Vérifier si l'utilisateur actuel est autorisé à modifier le commentaire
-        if (!commentaire.getUser_id().getEmail().equals(u1.getEmail())) {
+        if (commentaire.getUser_id() != null && commentaire.getUser_id().getEmail() != null && commentaire.getUser_id().getEmail().equals(currentUser.getEmail())) {
             System.out.println("Vous n'êtes pas autorisé à modifier ce commentaire.");
             return;
         }
@@ -324,14 +317,15 @@ public class afficherPostgroup {
         }
         // Supposons que vous avez déjà un utilisateur enregistré en tant que User currentUser
         UserService userService = new UserService();
-        User u1 = userService.getCurrentLoggedInUser(); // À remplacer par votre propre utilisateur
+        User u1 = Session.getInstance().getCurrentUser(); // À remplacer par votre propre utilisateur
 
 
         // Créez un objet Sponsoring à partir de l'ID
         Sponsoring sponsoring = new Sponsoring( sponsoringId);
 
         // Créez un objet Post_group en spécifiant le Sponsoring et l'User
-        Post_group postGroup = new Post_group(contenu, new Date(), sponsoring, u1);
+
+        Post_group postGroup = new Post_group(contenu, new Date(), sponsoring, u1.getId());
         try {
             postgroupService.ajouter(postGroup);
             afficherPosts(); // Afficher les posts après l'ajout
@@ -360,7 +354,7 @@ public class afficherPostgroup {
     private void handlesponsorButtonClick() {
         try {
             // Charger le fichier FXML de la nouvelle page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/affichersponsoring.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashb.fxml"));
             Parent root = loader.load();
 
             // Créer la scène avec la nouvelle page
@@ -383,24 +377,28 @@ public class afficherPostgroup {
     @FXML
     public void supprimerPostgroup(Post_group post) {
         UserService userService = new UserService();
-        User u1 = userService.getCurrentLoggedInUser();
+        User currentUser = Session.getInstance().getCurrentUser();
         // Vérifier si l'utilisateur actuel est l'auteur du post
-        if (post.getUser_id().getEmail().equals(u1.getEmail()) ) {
+        if ((post.getUser_id()==currentUser.getId())) {
             try {
                 postgroupService.supprimer(post.getId()); // Appeler la méthode supprimer avec l'ID du post à supprimer
                 afficherPostsSponsoring(sponsoringName); // Réafficher les posts après la suppression
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+        } else {
+            System.out.println("Vous n'êtes pas autorisé à supprimer ce post.");
+            System.out.println("ID de l'utilisateur actuel : " + currentUser.getId());
+            System.out.println("ID de l'utilisateur associé au post : " + post.getUser_id());
         }
     }
 
     @FXML
     public void modifierPostgroup(Post_group post) {
         UserService userService = new UserService();
-        User u1 = userService.getCurrentLoggedInUser();
+        User currentUser = Session.getInstance().getCurrentUser();
         // Vérifier si l'utilisateur actuel est l'auteur du post
-        if (post.getUser_id().getEmail().equals(u1.getEmail()) ) {
+        if (post.getUser_id()==currentUser.getId()) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifierPostgroup.fxml"));
                 Parent root = loader.load();
@@ -419,11 +417,14 @@ public class afficherPostgroup {
         } else {
             // Afficher un message d'erreur indiquant que l'utilisateur n'est pas autorisé à modifier ce post
             System.out.println("Vous n'êtes pas autorisé à modifier ce post.");
+            System.out.println("ID de l'utilisateur actuel : " + currentUser.getId());
+            System.out.println("ID de l'utilisateur associé au post : " + post.getUser_id());
         }
     }
+
     public void onLikeButtonClicked(Postcommentaire commentaire) {
         UserService userService = new UserService();
-        User currentUser = userService.getCurrentLoggedInUser();
+        User currentUser = Session.getInstance().getCurrentUser();
 
         CommentaireService commentaireService = new CommentaireService();
         try {

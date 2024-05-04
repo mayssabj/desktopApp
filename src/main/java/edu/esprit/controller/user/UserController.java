@@ -192,10 +192,11 @@ public class UserController implements Initializable {
         User currentUser = Session.getInstance().getCurrentUser();
         if (currentUser != null && BCrypt.checkpw(oldPassword, currentUser.getPassword())) {
             String hashedNewPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-            User updatedUser = userService.updateUserPassword(hashedNewPassword, currentUser.getId());
-            if (updatedUser != null) {
+            boolean updatedUser = userService.updateUserPassword(hashedNewPassword, currentUser.getId());
+            if (updatedUser) {
                 // Update the current user in the session
-                Session.getInstance().setCurrentUser(updatedUser);
+                User newUser = userService.getUserById(currentUser.getId());
+                Session.getInstance().setCurrentUser(newUser);
                 displayPasswordUpdateSuccess("Password changed successfully.");
                 oldPasswordField.setText(""); // Clear the old password field
                 newPasswordField.setText(""); // Clear the new password field
@@ -211,7 +212,7 @@ public class UserController implements Initializable {
     public void performUpdatePicture(ActionEvent event) {
         User currentUser = Session.getInstance().getCurrentUser();
         if (currentUser != null) {
-            String profilePictureUrl = (currentUser.getProfilePicture() != null) ? currentUser.getProfilePicture() : "";
+            String profilePictureUrl = (currentUser.getPhoto() != null) ? currentUser.getPhoto() : "";
             boolean updateSuccessful = userService.updateUserProfilePicture(profilePictureUrl, currentUser.getId());
             if (updateSuccessful) {
                 displayProfileUpdateSuccess("Profile picture updated successfully.");
@@ -267,7 +268,7 @@ public class UserController implements Initializable {
             phoneField.setText(currentUser.getPhone());
             addressField.setText(currentUser.getAddress());
             currentEmailField.setText(currentUser.getEmail()); // Set the current email
-            String profilePictureUrl = currentUser.getProfilePicture();
+            String profilePictureUrl = currentUser.getPhoto();
 
             // Set the clip for the ImageView to make it circular
             Circle clip = new Circle(50, 50, 50); // Assuming the ImageView is 100x100
@@ -367,7 +368,7 @@ public class UserController implements Initializable {
             // Update the current user's profile picture URL in the session
             User currentUser = Session.getInstance().getCurrentUser();
             if (currentUser != null) {
-                currentUser.setProfilePicture(selectedFile.toURI().toString());
+                currentUser.setPhoto(selectedFile.toURI().toString());
             }
         } else {
             System.out.println("File selection cancelled.");
@@ -382,7 +383,7 @@ public class UserController implements Initializable {
         // Update the current user's profile picture URL in the session to null
         User currentUser = Session.getInstance().getCurrentUser();
         if (currentUser != null) {
-            currentUser.setProfilePicture(null);
+            currentUser.setPhoto(null);
         }
     }
 

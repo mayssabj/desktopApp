@@ -1,164 +1,231 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="myBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1315.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.dashbord">
-    <left>
-        <VBox alignment="TOP_CENTER" prefHeight="810.0" prefWidth="253.0" style="-fx-background-color: #F8C07F;" BorderPane.alignment="CENTER">
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="919.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.dashbord">
+    <children>
+        <AnchorPane layoutX="-1.0" layoutY="74.0" prefHeight="722.0" prefWidth="240.0" styleClass="sidebar">
             <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@images/nameApp.jpg" />
-                    </image>
-                    <VBox.margin>
-                        <Insets bottom="60.0" top="40.0" />
-                    </VBox.margin>
-                </ImageView>
-                <HBox prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                <Pane layoutX="30.0" layoutY="37.0" prefHeight="30.0" prefWidth="180.0" styleClass="labbtn">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/analyse.png" />
-                            </image>
-                        </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="Dashboard">
+                        <Label alignment="CENTER" layoutX="41.0" layoutY="6.0" text="Upload New File" textFill="#2262c6">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Berlin Sans FB" size="14.0" />
                             </font>
                         </Label>
                     </children>
-                </HBox>
-                <HBox layoutX="30.0" layoutY="392.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                </Pane>
+                <HBox alignment="CENTER_LEFT" layoutX="32.0" layoutY="122.0" onMouseClicked="#showsponsor" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/homme.png" />
+                                <Image url="@images/icons8_steering_wheel_64px.png" />
                             </image>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="Users">
+                        <Label onMouseClicked="#showsponsor" text="posts" textFill="#a2bee8">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Cambria" size="14.0" />
                             </font>
                         </Label>
                     </children>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="416.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                <HBox alignment="CENTER_LEFT" layoutX="32.0" layoutY="154.0" onMouseClicked="#showspostgroup" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                     <children>
-                        <ImageView fx:id="eventView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/fete.png" />
+                                <Image url="@images/icons8_widescreen_24px.png" />
                             </image>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="Markets">
+                        <Label text="User" textFill="#a2bee8">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Cambria" size="14.0" />
                             </font>
                         </Label>
                     </children>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="438.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                <HBox alignment="CENTER_LEFT" layoutX="31.0" layoutY="185.0" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/probleme.png" />
+                                <Image url="@images/icons8_windows_homegroup_32px.png" />
                             </image>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="Reclamation">
+                        <Label text="Shared with me" textFill="#a2bee8">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Cambria" size="14.0" />
                             </font>
                         </Label>
                     </children>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="461.0" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                <HBox alignment="CENTER_LEFT" layoutX="32.0" layoutY="215.0" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/produit.png" />
+                                <Image url="@images/icons8_time_machine_30px.png" />
                             </image>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="Posts">
+                        <Label text="Recent" textFill="#a2bee8">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Cambria" size="14.0" />
                             </font>
                         </Label>
                     </children>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="484.0" onMouseClicked="#showsponsor" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                <HBox alignment="CENTER_LEFT" layoutX="31.0" layoutY="246.0" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/batiment-de-restauration.png" />
+                                <Image url="@images/icons8_star_50px.png" />
                             </image>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="Sponsors">
+                        <Label text="Starred" textFill="#a2bee8">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Cambria" size="14.0" />
                             </font>
                         </Label>
                     </children>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="279.0" onMouseClicked="#showspostgroup" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                <HBox alignment="CENTER_LEFT" layoutX="31.0" layoutY="277.0" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/grouper.png" />
+                                <Image url="@images/icons8_empty_trash_32px.png" />
                             </image>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="group-post">
+                        <Label text="Trash" textFill="#a2bee8">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Cambria" size="14.0" />
                             </font>
                         </Label>
                     </children>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
                 </HBox>
-                <HBox layoutX="30.0" layoutY="279.0" onMouseClicked="#showcomment" prefHeight="45.0" prefWidth="200.0" spacing="20.0" styleClass="button1" stylesheets="@style/styleafficher.css">
+                <HBox alignment="CENTER_LEFT" layoutX="32.0" layoutY="307.0" prefHeight="30.0" prefWidth="180.0" styleClass="sidebar-btn-text">
                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/customer-review.png" />
+                                <Image url="@images/icons8_sync_settings_24px.png" />
                             </image>
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="202.0" text="Comments">
+                        <Label text="Backups" textFill="#a2bee8">
                             <font>
-                                <Font name="System Bold" size="16.0" />
+                                <Font name="Cambria" size="14.0" />
                             </font>
                         </Label>
                     </children>
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
                 </HBox>
-
+                <Label alignment="CENTER" layoutX="32.0" layoutY="361.0" text="Strorage Details" textFill="#a2bee8">
+                    <font>
+                        <Font name="Berlin Sans FB" size="16.0" />
+                    </font>
+                </Label>
             </children>
-            <padding>
-                <Insets left="20.0" right="20.0" />
-            </padding>
-        </VBox>
-    </left>
-    <center>
-        <VBox fx:id="vboxdash" prefHeight="810.0" prefWidth="1062.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets right="10.0" top="10.0" />
-         </BorderPane.margin></VBox>
+        </AnchorPane>
+        <ImageView fitHeight="44.0" fitWidth="51.0" layoutX="38.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/icons8_james_bond_32px.png" />
+            </image>
+        </ImageView>
+        <Label alignment="CENTER" layoutX="98.0" layoutY="26.0" text="Lost &amp; Found" textFill="#2262c6">
+            <font>
+                <Font name="Berlin Sans FB" size="20.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="22.0" fitWidth="18.0" layoutX="690.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/icons8_bell_24px.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="22.0" fitWidth="18.0" layoutX="714.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/icons8_help_32px.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="22.0" fitWidth="18.0" layoutX="741.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/icons8_settings_26px.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="22.0" fitWidth="18.0" layoutX="873.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/icons8_slider_50px.png" />
+            </image>
+        </ImageView>
+        <VBox fx:id="vboxdash" layoutX="249.0" layoutY="123.0" prefHeight="691.0" prefWidth="1225.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="338.0" prefWidth="1226.0">
+               <children>
+            
+                        <BarChart fx:id="statisticsChart" prefHeight="338.0" prefWidth="375.0">
+                            <xAxis>
+                                <CategoryAxis label="Type" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Count" prefHeight="749.0" prefWidth="0.0" />
+                            </yAxis>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                            <!-- Ajoutez des séries de données si nécessaire -->
+                        </BarChart>
+               </children>
+            </HBox>
+         </children></VBox>
 
 
-    </center>
-    <right>
-        <BarChart fx:id="statisticsChart" prefHeight="274.0" prefWidth="313.0">
-            <xAxis>
-                <CategoryAxis label="Type" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis label="Count" prefHeight="749.0" prefWidth="0.0" />
-            </yAxis>
-         <BorderPane.margin>
-            <Insets bottom="500.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-            <!-- Ajoutez des séries de données si nécessaire -->
-        </BarChart>
-    </right>
+    </children>
 
-</BorderPane>
+</AnchorPane>
