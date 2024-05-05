@@ -14,7 +14,35 @@ public class UserDAO {
     public UserDAO() {
         this.connection = DataBase.getConnection();
     }
+    public List<User> getAllUserByReputation(int minReputation) {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE reputation >= ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            // Set the minimum reputation threshold parameter
+            preparedStatement.setInt(1, minReputation);
 
+            // Execute the query and retrieve the result set
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setAddress(resultSet.getString("address"));
+                    user.setPhone(resultSet.getString("phone"));
+                    user.setPhoto(resultSet.getString("photo"));
+                    user.setReputation(resultSet.getInt("reputation")); // Set the user's reputation
+
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any SQL exceptions appropriately
+        }
+        return users;
+    }
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM user";

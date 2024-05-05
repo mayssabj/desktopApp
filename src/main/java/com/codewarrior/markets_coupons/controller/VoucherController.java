@@ -81,7 +81,7 @@ public class VoucherController {
 
     private void loadUsers() {
         // This should be replaced with a database call=
-        List<User> listOfUser = userDAO.getAllUsers();
+        List<User> listOfUser = userDAO.getAllUserByReputation(1500);
         List<String> listOfEmails = new ArrayList<>();
         for (User user : listOfUser) {
             listOfEmails.add(user.getEmail());

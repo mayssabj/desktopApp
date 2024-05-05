@@ -8,10 +8,19 @@ public class User {
     private String address;
     private String phone;
     private String photo; // Assuming 'photo' corresponds to 'image' in the database
+    private int reputation;
 
     // Constructor
     public User() {
         // Default constructor
+    }
+
+    public User(int id, String username, String password, String email, int reputation) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.reputation = reputation;
     }
 
     // Getters and setters
@@ -63,6 +72,14 @@ public class User {
         this.phone = phone;
     }
 
+    public int getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(int reputation) {
+        this.reputation = reputation;
+    }
+
     public String getPhoto() {
         return photo;
     }
@@ -82,6 +99,7 @@ public class User {
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", photo='" + photo + '\'' +
+                ", reputation=" + reputation +
                 '}';
     }
 }

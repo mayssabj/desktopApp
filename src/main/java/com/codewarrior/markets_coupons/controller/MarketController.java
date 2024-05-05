@@ -194,7 +194,7 @@ public class MarketController {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\"messages\":[{\"destinations\":[{\"to\":\"21658450148\"}],\"from\":\"ServiceSMS\",\"text\":\""+newMarket.getName() + newMarket.getAddress() + newMarket.getCity() + newMarket.getRegion() + String.valueOf(newMarket.getZipCode()) + "\"}]}");
+        RequestBody body = RequestBody.create(mediaType, "{\"messages\":[{\"destinations\":[{\"to\":\"21658450148\"}],\"from\":\"ServiceSMS\",\"text\":\""+newMarket.getName() + " | Market address : " + newMarket.getAddress() +" | City : "+newMarket.getCity() + " | Market's region : " + newMarket.getRegion() + "| ZIP code : " + String.valueOf(newMarket.getZipCode()) + "\"}]}");
 
         Request request = new Request.Builder()
                 .url("https://ggeryw.api.infobip.com/sms/2/text/advanced")
