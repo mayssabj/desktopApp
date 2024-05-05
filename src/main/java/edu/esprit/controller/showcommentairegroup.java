@@ -1,72 +1,167 @@
 package edu.esprit.controller;
 
-import edu.esprit.entities.Post_group;
-import edu.esprit.entities.Postcommentaire;
-import edu.esprit.entities.User;
-import edu.esprit.services.CommentaireService;
-import edu.esprit.services.PostgroupService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-
-import java.net.URL;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.util.List;
 
-public class showcommentairegroup implements Initializable {
+import edu.esprit.entities.*;
+import edu.esprit.services.*;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class showcommentairegroup {
+
+    private static final int POSTS_PER_ROW = 3;
+
     @FXML
-    private ListView<Postcommentaire> commentairegroupListView;
+    private AnchorPane anchorPane;
+    @FXML
+    private TextField tfSearch;
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadCommentairegroups();
-    }
-    private void loadCommentairegroups() {
-        CommentaireService service = new CommentaireService();
-        try {
-            ObservableList<Postcommentaire> data = FXCollections.observableArrayList(service.afficherCommentaire());
-            commentairegroupListView.setItems(data);
-            commentairegroupListView.setCellFactory(param -> new ListCell<Postcommentaire>() {
-                @Override
-                protected void updateItem(Postcommentaire item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        HBox hbox = new HBox(10);
-                        hbox.setStyle("-fx-padding: 10; -fx-border-style: solid inside; -fx-border-width: 0 0 1 0; -fx-border-color: #808080;");
-
-                        VBox vbox = new VBox(5);
-                        Text commnetaireText = new Text("Commentaire: " + item.getCommentaire());
-                        Text postgroup_idText = new Text("Post group ID: " + (item.getPostgroup_id() != null ? item.getPostgroup_id() .getId() : "None"));
-                        Text user_idText = new Text("User ID: " + (item.getUser_id() != null ? item.getUser_id().getId() : "None"));
-                        Text likesText = new Text("likes: " + item.getLikes());
-                        Text likedbyText = new Text("likedby: " + item.getLikedByUsers());
-
-
-                        Button deleteButton = new Button("Delete");
-                        deleteButton.setOnAction(event -> deleteCommentaireGroup(item));
-                        deleteButton.getStyleClass().add("button-delete");
-
-                        vbox.getChildren().addAll(commnetaireText, postgroup_idText, user_idText,likesText,likedbyText);
-                        hbox.getChildren().addAll(vbox, deleteButton);
-                        setGraphic(hbox);
-                    }
+    @FXML
+    private void initialize() throws SQLException {
+        fnReloadData();
+        tfSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            for (Node child : anchorPane.getChildren()) {
+                if (child instanceof HBox) {
+                    HBox postEntry = (HBox) child;
+                    // Add your filtering logic here
+                    boolean isVisible = postEntry.getChildren().stream()
+                            .filter(Label.class::isInstance)
+                            .map(Label.class::cast)
+                            .anyMatch(label -> label.getText().toLowerCase().contains(newValue.toLowerCase()));
+                    postEntry.setVisible(isVisible);
+                    postEntry.setManaged(isVisible);
                 }
-            });
-        } catch (SQLException e) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error loading Commentaire groups: " + e.getMessage());
-            errorAlert.showAndWait();
+            }
+        });
+    }
+
+    @FXML
+    private void fnReloadData() throws SQLException {
+        int postIndex = 1; // Start post index from 1 to accommodate the header row
+        anchorPane.getChildren().clear();
+        List<Postcommentaire> postList = loadDataFromDatabase();
+
+        // Create header row
+        HBox headerRow = new HBox();
+        headerRow.setSpacing(5);
+        headerRow.setPrefWidth(1000);
+        headerRow.setStyle("-fx-background-color: #6b9eef; -fx-padding: 10px; -fx-spacing: 10px;");
+
+        // Header labels
+        Label titleLabel = new Label("Commentaire");
+        titleLabel.setPrefWidth(170);
+        titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(titleLabel);
+
+        Label sponLabel = new Label("Post");
+        sponLabel.setPrefWidth(170);
+        sponLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(sponLabel);
+
+        Label dateLabel = new Label("postliked");
+        dateLabel.setPrefWidth(170);
+        dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(dateLabel);
+
+        Label likeLabel = new Label("nblikes");
+        likeLabel.setPrefWidth(170);
+        likeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(likeLabel);
+
+        Label userLabel = new Label("user");
+        userLabel.setPrefWidth(170);
+        userLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(userLabel);
+
+
+
+
+
+
+
+
+        // Add header row to the AnchorPane
+        anchorPane.getChildren().add(headerRow);
+        AnchorPane.setTopAnchor(headerRow, 50.0); // Adjust vertical position as needed
+
+        for (Postcommentaire post : postList) {
+            HBox postEntry = createPostEntry(post);
+            anchorPane.getChildren().add(postEntry);
+            AnchorPane.setTopAnchor(postEntry, 50.0 + (postIndex * 50.0)); // Adjust vertical position as needed
+            postIndex++;
         }
     }
 
+    private HBox createPostEntry(Postcommentaire post) {
+        HBox hbox = new HBox();
+        hbox.setSpacing(40);
+        hbox.setPrefWidth(1000);
+
+        Label titleLabel = new Label( post.getCommentaire());
+        titleLabel.setPrefWidth(150);
+        titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
+        hbox.getChildren().add(titleLabel);
+
+        String s= String.valueOf(post.getPostgroup_id().getId());
+        Label localLabel = new Label(s);
+        localLabel.setPrefWidth(150);
+        localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
+        hbox.getChildren().add(localLabel);
+
+        Label dateLabel = new Label( post.getLikedByUsersAsString());
+        dateLabel.setPrefWidth(150);
+        dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
+        hbox.getChildren().add(dateLabel);
+
+        String ss= String.valueOf(post.getLikes());
+        Label likesLabel = new Label( ss);
+        likesLabel.setPrefWidth(150);
+        likesLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
+        hbox.getChildren().add(likesLabel);
+
+
+        String sss= String.valueOf(post.getUser_id().getId());
+        Label userLabel = new Label( sss);
+        userLabel.setPrefWidth(150);
+        userLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
+        hbox.getChildren().add(userLabel);
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(event -> deleteCommentaireGroup(post));
+        deleteButton.getStyleClass().add("button-delete");
+        hbox.getChildren().add(deleteButton);
+
+
+
+
+
+
+
+
+
+
+
+        return hbox;
+    }
+
+    private List<Postcommentaire> loadDataFromDatabase() throws SQLException {
+        CommentaireService postCRUD = new CommentaireService();
+        return postCRUD.afficherCommentaire();
+    }
     private void deleteCommentaireGroup(Postcommentaire commentaire) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this post group?", ButtonType.YES, ButtonType.NO);
         confirmationAlert.showAndWait().ifPresent(response -> {
@@ -74,7 +169,7 @@ public class showcommentairegroup implements Initializable {
                 try {
                     CommentaireService service = new CommentaireService();
                     service.supprimerCommentaire(commentaire.getId());
-                    loadCommentairegroups(); // Refresh list
+                    loadDataFromDatabase(); // Refresh list
                 } catch (SQLException e) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error deleting post group: " + e.getMessage());
                     errorAlert.showAndWait();
@@ -82,4 +177,6 @@ public class showcommentairegroup implements Initializable {
             }
         });
     }
+
+
 }

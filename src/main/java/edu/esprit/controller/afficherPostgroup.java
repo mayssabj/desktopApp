@@ -58,6 +58,7 @@ public class afficherPostgroup {
 
     public void afficherPostsSponsoring(String sponsoringName) {
         postbox.getChildren().clear();
+
         try {
             List<Post_group> posts = postgroupService.afficherBySponsoring(sponsoringName);
             for (Post_group post : posts) {
@@ -82,6 +83,7 @@ public class afficherPostgroup {
                     VBox postDetails = new VBox(userInfo, contenuLabel, postControls);
                     postDetails.setSpacing(10);
 
+
                     VBox commentairesBox = createCommentsBox(post);
                     VBox postContainer = new VBox(postDetails, commentairesBox);
                     postContainer.getStyleClass().add("post-card");
@@ -103,6 +105,8 @@ public class afficherPostgroup {
         postControls.setAlignment(Pos.CENTER_RIGHT);
 
 
+
+
             // Ajouter des boutons uniquement si l'utilisateur actuel est l'auteur du post
         if ((post.getUser_id()==currentUser.getId())) {
             Image deleteIcon = new Image(getClass().getResourceAsStream("/images/delete.png"));
@@ -117,6 +121,7 @@ public class afficherPostgroup {
             editImageView.setFitWidth(20);
             editImageView.setFitHeight(20);
             Button editButton = new Button("", editImageView);
+
             editButton.setOnAction(event -> modifierPostgroup(post));
 
             postControls.getChildren().addAll(deleteButton, editButton);
@@ -126,7 +131,7 @@ public class afficherPostgroup {
     }
     private VBox createCommentsBox(Post_group post) {
         VBox commentairesBox = new VBox();
-        commentairesBox.setSpacing(5);  // Espacement entre les commentaires
+        commentairesBox.setSpacing(8);// Espacement entre les commentaires
 
         UserService userService = new UserService();
         User currentUser = Session.getInstance().getCurrentUser();  // Récupérer l'utilisateur actuel

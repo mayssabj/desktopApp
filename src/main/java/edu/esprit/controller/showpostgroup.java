@@ -15,8 +15,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.ImageView;
@@ -74,10 +73,11 @@ public class showpostgroup {
         dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(dateLabel);
 
-        Label sponLabel = new Label("SponsorName");
-        sponLabel.setPrefWidth(170);
-        sponLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
-        headerRow.getChildren().add(sponLabel);
+
+        Label userLabel = new Label("SponsorName");
+        userLabel.setPrefWidth(170);
+        userLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(userLabel);
 
 
 
@@ -99,19 +99,26 @@ public class showpostgroup {
         hbox.setPrefWidth(1000);
 
         Label titleLabel = new Label( post.getContenu());
-        titleLabel.setPrefWidth(180);
+        titleLabel.setPrefWidth(150);
         titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(titleLabel);
 
         Label dateLabel = new Label( post.getDate().toString());
-        dateLabel.setPrefWidth(180);
+        dateLabel.setPrefWidth(150);
         dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
         hbox.getChildren().add(dateLabel);
 
         Label localLabel = new Label( post.getSponsoring_id().getName());
-        localLabel.setPrefWidth(180);
+        localLabel.setPrefWidth(150);
         localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(localLabel);
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(event -> deletePostGroup(post));
+        deleteButton.getStyleClass().add("button-delete");
+        hbox.getChildren().add(deleteButton);
+
+
 
 
 
@@ -121,5 +128,20 @@ public class showpostgroup {
     private List<Post_group> loadDataFromDatabase() throws SQLException {
         PostgroupService postCRUD = new PostgroupService();
         return postCRUD.afficher();
+    }
+    private void deletePostGroup(Post_group postgroup) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this post group?", ButtonType.YES, ButtonType.NO);
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    PostgroupService service = new PostgroupService();
+                    service.supprimer(postgroup.getId());
+                    loadDataFromDatabase(); // Refresh list
+                } catch (SQLException e) {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error deleting post group: " + e.getMessage());
+                    errorAlert.showAndWait();
+                }
+            }
+        });
     }
 }

@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="719.0" prefWidth="981.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.afficherPostgroup">
+<AnchorPane prefHeight="783.0" prefWidth="1359.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.afficherPostgroup">
     <children>
-        <VBox layoutY="-12.0" prefHeight="732.0" prefWidth="1297.0" styleClass="card" stylesheets="@style/styleafficher.css">
+        <VBox layoutY="-12.0" prefHeight="795.0" prefWidth="1355.0" styleClass="card" stylesheets="@style/styleafficher.css">
             <children>
                 <HBox prefHeight="188.0" prefWidth="878.0">
                     <children>
@@ -50,14 +50,14 @@
                         </HBox>
                     </children>
                 </HBox>
-                <HBox prefHeight="108.0" prefWidth="1178.0" stylesheets="@style/styleafficher.css">
+                <HBox prefHeight="108.0" prefWidth="1423.0" stylesheets="@style/styleafficher.css">
                     <children>
                         <TextField fx:id="sasie1" prefHeight="26.0" prefWidth="696.0" promptText="write something" stylesheets="@style/styleafficher.css">
                             <HBox.margin>
                                 <Insets left="50.0" top="20.0" />
                             </HBox.margin>
                         </TextField>
-                        <Button fx:id="ajouter1" mnemonicParsing="false" onAction="#ajouterPostgroup" prefHeight="27.0" prefWidth="195.0" styleClass="poste-button" stylesheets="@style/styleafficher.css" text="poster" textFill="#fffafa">
+                        <Button fx:id="ajouter1" mnemonicParsing="false" onAction="#ajouterPostgroup" prefHeight="27.0" prefWidth="195.0" styleClass="post-button" stylesheets="@style/styleafficher.css" text="poster" >
                             <HBox.margin>
                                 <Insets top="20.0" />
                             </HBox.margin>
@@ -68,8 +68,8 @@
                         <String fx:value="card" />
                     </styleClass>
                 </HBox>
-                <ScrollPane fitToWidth="true">
-                <VBox fx:id="postbox" prefHeight="338.0" prefWidth="894.0" styleClass="post-card">
+                <ScrollPane fitToWidth="true" prefHeight="430.0" prefWidth="1462.0">
+                <VBox fx:id="postbox" prefHeight="395.0" prefWidth="1460.0"  stylesheets="@style/styleafficher.css" styleClass="post-card">
                     <!-- Les posts seront affichés ici -->
                     <!-- Ajoutez le TextField et le Button pour les commentaires dans la boucle for de la méthode afficherPostsSponsoring -->
                 </VBox>
