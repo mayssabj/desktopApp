@@ -2,10 +2,7 @@ package edu.esprit.controller.user;
 
 import edu.esprit.entities.User;
 import edu.esprit.services.UserService;
-import edu.esprit.utils.FileChooserUtil;
-import edu.esprit.utils.NavigationUtil;
-import edu.esprit.utils.Session;
-import edu.esprit.utils.ValidationUtils;
+import edu.esprit.utils.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,9 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +68,7 @@ public class UserController implements Initializable {
     @FXML
     public Label deleteMessageLabel;
 
+    private File selectedImageFile;
 
 
     private UserService userService = new UserService();
@@ -211,8 +208,8 @@ public class UserController implements Initializable {
 
     public void performUpdatePicture(ActionEvent event) {
         User currentUser = Session.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            String profilePictureUrl = (currentUser.getPhoto() != null) ? currentUser.getPhoto() : "";
+        if (currentUser != null && selectedImageFile != null) {
+            String profilePictureUrl = CloudinaryUtil.uploadImage(selectedImageFile);
             boolean updateSuccessful = userService.updateUserProfilePicture(profilePictureUrl, currentUser.getId());
             if (updateSuccessful) {
                 displayProfileUpdateSuccess("Profile picture updated successfully.");
@@ -276,12 +273,15 @@ public class UserController implements Initializable {
 
             if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
                 try {
-                    Image profileImage = new Image(new FileInputStream(profilePictureUrl));
+                    Image profileImage = new Image(new URL(profilePictureUrl).openStream());
+
                     profileImageView.setImage(profileImage);
                 } catch (IllegalArgumentException | FileNotFoundException e) {
                     // Set default image if the URL is invalid or file not found
                     Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
                     profileImageView.setImage(defaultImage);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             } else {
                 Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
@@ -362,13 +362,13 @@ public class UserController implements Initializable {
     public void openFileChooser(ActionEvent event) {
         List<File> selectedFiles = FileChooserUtil.openFileChooser(false); // false for single file selection
         if (!selectedFiles.isEmpty()) {
-            File selectedFile = selectedFiles.get(0);
-            Image image = new Image(selectedFile.toURI().toString());
+            selectedImageFile = selectedFiles.get(0);
+            Image image = new Image(selectedImageFile.toURI().toString());
             profileImageView.setImage(image);
             // Update the current user's profile picture URL in the session
             User currentUser = Session.getInstance().getCurrentUser();
             if (currentUser != null) {
-                currentUser.setPhoto(selectedFile.toURI().toString());
+                currentUser.setPhoto(selectedImageFile.toURI().toString());
             }
         } else {
             System.out.println("File selection cancelled.");

@@ -32,7 +32,7 @@ public class EmailVerificationController {
     // Initialize your controller
     public void initialize() {
         // Set initial label style and message
-        verificationMessageLabel.setText("Account verification pending.");
+        verificationMessageLabel.setText("Account verification pending. Check your email for the code.");
         verificationMessageLabel.setStyle("-fx-text-fill: orange;"); // Orange color for warning
         verificationMessageLabel.setFont(new Font("Arial", 12)); // Set font and size
     }
@@ -47,7 +47,7 @@ public class EmailVerificationController {
         }
 
         UserService userService = new UserService();
-        User currentUser = userService.getUserById(Session.getInstance().getCurrentUser().getId());
+        User currentUser = userService.findUserByEmail(Session.getInstance().getVerificationEmail());
         if (currentUser != null && currentUser.getVerificationCode() != null) {
             int result = VerificationCodeUtil.validateVerificationCode(currentUser.getVerificationCode(), inputCode);
             handleVerificationResult(result, currentUser, event, userService);
@@ -65,6 +65,7 @@ public class EmailVerificationController {
                 currentUser.setVerified(true);
                 if (userService.updateUserVerificationStatus(currentUser.getId(), true)) {
                     // Redirect to the main application page or refresh the user session
+                    NavigationUtil.redirectTo("/user/login.fxml",event);
                 } else {
                     verificationMessageLabel.setText("Failed to update verification status in database.");
                     verificationMessageLabel.setStyle("-fx-text-fill: red;");
