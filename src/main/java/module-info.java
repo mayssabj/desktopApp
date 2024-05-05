@@ -14,6 +14,7 @@ module edu.esprit {
     exports edu.esprit.enums to com.google.gson;
     requires com.google.gson;
     requires javax.mail;
+    requires okhttp3;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;
