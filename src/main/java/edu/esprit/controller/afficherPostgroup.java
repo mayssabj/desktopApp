@@ -213,6 +213,7 @@ public class afficherPostgroup {
         TextField newCommentField = new TextField();
         newCommentField.setPromptText("Add a comment...");
 
+
         Button commentButton = new Button("Post Comment");
         commentButton.setOnAction(event -> addComment(post, newCommentField.getText()));
 
@@ -247,7 +248,13 @@ public class afficherPostgroup {
             } catch (SQLException e) {
                 System.out.println("Failed to add comment: " + e.getMessage());
             }
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR); alert.setTitle("Erreur de Saisie"); alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir du contenu ");
+            alert.showAndWait();
         }
+
+
     }
 
     public void supprimerCommentaire(Postcommentaire commentaire) {
@@ -312,30 +319,40 @@ public class afficherPostgroup {
 
 
 
+
     @FXML
     public void ajouterPostgroup() {
         String contenu = sasie1.getText();
-        // Initialiser le filtre de profanité
-        ProfanityFilter filter = new ProfanityFilter();
-        if (filter.containsProfanity(contenu)) {
-            contenu = filter.filterContent(contenu);  // Filtrer le contenu s'il contient des mots indésirables
-        }
-        // Supposons que vous avez déjà un utilisateur enregistré en tant que User currentUser
-        UserService userService = new UserService();
-        User u1 = Session.getInstance().getCurrentUser(); // À remplacer par votre propre utilisateur
 
+        if (contenu.isEmpty()) {
+            // Afficher un message d'erreur à l'utilisateur s'il n'a pas saisi de contenu
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de Saisie");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir du contenu avant d'ajouter un nouveau post.");
+            alert.showAndWait();
+        } else {
+            // Initialiser le filtre de profanité
+            ProfanityFilter filter = new ProfanityFilter();
+            if (filter.containsProfanity(contenu)) {
+                contenu = filter.filterContent(contenu);  // Filtrer le contenu s'il contient des mots indésirables
+            }
 
-        // Créez un objet Sponsoring à partir de l'ID
-        Sponsoring sponsoring = new Sponsoring( sponsoringId);
+            // Supposer qu'un utilisateur est déjà enregistré en tant que User currentUser
+            UserService userService = new UserService();
+            User u1 = Session.getInstance().getCurrentUser(); // À remplacer par votre propre utilisateur
 
-        // Créez un objet Post_group en spécifiant le Sponsoring et l'User
+            // Créer un objet Sponsoring à partir de l'ID
+            Sponsoring sponsoring = new Sponsoring(sponsoringId);
 
-        Post_group postGroup = new Post_group(contenu, new Date(), sponsoring, u1.getId());
-        try {
-            postgroupService.ajouter(postGroup);
-            afficherPosts(); // Afficher les posts après l'ajout
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            // Créer un objet Post_group en spécifiant le Sponsoring et l'User
+            Post_group postGroup = new Post_group(contenu, new Date(), sponsoring, u1.getId());
+            try {
+                postgroupService.ajouter(postGroup);
+                afficherPosts(); // Afficher les posts après l'ajout
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
