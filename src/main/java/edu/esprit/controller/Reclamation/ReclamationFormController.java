@@ -1,6 +1,8 @@
 package edu.esprit.controller.Reclamation;
 
+import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.Reclamation;
+import edu.esprit.services.ImageUploadService;
 import edu.esprit.services.ServiceReclamation;
 import edu.esprit.services.TranslationService;
 import javafx.application.Platform;
@@ -23,6 +25,7 @@ import org.json.JSONObject;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -53,6 +56,7 @@ public class ReclamationFormController {
 
         typereclamation.getItems().addAll("Violation", "Inappropriate Content", "Other");  // Populate the choice box with example items
         typereclamation.setValue("Other");  // Set a default value
+
 
     }
 
@@ -123,9 +127,20 @@ public class ReclamationFormController {
         File file = fileChooser.showOpenDialog(null);
 
         if (file != null) {
-            Image image = new Image(file.toURI().toString());
-            imageView.setImage(image);
-            screenshoot.setText(file.toURI().toString());  // Store the path in the screenshot button
+            ImageUploadService uploadService = new ImageUploadService();
+            uploadService.uploadImageAsync(file)
+                    .thenAccept(imageUrl -> {
+                        Platform.runLater(() -> {
+                            screenshoot.setText(imageUrl);  // Store the URL returned by Cloudinary
+                            Image image = new Image(imageUrl);
+                            imageView.setImage(image);  // Display the uploaded image
+                        });
+                    })
+                    .exceptionally(e -> {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to upload file: " + e.getMessage(), Alert.AlertType.ERROR);
+                        return null;
+                    });
         } else {
             showAlert("Error", "No file selected!", Alert.AlertType.ERROR);
         }
@@ -140,6 +155,9 @@ public class ReclamationFormController {
     }
 
     //function pour l'auto complete
+
+
+
 
 
 }
