@@ -1,0 +1,159 @@
+package edu.esprit.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import edu.esprit.entities.Post;
+import edu.esprit.entities.User;
+import edu.esprit.services.PostCRUD;
+import edu.esprit.services.UserService;
+import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
+
+public class showPostAdminController {
+
+    private static final int POSTS_PER_ROW = 3;
+
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private TextField tfSearch;
+
+    @FXML
+    private void initialize() throws SQLException {
+        fnReloadData();
+        tfSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            for (Node child : anchorPane.getChildren()) {
+                if (child instanceof HBox) {
+                    HBox postEntry = (HBox) child;
+                    // Add your filtering logic here
+                    boolean isVisible = postEntry.getChildren().stream()
+                            .filter(Label.class::isInstance)
+                            .map(Label.class::cast)
+                            .anyMatch(label -> label.getText().toLowerCase().contains(newValue.toLowerCase()));
+                    postEntry.setVisible(isVisible);
+                    postEntry.setManaged(isVisible);
+                }
+            }
+        });
+    }
+
+    @FXML
+    private void fnReloadData() throws SQLException {
+        int postIndex = 1; // Start post index from 1 to accommodate the header row
+        anchorPane.getChildren().clear();
+        List<Post> postList = loadDataFromDatabase();
+
+        // Create header row
+        HBox headerRow = new HBox();
+        headerRow.setSpacing(5);
+        headerRow.setPrefWidth(1000);
+        headerRow.setStyle("-fx-background-color: #6b9eef; -fx-padding: 10px; -fx-spacing: 10px;");
+
+        // Header labels
+        Label titleLabel = new Label("Titre");
+        titleLabel.setPrefWidth(150);
+        titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(titleLabel);
+
+        Label dateLabel = new Label("Date");
+        dateLabel.setPrefWidth(150);
+        dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(dateLabel);
+
+        Label localLabel = new Label("Local");
+        localLabel.setPrefWidth(150);
+        localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(localLabel);
+
+        Label sizeLabel = new Label("Type");
+        sizeLabel.setPrefWidth(150);
+        sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(sizeLabel); // Add bold style
+
+        Label desLabel = new Label("Description");
+        desLabel.setPrefWidth(150);
+        desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(desLabel);
+
+        Label userLabel = new Label("User");
+        userLabel.setPrefWidth(150);
+        userLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
+        headerRow.getChildren().add(userLabel);
+
+        // Add header row to the AnchorPane
+        anchorPane.getChildren().add(headerRow);
+        AnchorPane.setTopAnchor(headerRow, 50.0); // Adjust vertical position as needed
+
+        for (Post post : postList) {
+            HBox postEntry = createPostEntry(post);
+            anchorPane.getChildren().add(postEntry);
+            AnchorPane.setTopAnchor(postEntry, 50.0 + (postIndex * 50.0)); // Adjust vertical position as needed
+            postIndex++;
+        }
+    }
+
+    private HBox createPostEntry(Post post) {
+        HBox hbox = new HBox();
+        hbox.setSpacing(5);
+        hbox.setPrefWidth(1000);
+
+        Label titleLabel = new Label( post.getTitre());
+        titleLabel.setPrefWidth(150);
+        titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
+        hbox.getChildren().add(titleLabel);
+
+        Label dateLabel = new Label( post.getDate().toString());
+        dateLabel.setPrefWidth(150);
+        dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
+        hbox.getChildren().add(dateLabel);
+
+        Label localLabel = new Label( post.getPlace());
+        localLabel.setPrefWidth(150);
+        localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
+        hbox.getChildren().add(localLabel);
+
+        Label sizeLabel = new Label( post.getType().toString());
+        sizeLabel.setPrefWidth(150);
+        sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; " + "-fx-font-weight: bold;"); // Add bold style
+
+        if ("LOST".equals(post.getType())) {
+            sizeLabel.setStyle(sizeLabel.getStyle() + "-fx-text-fill: red;");
+        } else {
+            sizeLabel.setStyle(sizeLabel.getStyle() + "-fx-text-fill: green;");
+        }
+
+        hbox.getChildren().add(sizeLabel);
+
+        Label desLabel = new Label( post.getDescription());
+        desLabel.setPrefWidth(150);
+        desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
+        hbox.getChildren().add(desLabel);
+
+        int id = post.getuser_id();
+        UserService userService = new UserService();
+        User user = userService.getUserById(id);
+
+        Label nameuser = new Label(user.getEmail().toString());
+        nameuser.setPrefWidth(150);
+        nameuser.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
+        hbox.getChildren().add(nameuser);
+
+        hbox.setStyle("-fx-background-color: #FEFFFD; -fx-background-radius: 10px; -fx-padding: 10px; -fx-spacing: 10px;"); // Add background color and padding
+
+        return hbox;
+    }
+
+    private List<Post> loadDataFromDatabase() throws SQLException {
+        PostCRUD postCRUD = new PostCRUD();
+        return postCRUD.afficher();
+    }
+}

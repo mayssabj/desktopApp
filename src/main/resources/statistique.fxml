@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.esprit.controller.DashboardController"
+      spacing="10" padding="10">
+
+    <TextField fx:id="tfSearch" promptText="Search" />
+
+    <ComboBox fx:id="comboBox" promptText="Select" />
+
+    <VBox fx:id="vboxdash" />
+
+    <BarChart fx:id="statisticsChart">
+        <xAxis>
+            <CategoryAxis />
+        </xAxis>
+        <yAxis>
+            <NumberAxis />
+        </yAxis>
+    </BarChart>
+</VBox>

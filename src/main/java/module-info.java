@@ -1,15 +1,22 @@
-module com.example.pidev {
+module edu.esprit {
+    requires javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
     requires java.sql;
-    requires org.controlsfx.controls; // Corrected module name
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
+    requires jbcrypt;
+    exports edu.esprit.enums to com.google.gson;
+    requires com.google.gson;
+    requires javax.mail;
+    requires java.persistence;
+    requires javafx.web;
+    requires jdk.jsobject;
+    requires cloudinary.core;
     requires org.kordamp.bootstrapfx.core;
+    requires twilio;
 
-    opens entities to javafx.base;
-    opens Services to javafx.fxml;
-    opens Controllers to javafx.fxml; // Add this line
-    exports test;
+    opens edu.esprit.controller.user to javafx.fxml;
+    opens edu.esprit.controller to javafx.fxml;
+    opens edu.esprit.entities to javafx.base;
+
+    exports edu.esprit;
 }

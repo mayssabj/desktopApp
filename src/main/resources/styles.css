@@ -1,0 +1,75 @@
+/* styles.css */
+
+/* Body styles */
+body {
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header styles */
+.header {
+    background-color: #7387A8;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+/* Container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Post styles */
+.post {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.post-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.post-content {
+    font-size: 16px;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Search bar styles */
+.search-bar {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .post {
+        padding: 15px;
+    }
+
+    .header {
+        font-size: 20px;
+    }
+}
