@@ -473,19 +473,6 @@ public class AfficherPostController {
     }
 
 
-    @FXML
-    private void handleAddPostButton(ActionEvent event) {
-        try {
-            Parent addPostParent = FXMLLoader.load(getClass().getResource("/addpost.fxml"));
-            Scene addPostScene = new Scene(addPostParent);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(addPostScene);
-            window.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 /*
     private void commentOnPost(Post post) {
         // Create a TextInputDialog for the user_id to enter the comment

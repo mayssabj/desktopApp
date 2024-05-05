@@ -3,6 +3,7 @@ package edu.esprit.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.User;
+import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.Session;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
@@ -172,8 +173,7 @@ public class AjouterPostController {
     @FXML
     private void returnToPostsPage(ActionEvent event) {
         try {
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.close();
+            NavigationUtil.redirectTo("/Post.fxml", event);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -175,7 +175,7 @@ public class showPostAdminController {
         deleteIcon.setFitWidth(16);
         deleteIcon.setFitHeight(16);
         deleteButton.setGraphic(deleteIcon);
-        deleteButton.getStyleClass().add("add-btn");
+        deleteButton.getStyleClass().add("button-delete");
         deleteButton.setFont(new Font("System Bold", 18));
         deleteButton.setTextFill(Color.valueOf("#828282"));
         deleteButton.setOnAction(event -> deletePost(post));

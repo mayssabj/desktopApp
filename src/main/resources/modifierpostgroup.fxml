@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="230.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.modifierPostgroup">
+    <Label layoutX="185.0" layoutY="29.0" text="Edit your post ">
+      <font>
+         <Font name="Arial" size="36.0" />
+      </font></Label>
+    <TextField fx:id="contenuField" layoutX="50.0" layoutY="100.0" prefHeight="26.0" prefWidth="367.0" promptText="Contenu du post" />
+
+    <Button layoutX="452.0" layoutY="100.0" onAction="#enregistrerModification" text="Enregistrer" />
+
+</AnchorPane>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="589.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.ajouterSponsoring">
+    <children>
+        <Pane layoutX="98.0" layoutY="11.0" prefHeight="566.0" prefWidth="898.0" styleClass="" stylesheets="@style/stylesheet.css">
+            <children>
+                <VBox alignment="CENTER" layoutX="27.0" layoutY="11.0" prefHeight="539.0" prefWidth="835.0" spacing="10">
+                    <children>
+                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Add sponsoring" />
+                        <TextField fx:id="nameField" prefHeight="21.0" prefWidth="384.0" promptText="Nom" styleClass="search-box">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </TextField>
+                        <Text fx:id="errorname" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                        <TextArea fx:id="descriptionArea" prefHeight="9.0" prefWidth="366.0" promptText="Description" styleClass="search-box">
+                            <padding>
+                                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                            </padding>
+                        </TextArea>
+                        <Text fx:id="errordescription" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="367.7367057800293" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <HBox prefHeight="115.0" prefWidth="379.0">
+                                    <children>
+                                        <Button fx:id="selectImage" mnemonicParsing="false" onAction="#selectImageAction" prefHeight="26.0" prefWidth="158.0" styleClass="image-button" text="select image " />
+                                        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="249.0" pickOnBounds="true" preserveRatio="true" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <DatePicker fx:id="datePicker" promptText="Date" styleClass="search-box">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </DatePicker>
+                        <ComboBox fx:id="contratComboBox" promptText="Contrat" styleClass="search-box">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="ONE_YEAR" />
+                                    <String fx:value="TWO_YEARS" />
+                                    <String fx:value="TREE_YEARS" />
+                                </FXCollections>
+                            </items>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </ComboBox>
+                        <ComboBox fx:id="typeComboBox" promptText="Type" styleClass="search-box">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="ACTIVE" />
+                                    <String fx:value="DESACTIVE" />
+                                </FXCollections>
+                            </items>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </ComboBox>
+                        <Button fx:id="buttonajouter" onAction="#ajouterSponsoring" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Add sponsor" />
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

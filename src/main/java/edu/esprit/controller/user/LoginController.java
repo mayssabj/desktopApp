@@ -99,7 +99,7 @@ public class LoginController implements Initializable {
                         NavigationUtil.redirectTo("/Dashboard.fxml", event);
                     }else{
 //                        NavigationUtil.redirectTo("/user/updateUser.fxml", event);
-                        NavigationUtil.redirectTo("/Post.fxml", event);
+                        NavigationUtil.redirectTo("/dashb.fxml", event);
                     }
                     // Proceed with login (e.g., navigate to another page)
 //                    NavigationUtil.redirectTo("/user/updateUser.fxml", event);

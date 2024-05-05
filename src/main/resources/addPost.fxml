@@ -52,7 +52,7 @@
                       <HBox prefHeight="115.0" prefWidth="379.0">
                         <children>
                           <Button fx:id="selectImage" onAction="#selectImageAction" text="Select Image" />
-                          <ImageView fx:id="imageView" fitHeight="150" fitWidth="150" preserveRatio="true" />
+                          <ImageView fx:id="imageView" fitHeight="150" fitWidth="244.0" preserveRatio="true" />
                         </children>
                       </HBox>
                     </children>
@@ -77,7 +77,7 @@
                   <VBox prefHeight="200.0" prefWidth="100.0" />
                </children>
             </HBox>
-        <WebView fx:id="mapWebView" layoutX="350.0" layoutY="100.0" prefHeight="500.0" prefWidth="700.0" styleClass="map" />
+        <WebView fx:id="mapWebView" layoutX="385.0" layoutY="82.0" prefHeight="448.0" prefWidth="557.0" styleClass="map" />
       </children>
     </Pane>
   </children>

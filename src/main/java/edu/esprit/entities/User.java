@@ -30,6 +30,20 @@ public class User {
         this.roles = new ArrayList<>(Arrays.asList(Role.ROLE_USER));
         this.isEnabled = true;
     }
+
+    public User(int id, String photo, String username) {
+        this.id = id;
+        this.photo = photo;
+        this.username = username;
+    }
+
+    public User( String username,String photo) {
+        this.username = username;
+        this.photo = photo;
+    }
+
+
+
     // Getters and setters
     public int getId() {
         return id;
