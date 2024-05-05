@@ -1,13 +1,12 @@
 package edu.esprit.controller.user;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.User;
 import edu.esprit.entities.VerificationCode;
 import edu.esprit.services.MailService;
 import edu.esprit.services.UserService;
-import edu.esprit.utils.FileChooserUtil;
-import edu.esprit.utils.NavigationUtil;
-import edu.esprit.utils.ValidationUtils;
-import edu.esprit.utils.VerificationCodeUtil;
+import edu.esprit.utils.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,10 +27,7 @@ import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class RegistrationController implements Initializable {
@@ -70,6 +66,10 @@ public class RegistrationController implements Initializable {
     ObservableList<String> genderList = FXCollections.observableArrayList("Male","Female","Prefer Not To Say");
     @FXML
     private ChoiceBox genderChoiceBox;
+
+    private Cloudinary cloudinary;
+
+    private File selectedImageFile;
 
 
     @Override
@@ -134,7 +134,11 @@ public class RegistrationController implements Initializable {
             String hashedPassword = BCrypt.hashpw(passwordField.getText(), BCrypt.gensalt());
             user.setPassword(hashedPassword);
             user.setPhone(phoneField.getText());
-            user.setPhoto(getImagePath(profileImageView));
+//            user.setPhoto(getImagePath(profileImageView));
+            if(selectedImageFile != null){
+                String imageUrl = CloudinaryUtil.uploadImage(selectedImageFile);
+                user.setPhoto(imageUrl);
+            }
             user.setAddress(addressField.getText());
             user.setGender(genderChoiceBox.getValue().toString());
             user.setUsername(user.getEmail().split("@")[0]);
@@ -152,6 +156,8 @@ public class RegistrationController implements Initializable {
                 registerMessageLabel.setText("Registration successful, Please verify your email.");
                 registerMessageLabel.setStyle("-fx-text-fill: green; -fx-font-size: 14px;"); // Set text color to green
                 registerMessageLabel.setVisible(true);
+                Session.getInstance().setVerificationEmail(user.getEmail());
+                NavigationUtil.redirectTo("/user/verificationCode.fxml",event);
             } else {
                 registerMessageLabel.setText("Registration failed. Please try again.");
                 registerMessageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14px;"); // Set text color to red
@@ -180,8 +186,8 @@ public class RegistrationController implements Initializable {
         List<File> selectedFiles = FileChooserUtil.openFileChooser(false); // false for single file selection
 
         if (!selectedFiles.isEmpty()) {
-            File selectedFile = selectedFiles.get(0);
-            Image image = new Image(selectedFile.toURI().toString());
+            selectedImageFile = selectedFiles.get(0);
+            Image image = new Image(selectedImageFile.toURI().toString());
             profileImageView.setImage(image);
         } else {
             System.out.println("File selection cancelled.");
