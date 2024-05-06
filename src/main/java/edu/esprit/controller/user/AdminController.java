@@ -5,6 +5,7 @@ import edu.esprit.services.UserService;
 import edu.esprit.utils.ReflectionUtil;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
@@ -25,7 +26,7 @@ public class AdminController {
     private List<User> allUsers;
     private List<User> filteredUsers;
     private static final int ROWS_PER_PAGE = 2;
-    private double columnWidth = 105;
+    private double columnWidth = 100;
 
     @FXML
     private void initialize() throws SQLException {
@@ -82,6 +83,7 @@ public class AdminController {
     private HBox createTableEntry(User user) {
         HBox hbox = new HBox(5);
         hbox.setStyle("-fx-background-color: #f4f4f4; -fx-padding: 5px;");
+
         try {
             for (Field field : User.class.getDeclaredFields()) {
                 field.setAccessible(true);
@@ -95,6 +97,27 @@ public class AdminController {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
+        // Button to toggle user enabled status
+        String buttonText = user.isEnabled() ? "Disable" : "Enable";
+        Button toggleButton = new Button(buttonText);
+        toggleButton.setPrefWidth(120);
+        toggleButton.setOnAction(event -> toggleUserEnabled(user, toggleButton));
+        hbox.getChildren().add(toggleButton);
+
         return hbox;
     }
+
+    private void toggleUserEnabled(User user, Button button) {
+        user.setEnabled(!user.isEnabled());  // Toggle the enabled status
+        userService.updateUserEnabledStatus(user);  // Assume this method updates the user in the database
+
+        // Update button text based on new status
+        button.setText(user.isEnabled() ? "Disable" : "Enable");
+
+        // Optionally, refresh the list or UI if needed
+        updatePagination();
+    }
+
+
 }

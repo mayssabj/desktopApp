@@ -2,8 +2,11 @@
 package edu.esprit.controller;
 
 import edu.esprit.entities.Avertissement;
+import edu.esprit.entities.User;
 import edu.esprit.services.ServiceAvertissement;
 import edu.esprit.services.StatisticsService;
+import edu.esprit.utils.NavigationUtil;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,13 +18,14 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,6 +52,11 @@ public class dashbord {
     private BarChart<String, Number> barChart1;
 
     private Connection connection;
+
+    @FXML
+    private ImageView userPhoto;
+    @FXML
+    private Label usernameLabel;
 
 
     @FXML
@@ -78,6 +87,21 @@ public class dashbord {
 
         barChart.getData().addAll(totalSeries, answeredSeries);
         loadChart();
+
+
+        User currentUser = Session.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            usernameLabel.setText(currentUser.getUsername());
+            Image profileImage = new Image(getClass().getResourceAsStream("/images/default_user.png"));
+            if (currentUser.getPhoto() != null && !currentUser.getPhoto().isEmpty()) {
+                try {
+                    profileImage = new Image(new FileInputStream(currentUser.getPhoto()));
+                } catch (FileNotFoundException e) {
+                    profileImage = new Image(currentUser.getPhoto(), true); // Assume URL or path is valid
+                }
+            }
+            userPhoto.setImage(profileImage);
+        }
 
     }
     private void loadChart() {
@@ -349,5 +373,11 @@ public class dashbord {
         } catch (IOException e) {
             e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
         }
+    }
+
+    @FXML
+    void handleLogout(ActionEvent event) {
+        Session.getInstance().setCurrentUser(null);
+        NavigationUtil.redirectTo("/user/login.fxml",event);
     }
 }
