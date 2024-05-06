@@ -26,7 +26,7 @@ public class AdminController {
     private List<User> allUsers;
     private List<User> filteredUsers;
     private static final int ROWS_PER_PAGE = 2;
-    private double columnWidth = 105;
+    private double columnWidth = 100;
 
     @FXML
     private void initialize() throws SQLException {
@@ -101,6 +101,7 @@ public class AdminController {
         // Button to toggle user enabled status
         String buttonText = user.isEnabled() ? "Disable" : "Enable";
         Button toggleButton = new Button(buttonText);
+        toggleButton.setPrefWidth(120);
         toggleButton.setOnAction(event -> toggleUserEnabled(user, toggleButton));
         hbox.getChildren().add(toggleButton);
 
