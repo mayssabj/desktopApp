@@ -1,31 +1,31 @@
 package edu.esprit.controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
-import edu.esprit.entities.Post;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import edu.esprit.entities.Sponsoring;
-import edu.esprit.entities.User;
-import edu.esprit.services.PostCRUD;
 import edu.esprit.services.SponsoringService;
-import edu.esprit.services.UserService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 
 public class showSponsoring {
 
@@ -64,37 +64,37 @@ public class showSponsoring {
         // Create header row
         HBox headerRow = new HBox();
         headerRow.setSpacing(8);
-        headerRow.setPrefWidth(1000);
+        headerRow.setPrefWidth(1050);
         headerRow.setStyle("-fx-background-color: #6b9eef; -fx-padding: 10px; -fx-spacing: 10px;");
 
         // Header labels
         Label titleLabel = new Label("NAME");
-        titleLabel.setPrefWidth(150);
+        titleLabel.setPrefWidth(140);
         titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(titleLabel);
 
         Label dateLabel = new Label("Date");
-        dateLabel.setPrefWidth(150);
+        dateLabel.setPrefWidth(140);
         dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(dateLabel);
 
         Label localLabel = new Label("Description");
-        localLabel.setPrefWidth(150);
+        localLabel.setPrefWidth(140);
         localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(localLabel);
 
         Label sizeLabel = new Label("Type");
-        sizeLabel.setPrefWidth(150);
+        sizeLabel.setPrefWidth(140);
         sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(sizeLabel); // Add bold style
 
         Label desLabel = new Label("Contrat");
-        desLabel.setPrefWidth(150);
+        desLabel.setPrefWidth(140);
         desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(desLabel);
 
         Label userLabel = new Label("image");
-        userLabel.setPrefWidth(150);
+        userLabel.setPrefWidth(140);
         userLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(userLabel);
 
@@ -114,26 +114,32 @@ public class showSponsoring {
 
     private HBox createPostEntry(Sponsoring post) {
         HBox hbox = new HBox();
-        hbox.setSpacing(8);
-        hbox.setPrefWidth(1000);
+        hbox.setSpacing(15);
+        hbox.setPrefWidth(1050);
+
 
         Label titleLabel = new Label( post.getName());
-        titleLabel.setPrefWidth(150);
+        titleLabel.setPrefWidth(140);
+        titleLabel.setPrefHeight(70);
         titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(titleLabel);
 
+
         Label dateLabel = new Label( post.getDate().toString());
-        dateLabel.setPrefWidth(150);
+        dateLabel.setPrefWidth(140);
+        dateLabel.setPrefHeight(70);
         dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
         hbox.getChildren().add(dateLabel);
 
         Label localLabel = new Label( post.getDescription());
-        localLabel.setPrefWidth(150);
+        localLabel.setPrefWidth(140);
+        localLabel.setPrefHeight(70);
         localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(localLabel);
 
         Label sizeLabel = new Label( post.getType().toString());
-        sizeLabel.setPrefWidth(150);
+        sizeLabel.setPrefWidth(140);
+        sizeLabel.setPrefHeight(70);
         sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; " + "-fx-font-weight: bold;"); // Add bold style
 
         if ("DESACTIVE".equals(post.getType().toString())) {
@@ -146,20 +152,22 @@ public class showSponsoring {
 
         Label desLabel = new Label( post.getContrat().toString());
         desLabel.setPrefWidth(150);
+        desLabel.setPrefHeight(70);
         desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
         hbox.getChildren().add(desLabel);
 
 
 
         ImageView imageView = new ImageView(new Image("http://localhost:8000/uploads/" + post.getImage()));
-        imageView.setFitWidth(40); // Définit la largeur de l'image
+        imageView.setFitWidth(50); // Définit la largeur de l'image
+
         imageView.setPreserveRatio(true); // Garde le ratio de l'image
         HBox.setMargin(imageView, new Insets(10)); // Marges autour de l'image
 
         hbox.getChildren().add(imageView);
 
 // Applique le style à la HBox
-        hbox.setStyle("-fx-background-color: #FEFFFD; -fx-background-radius: 10px; -fx-padding: 10px; -fx-spacing: 10px;");
+        hbox.setStyle("-fx-background-color: #FEFFFD; -fx-background-radius: 10px; -fx-padding: 5px; -fx-spacing: 10px;");
         // Add background color and padding
 
 
@@ -171,17 +179,68 @@ public class showSponsoring {
         Button editButton = new Button("Edit");
         editButton.setOnAction(event -> openEditSponsoringWindow(post));
         editButton.getStyleClass().add("button-edit");
+        editButton.setPrefHeight(20);
+        editButton.setPadding(new Insets(20, 20, 20, 10));
         hbox1.getChildren().add(editButton);
+
 
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(event -> deleteSponsoring(post));
         deleteButton.getStyleClass().add("button-delete");
+        deleteButton.setPadding(new Insets(20, 20, 20, 10));
+
         hbox1.getChildren().add(deleteButton);
 
+
         hbox.getChildren().add(hbox1);
+
+
+
+        String qrCodeData = "Welcome ,The name of sponsor " + post.getName() + ", " +
+                post.getDescription() + " created on " +
+                post.getDate().toString() + " and now is  " +
+                post.getType()+ " sign underneath  " ;
+
+        Image qrCodeImage = generateQRCodeImage(qrCodeData, 140, 140); // Generate QR code image
+
+        Button qrCodeButton = new Button("Show QR Code");
+        qrCodeButton.setOnAction(event -> showQRCode(qrCodeImage));
+        hbox.getChildren().add(qrCodeButton);
+
+
         return  hbox;
     }
+    private Image generateQRCodeImage(String data, int width, int height) {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix;
+        try {
+            bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, width, height);
+            ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
+            ByteArrayInputStream bis = new ByteArrayInputStream(pngOutputStream.toByteArray());
+            return new Image(bis);
+        } catch (Exception e) {
+            throw new RuntimeException("Error in generating QR code", e);
+        }
+    }
 
+    private void showQRCode(Image qrCodeImage) {
+        Stage qrStage = new Stage();
+        qrStage.setTitle("QR Code");
+        ImageView qrView = new ImageView(qrCodeImage);
+        qrView.setFitHeight(300);  // Set height as per your requirement
+        qrView.setFitWidth(300);   // Set width as per your requirement
+
+        AnchorPane qrPane = new AnchorPane();
+        qrPane.getChildren().add(qrView);
+        qrPane.setStyle("-fx-background-color: white;");  // Ensures the background is white
+        AnchorPane.setTopAnchor(qrView, 10.0);
+        AnchorPane.setLeftAnchor(qrView, 10.0);
+
+        Scene qrScene = new Scene(qrPane, 320, 320);  // Adjust size as needed
+        qrStage.setScene(qrScene);
+        qrStage.show();
+    }
 
 
     private List<Sponsoring> loadDataFromDatabase() throws SQLException {

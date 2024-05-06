@@ -1,3 +1,4 @@
+
 package edu.esprit.controller;
 
 import edu.esprit.Api.ProfanityFilter;
@@ -63,7 +64,7 @@ public class afficherPostgroup {
             List<Post_group> posts = postgroupService.afficherBySponsoring(sponsoringName);
             for (Post_group post : posts) {
                 UserService userserv=new UserService();
-                    User user = userserv.getUserById(post.getUser_id());
+                User user = userserv.getUserById(post.getUser_id());
                 if (user != null) {
                     Label userNameLabel = new Label(user.getUsername());
                     ImageView userImageView = new ImageView();
@@ -107,7 +108,7 @@ public class afficherPostgroup {
 
 
 
-            // Ajouter des boutons uniquement si l'utilisateur actuel est l'auteur du post
+        // Ajouter des boutons uniquement si l'utilisateur actuel est l'auteur du post
         if ((post.getUser_id()==currentUser.getId())) {
             Image deleteIcon = new Image(getClass().getResourceAsStream("/images/delete.png"));
             ImageView deleteImageView = new ImageView(deleteIcon);
@@ -222,7 +223,7 @@ public class afficherPostgroup {
         commentInputBox.setPadding(new Insets(10));
         commentairesBox.getChildren().add(commentInputBox);
 
-            return commentairesBox;
+        return commentairesBox;
     }
 
 
