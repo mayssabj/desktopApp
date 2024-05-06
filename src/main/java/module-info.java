@@ -15,9 +15,13 @@ module edu.esprit {
     requires com.google.gson;
     requires javax.mail;
     requires okhttp3;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;
+
+    opens edu.esprit.entities to javafx.base;
 
     exports edu.esprit;
 }

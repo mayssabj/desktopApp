@@ -95,4 +95,55 @@ public class dashbord {
         // Add the data series to the chart
         statisticsChart.getData().add(series);
     }
+
+    @FXML
+    void showcategory(MouseEvent event) {
+        try {
+            // Load showsponsoring.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/category-view.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+        }
+    }
+
+    @FXML
+    void showmarket(MouseEvent event) {
+        try {
+            // Load showsponsoring.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/market-view.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+        }
+    }
+
+    @FXML
+    void showvoucher(MouseEvent event) {
+        try {
+            // Load showsponsoring.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/voucher-view.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+        }
+    }
 }

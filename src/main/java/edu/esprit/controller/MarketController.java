@@ -108,7 +108,7 @@ public class MarketController {
     void displayRoute(MouseEvent event) {
         System.out.println("marzabba");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/displayMarket-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/displayMarket-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage newStage = new Stage();
             newStage.setScene(scene);

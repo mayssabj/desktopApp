@@ -70,7 +70,7 @@ public class CategoryController {
     void displayRoute(MouseEvent event) {
         System.out.println("marzabba");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/displayCategory-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/displayCategory-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage newStage = new Stage();
             newStage.setScene(scene);
