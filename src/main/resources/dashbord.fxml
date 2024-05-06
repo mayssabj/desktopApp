@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="919.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.dashbord">
     <children>
-        <AnchorPane layoutX="32.0" layoutY="65.0" prefHeight="722.0" prefWidth="240.0" styleClass="sidebar">
+        <AnchorPane layoutY="59.0" prefHeight="722.0" prefWidth="240.0" styleClass="sidebar">
             <children>
                 <Pane layoutX="30.0" layoutY="37.0" prefHeight="30.0" prefWidth="180.0" styleClass="labbtn">
                     <children>
@@ -230,12 +230,12 @@
                 </HBox>
             </children>
         </AnchorPane>
-        <ImageView fitHeight="44.0" fitWidth="51.0" layoutX="38.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="44.0" fitWidth="51.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@images/icons8_james_bond_32px.png" />
             </image>
         </ImageView>
-        <Label alignment="CENTER" layoutX="98.0" layoutY="26.0" text="Lost &amp; Found" textFill="#2262c6">
+        <Label alignment="CENTER" layoutX="69.0" layoutY="23.0" text="Lost &amp; Found" textFill="#2262c6">
             <font>
                 <Font name="Berlin Sans FB" size="20.0" />
             </font>
