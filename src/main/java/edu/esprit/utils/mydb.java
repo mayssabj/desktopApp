@@ -1,9 +1,6 @@
 package edu.esprit.utils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
+import java.sql.*;
 public class mydb {
     static mydb instance ;
     Connection con ;
@@ -14,7 +11,7 @@ public class mydb {
     private mydb() {
         try {
             this.con = DriverManager.getConnection(url,user,pwd);
-            System.out.println("Connection established ✅.");
+            System.out.println("Connexion etablie.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

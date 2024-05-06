@@ -3,6 +3,7 @@ package edu.esprit.services;
 import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
 import edu.esprit.utils.Session;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;

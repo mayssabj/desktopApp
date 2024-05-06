@@ -79,7 +79,7 @@ public class ajouterSponsoring {
         httpPost.setEntity(requestEntity);
         SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(new TrustSelfSignedStrategy()).build();
 
-        HttpClient httpClient = HttpClients.custom().setSslcontext(sslContext).build();
+        HttpClient httpClient = HttpClients.custom().setSSLContext(sslContext).build();
         HttpResponse response = httpClient.execute(httpPost);
         System.out.println(response);
 
