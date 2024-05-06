@@ -130,6 +130,21 @@ public class ModifierPostController {
         }
     }
 
+    @FXML
+    void selectImageAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+        user_idctedImageFile = fileChooser.showOpenDialog(null);
+
+        if (user_idctedImageFile != null) {
+            Image image = new Image(user_idctedImageFile.toURI().toString());
+            imageView.setImage(image);
+        }
+    }
+
     private boolean isInputValid() {
         boolean isValid = true;
 
