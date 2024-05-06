@@ -12,7 +12,9 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserService {
 
@@ -395,5 +397,28 @@ public class UserService {
         }
     }
 
+    public Map<String, Integer> calculateUserStatusStatistics() {
+            Map<String, Integer> stats = new HashMap<>();
+            String query = "SELECT is_verified, is_enabled, COUNT(*) as count FROM user GROUP BY is_verified, is_enabled";
+
+            try (Connection con = mydb.getInstance().getCon();
+                 PreparedStatement pst = con.prepareStatement(query);
+                 ResultSet rs = pst.executeQuery()) {
+
+                while (rs.next()) {
+                    boolean isVerified = rs.getBoolean("is_verified");
+                    boolean isEnabled = rs.getBoolean("is_enabled");
+                    int count = rs.getInt("count");
+
+                    String key = (isVerified ? "Verified" : "Unverified") + (isEnabled ? "Enabled" : "Disabled");
+                    stats.put(key, count);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return stats;
+    }
 }
 

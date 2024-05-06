@@ -294,6 +294,16 @@
                            <NumberAxis label="Nombre d'Avertissements" />
                        </yAxis>
                    </BarChart>
+
+                   <BarChart fx:id="userStatusChart" prefHeight="338.0" prefWidth="375.0">
+                       <xAxis>
+                           <CategoryAxis label="Status" />
+                       </xAxis>
+                       <yAxis>
+                           <NumberAxis label="Count" />
+                       </yAxis>
+                   </BarChart>
+
                </children>
             </HBox>
          </children></VBox>

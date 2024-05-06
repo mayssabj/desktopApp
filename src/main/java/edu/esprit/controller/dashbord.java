@@ -5,6 +5,7 @@ import edu.esprit.entities.Avertissement;
 import edu.esprit.entities.User;
 import edu.esprit.services.ServiceAvertissement;
 import edu.esprit.services.StatisticsService;
+import edu.esprit.services.UserService;
 import edu.esprit.utils.NavigationUtil;
 import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
@@ -38,6 +39,9 @@ import java.util.stream.Collectors;
 
 public class dashbord {
 
+
+    @FXML
+    private BarChart<String, Number> userStatusChart;
 
     @FXML
     private VBox vboxdash;
@@ -102,6 +106,9 @@ public class dashbord {
             }
             userPhoto.setImage(profileImage);
         }
+
+        displayUserStatusStatistics();
+
 
     }
     private void loadChart() {
@@ -380,4 +387,21 @@ public class dashbord {
         Session.getInstance().setCurrentUser(null);
         NavigationUtil.redirectTo("/user/login.fxml",event);
     }
+
+    private void displayUserStatusStatistics() {
+        UserService userService = new UserService();
+        Map<String, Integer> userStats = userService.calculateUserStatusStatistics();
+        XYChart.Series<String, Number> verifiedSeries = new XYChart.Series<>();
+        verifiedSeries.setName("Verified");
+
+        XYChart.Series<String, Number> enabledSeries = new XYChart.Series<>();
+        enabledSeries.setName("Enabled");
+
+        // Assuming `calculateUserStatusStatistics` returns a map with keys like "VerifiedEnabled", "VerifiedDisabled", etc.
+        verifiedSeries.getData().add(new XYChart.Data<>("Verified", userStats.getOrDefault("VerifiedEnabled", 0) + userStats.getOrDefault("VerifiedDisabled", 0)));
+        enabledSeries.getData().add(new XYChart.Data<>("Enabled", userStats.getOrDefault("VerifiedEnabled", 0) + userStats.getOrDefault("UnverifiedEnabled", 0)));
+
+        userStatusChart.getData().addAll(verifiedSeries, enabledSeries);
+    }
+
 }
