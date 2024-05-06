@@ -1,5 +1,7 @@
 package edu.esprit.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.Post;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +16,9 @@ import edu.esprit.services.PostCRUD;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class ModifierPostController {
 
@@ -59,9 +63,17 @@ public class ModifierPostController {
 
     @FXML
     private Text errorDescription;
+    private Cloudinary cloudinary;
 
 
 
+
+    public ModifierPostController() {
+        cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dx5cteclw",
+                "api_key", "489998819632647",
+                "api_secret", "b_TAcmWLYB6jDor9fK9KZ3KalXQ"));
+    }
 
     public void initData(Post post) {
         this.post = post;
@@ -82,7 +94,7 @@ public class ModifierPostController {
 
 
     @FXML
-    public void modifierPost() throws SQLException {
+    public void modifierPost() throws SQLException, IOException {
         if (isInputValid()) {
             post.setTitre(titreField.getText());
             post.setDescription(descriptionArea.getText());
@@ -90,7 +102,8 @@ public class ModifierPostController {
             post.setType(Post.Type.valueOf(typeComboBox.getValue()));
 
             if (user_idctedImageFile != null) {
-                post.setImageUrl(user_idctedImageFile.getAbsolutePath());
+                Map uploadResult = cloudinary.uploader().upload(user_idctedImageFile, ObjectUtils.emptyMap());
+                post.setImageUrl((String) uploadResult.get("url"));
             }
 
             PostCRUD service = new PostCRUD();
