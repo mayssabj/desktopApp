@@ -90,7 +90,7 @@ public class MarketController {
     void goBack(MouseEvent event) {
         System.out.println("redirect to Home");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/hello-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/dash.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage newStage = new Stage();
             newStage.setScene(scene);

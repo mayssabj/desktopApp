@@ -5,11 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b8feff5-3da8-4dc7-9036-00268fca46c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/dash.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/codewarrior/markets_coupons/stylesheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8-nouvelles-50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_bell_24px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_ellipsis_50px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_empty_trash_32px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_help_32px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_james_bond_32px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_microsoft_excel_48px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_microsoft_powerpoint_2019_48px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_microsoft_word_48px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_pin_50px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_settings_26px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_slider_50px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_star_50px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_steering_wheel_64px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_sync_settings_24px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_time_machine_30px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_widescreen_24px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/icons8_windows_homegroup_32px.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/CategoryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/MarketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/RootController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/RootController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/controller/VoucherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codewarrior/markets_coupons/service/UserDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +40,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -64,10 +86,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "yassine-apis",
+    "git-widget-placeholder": "changeTable/list",
     "jdk.selected.JAVA_MODULE": "jbr-17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/usr/share/java/mysql-connector-j-8.3.0.jar",
+    "last_opened_file_path": "/home/benaoun/IdeaProjects/desktopApp",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -88,6 +111,9 @@
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.codewarrior.markets_coupons.controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources" />
@@ -152,6 +178,7 @@
       <workItem from="1714458094609" duration="18000" />
       <workItem from="1714465088832" duration="2391000" />
       <workItem from="1714917782381" duration="2424000" />
+      <workItem from="1714960618752" duration="1540000" />
     </task>
     <servers />
   </component>
