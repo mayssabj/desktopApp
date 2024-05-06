@@ -197,9 +197,10 @@ public class showSponsoring {
 
 
         String qrCodeData = "Welcome ,The name of sponsor " + post.getName() + ", " +
-                post.getDescription() + " created on " +
-                post.getDate().toString() + " and now is  " +
-                post.getType()+ " sign underneath  " ;
+                post.getDescription() + " created on " + ", " +
+                post.getDate().toString() + ", " +" and now is  " +
+                post.getType() + ", " + "for" +
+                post.getContrat() + " sign underneath  " ;
 
         Image qrCodeImage = generateQRCodeImage(qrCodeData, 140, 140); // Generate QR code image
 
