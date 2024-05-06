@@ -188,7 +188,25 @@ public class AfficherPostController {
         namephotoBox.setAlignment(Pos.CENTER_LEFT);
 
         String imagePath = u.getPhoto();
-        ImageView user_idPhoto = new ImageView(new Image(new FileInputStream(imagePath)));
+        ImageView user_idPhoto = new ImageView();
+
+        try {
+            // Try to load image from local file
+            InputStream inputStream = new FileInputStream(imagePath);
+            Image image = new Image(inputStream);
+            user_idPhoto.setImage(image);
+        } catch (FileNotFoundException e1) {
+            try {
+                // If loading from local file fails, try to load from web URL
+                InputStream inputStream = new URL(imagePath).openStream();
+                Image image = new Image(inputStream);
+                user_idPhoto.setImage(image);
+            } catch (Exception e2) {
+                // Handle any exceptions
+                e2.printStackTrace();
+                // Set a default image or handle the error as needed
+            }
+        }
         user_idPhoto.setFitWidth(30);
         user_idPhoto.setFitHeight(30);
 
@@ -379,8 +397,7 @@ public class AfficherPostController {
             String commentText = commentField.getText();
             if (!commentText.isEmpty()) {
                 try {
-                    User currentuser_id = Session.getInstance().getCurrentUser();
-                    Comment comment = new Comment(commentText, post, currentuser_id);
+                    Comment comment = new Comment(commentText, post, Session.getInstance().getCurrentUser());
                     commentCRUD.ajouter(comment);
                     // Reload the posts to reflect the new comment
                     loadPosts();
@@ -456,19 +473,6 @@ public class AfficherPostController {
     }
 
 
-    @FXML
-    private void handleAddPostButton(ActionEvent event) {
-        try {
-            Parent addPostParent = FXMLLoader.load(getClass().getResource("/addpost.fxml"));
-            Scene addPostScene = new Scene(addPostParent);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(addPostScene);
-            window.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 /*
     private void commentOnPost(Post post) {
         // Create a TextInputDialog for the user_id to enter the comment

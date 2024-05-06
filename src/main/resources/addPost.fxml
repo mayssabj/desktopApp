@@ -52,7 +52,7 @@
                       <HBox prefHeight="115.0" prefWidth="379.0">
                         <children>
                           <Button fx:id="selectImage" onAction="#selectImageAction" text="Select Image" />
-                          <ImageView fx:id="imageView" fitHeight="150" fitWidth="150" preserveRatio="true" />
+                          <ImageView fx:id="imageView" fitHeight="150" fitWidth="244.0" preserveRatio="true" />
                         </children>
                       </HBox>
                     </children>
@@ -61,8 +61,8 @@
                   <ComboBox fx:id="typeComboBox" promptText="Type" styleClass="search-box">
                     <items>
                       <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="LOST" />
-                        <String fx:value="FOUND" />
+                        <String fx:value="Lost" />
+                        <String fx:value="Found" />
                       </FXCollections>
                     </items>
                     <padding>
@@ -77,7 +77,7 @@
                   <VBox prefHeight="200.0" prefWidth="100.0" />
                </children>
             </HBox>
-      <WebView fx:id="mapView" layoutX="470.0" layoutY="132.0" prefHeight="307.0" prefWidth="388.0" />
+        <WebView fx:id="mapWebView" layoutX="385.0" layoutY="82.0" prefHeight="448.0" prefWidth="557.0" styleClass="map" />
       </children>
     </Pane>
   </children>

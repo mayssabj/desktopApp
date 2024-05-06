@@ -16,3 +16,27 @@
 .sidebar-btn:hover .sidebar-btn-text{
     -fx-text-fill: #7AA2E7;
 }
+.button-edit{
+    -fx-background-color: #45a0fa;
+    -fx-text-fill: white;
+
+    -fx-border-width: 2px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button-edit:hover {
+    -fx-background-color: #4cae4c;
+}
+.button-delete{
+    -fx-background-color: #45a0fa;
+    -fx-text-fill: white;
+
+    -fx-border-width: 2px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}

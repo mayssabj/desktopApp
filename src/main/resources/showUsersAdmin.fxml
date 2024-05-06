@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane stylesheets="@stylesheet.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="edu.esprit.controller.user.AdminController">
-    <ScrollPane layoutX="30.0" layoutY="90" prefHeight="580.0" prefWidth="1050" fitToWidth="true" hbarPolicy="ALWAYS">
-        <content>
-            <AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="580.0">
-                <!-- Width will be dynamically set based on content -->
-            </AnchorPane>
-        </content>
-    </ScrollPane>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.user.AdminController">
+    <VBox layoutX="30.0" layoutY="30.0" prefHeight="118.0" prefWidth="1050.0" spacing="10">
+        <TextField fx:id="tfSearch" prefWidth="1040.0" promptText="Search..." />
+        <VBox fx:id="tableContainer" prefHeight="25.0" prefWidth="1050.0">
+            <!-- The table header and data rows will be dynamically added here -->
+        </VBox>
+        <Pagination fx:id="pagination" pageCount="1" prefHeight="30.0" prefWidth="1050.0" />
+    </VBox>
 </AnchorPane>

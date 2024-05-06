@@ -21,9 +21,9 @@ public class StatisticsService {
             int foundCount = 0;
 
             for (Post post : posts) {
-                if (post.getType() == Post.Type.LOST) {
+                if (post.getType() == Post.Type.Lost) {
                     lostCount++;
-                } else if (post.getType() == Post.Type.FOUND) {
+                } else if (post.getType() == Post.Type.Found) {
                     foundCount++;
                 }
             }

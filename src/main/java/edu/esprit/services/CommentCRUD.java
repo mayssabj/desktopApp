@@ -56,7 +56,7 @@ public class CommentCRUD implements ServicePost<Comment> {
 
     @Override
     public void supprimer(int id) throws SQLException {
-        String req = "DELETE FROM `comment` WHERE `id_c`=?";
+        String req = "DELETE FROM `comment` WHERE `id`=?";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
             pst.setInt(1, id);
             pst.executeUpdate();
@@ -108,7 +108,7 @@ public class CommentCRUD implements ServicePost<Comment> {
             pst.setInt(1, post.getId());
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
-                    int id = rs.getInt("id_c");
+                    int id = rs.getInt("id");
                     String text = rs.getString("text");
                     int id_u = rs.getInt("id_u");
                     Comment comment = new Comment(id,text, post ,U.getUserById(id_u));

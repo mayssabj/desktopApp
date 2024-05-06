@@ -98,8 +98,8 @@ public class LoginController implements Initializable {
                     if(user.getRoles().contains(Role.ROLE_ADMIN)){
                         NavigationUtil.redirectTo("/Dashboard.fxml", event);
                     }else{
-//                        NavigationUtil.redirectTo("/user/updateUser.fxml", event);
-                        NavigationUtil.redirectTo("/Post.fxml", event);
+                        NavigationUtil.redirectTo("/dashb.fxml", event);
+//                        NavigationUtil.redirectTo("/Post.fxml", event);
                     }
                     // Proceed with login (e.g., navigate to another page)
 //                    NavigationUtil.redirectTo("/user/updateUser.fxml", event);

@@ -7,6 +7,16 @@ public class Session {
     private User currentUser;
     private String resetPasswordEmail;
 
+    private String verificationEmail;
+
+    public String getVerificationEmail() {
+        return verificationEmail;
+    }
+
+    public void setVerificationEmail(String verificationEmail) {
+        this.verificationEmail = verificationEmail;
+    }
+
     public String getResetPasswordEmail() {
         return resetPasswordEmail;
     }

@@ -13,6 +13,11 @@ module edu.esprit {
     requires cloudinary.core;
     requires org.kordamp.bootstrapfx.core;
     requires twilio;
+    requires itextpdf;
+    requires java.desktop;
+    requires httpcore;
+    requires httpclient;
+    requires httpmime;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;
