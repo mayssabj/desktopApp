@@ -230,6 +230,7 @@
                                 <NumberAxis label="Number of Questions" />
                             </yAxis>
                         </BarChart>
+
                     </children>
                 </HBox>
             </children></VBox>

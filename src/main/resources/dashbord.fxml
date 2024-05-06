@@ -224,6 +224,14 @@
                            <NumberAxis label="Number of Questions" />
                        </yAxis>
                    </BarChart>
+                   <BarChart fx:id="barChart1">
+                       <xAxis>
+                           <CategoryAxis label="Utilisateur"/>
+                       </xAxis>
+                       <yAxis>
+                           <NumberAxis label="Nombre d'Avertissements"/>
+                       </yAxis>
+                   </BarChart>
                </children>
             </HBox>
          </children></VBox>
