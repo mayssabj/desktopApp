@@ -96,7 +96,7 @@ public class LoginController implements Initializable {
                 Session.getInstance().setCurrentUser(user);
                 if(user.isVerified()){
                     if(user.getRoles().contains(Role.ROLE_ADMIN)){
-                        NavigationUtil.redirectTo("/Dashboard.fxml", event);
+                        NavigationUtil.redirectTo("/dashbord.fxml", event);
                     }else{
                         NavigationUtil.redirectTo("/dashb.fxml", event);
 //                        NavigationUtil.redirectTo("/Post.fxml", event);

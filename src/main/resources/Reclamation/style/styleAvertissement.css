@@ -1,0 +1,33 @@
+.root {
+    -fx-font-family: 'Arial';
+}
+
+.list-cell {
+    -fx-padding: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-width: 0 0 1 0;
+}
+
+.list-view {
+    -fx-background-color: white;
+    -fx-padding: 5px;
+}
+
+.text-field {
+    -fx-font-size: 14px;
+    -fx-border-color: #ccc;
+}
+
+.button {
+    -fx-background-color: #5c6bc0;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #3949ab;
+}
+
+.pagination {
+    -fx-background-color: #121313;
+}

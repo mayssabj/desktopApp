@@ -81,5 +81,21 @@ public class dash {
         }
     }
 
+        @FXML
+    public void showreclamation(MouseEvent mouseEvent) {
+
+        try {
+            // Charger la page ListAvertissement.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReclamationList.fxml"));
+            Node avertissementPage = loader.load();
+
+            // Effacer le contenu actuel de vboxdash et ajouter la page ListAvertissement.fxml
+            vboxdash.getChildren().clear();
+            vboxdash.getChildren().add(avertissementPage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

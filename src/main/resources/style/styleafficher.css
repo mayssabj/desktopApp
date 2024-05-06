@@ -1,153 +1,150 @@
-.search-box{
-    -fx-background-color:#FFFFFF ;
-    -fx-background-radius: 100;
+.search-box {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 100;
 }
 
-.transparent{
-    -fx-background-color: rgba(0,0,0,0);
+.transparent {
+  -fx-background-color: rgba(0, 0, 0, 0);
 }
 
-.search-button{
-    -fx-background-color: #468df8;
-    -fx-background-radius: 30;
-
+.search-button {
+  -fx-background-color: #468df8;
+  -fx-background-radius: 30;
 }
 
-.image-button{
-    -fx-background-color: #469ff8;
-    -fx-background-radius: 30;
-
+.image-button {
+  -fx-background-color: #469ff8;
+  -fx-background-radius: 30;
 }
 
-
-.right-bar{
-    -fx-background-color: #f6e6d4;
+.right-bar {
+  -fx-background-color: #f6e6d4;
 }
 
 .shadow {
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10.0, 0.0, 0.0, 10.0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 10);
 }
 
-.show-box{
-    -fx-background-color:#FFFFFF ;
-    -fx-background-radius: 80;
+.show-box {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 80;
 }
 
-.sponsor-button{
-    -fx-background-color: #46a8f8;
-    -fx-background-radius: 30;
-
+.sponsor-button {
+  -fx-background-color: #46a8f8;
+  -fx-background-radius: 30;
 }
 
-.search{
-    -fx-background-color: #fff7f7;
-    -fx-background-radius: 30;
+.search {
+  -fx-background-color: #fff7f7;
+  -fx-background-radius: 30;
 }
 .eco-card {
-    -fx-background-color: rgb(250, 247, 208);
-    -fx-background-radius: 10px; /* Coins arrondis */
-    -fx-padding: 15px; /* Marge intérieure */
-    -fx-spacing: 10px; /* Espacement entre les éléments */
+  -fx-background-color: rgb(250, 247, 208);
+  -fx-background-radius: 10px; /* Coins arrondis */
+  -fx-padding: 15px; /* Marge intérieure */
+  -fx-spacing: 10px; /* Espacement entre les éléments */
 }
 .card {
-    -fx-background-color: white; /* Couleur de fond */
-    -fx-background-radius: 20px; /* Coins arrondis */
-    -fx-padding: 30px; /* Marge intérieure */
-    -fx-spacing: 30px; /* Espacement entre les éléments */
-    -fx-border-width: 4px; /* Largeur de la bordure */
-    -fx-background-insets: 10px; /* Insets around the background to act as margin */
+  -fx-background-color: white; /* Couleur de fond */
+  -fx-background-radius: 20px; /* Coins arrondis */
+  -fx-padding: 30px; /* Marge intérieure */
+  -fx-spacing: 30px; /* Espacement entre les éléments */
+  -fx-border-width: 4px; /* Largeur de la bordure */
+  -fx-background-insets: 10px; /* Insets around the background to act as margin */
 }
 
 .degrade {
-    -fx-background-color: linear-gradient(to bottom, #F8C07F 0%, #F8C07F 50%, #F8C07F 100%);
+  -fx-background-color: linear-gradient(
+    to bottom,
+    #f8c07f 0%,
+    #f8c07f 50%,
+    #f8c07f 100%
+  );
 }
 
-.scroll{
-    -fx-background-color:#FFFFFF ;
+.scroll {
+  -fx-background-color: #ffffff;
 }
-.poste-button{
-    -fx-background-color: rgb(2, 109, 250);
-    -fx-background-radius: 30;
-
+.poste-button {
+  -fx-background-color: rgb(2, 109, 250);
+  -fx-background-radius: 30;
 }
 .post-card {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #CCCCCC;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
-    -fx-spacing: 10px; /* Espace entre les éléments à l'intérieur de la carte */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);
+  -fx-background-color: #ffffff;
+  -fx-border-color: #cccccc;
+  -fx-border-width: 1px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+  -fx-padding: 10px;
+  -fx-spacing: 10px; /* Espace entre les éléments à l'intérieur de la carte */
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 10);
 }
-.button-edit{
-    -fx-background-color: #faa345;
-    -fx-text-fill: white;
-    -fx-border-color: #ffc44b;
-    -fx-border-width: 2px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+.button-edit {
+  -fx-background-color: #faa345;
+  -fx-text-fill: white;
+  -fx-border-color: #ffc44b;
+  -fx-border-width: 2px;
+  -fx-font-weight: bold;
+  -fx-padding: 10px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
 }
 
 .button-edit:hover {
-    -fx-background-color: #4cae4c;
+  -fx-background-color: #4cae4c;
 }
-.button-delete{
-    -fx-background-color: #faa345;
-    -fx-text-fill: white;
-    -fx-border-color: #ffc44b;
-    -fx-border-width: 2px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+.button-delete {
+  -fx-background-color: #faa345;
+  -fx-text-fill: white;
+  -fx-border-color: #ffc44b;
+  -fx-border-width: 2px;
+  -fx-font-weight: bold;
+  -fx-padding: 10px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
 }
 
 .button-delete:hover {
-    -fx-background-color: #f3030a;
+  -fx-background-color: #f3030a;
 }
 .image-view {
-    -fx-border-color: #666;
-    -fx-border-width: 1px;
-    -fx-padding: 5px;
+  -fx-border-color: #666;
+  -fx-border-width: 1px;
+  -fx-padding: 5px;
 }
 
 .hbox {
-    -fx-spacing: 10px; /* space between elements in hbox */
+  -fx-spacing: 10px; /* space between elements in hbox */
 }
 
 .vbox {
-    -fx-spacing: 5px; /* space between elements in vbox */
+  -fx-spacing: 5px; /* space between elements in vbox */
 }
 .button {
-    -fx-padding: 5px;
-    -fx-background-color: #faa345;
-    -fx-text-fill: white;
-    -fx-border-width: 1px;
-    -fx-background-radius:30px ;
+  -fx-padding: 5px;
+  -fx-background-color: #faa345;
+  -fx-text-fill: white;
+  -fx-border-width: 1px;
+  -fx-background-radius: 30px;
 }
-
-
-
 
 .post-card {
-    -fx-padding: 10px;
-    -fx-border-color: #ccc;
-    -fx-border-width: 1px;
-    -fx-background-color: #f9f9f9;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+  -fx-padding: 10px;
+  -fx-border-color: #ccc;
+  -fx-border-width: 1px;
+  -fx-background-color: #f9f9f9;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
 }
 
-.grid-pane{
-    -fx-background-color: #000000;
+.grid-pane {
+  -fx-background-color: #000000;
 }
 
-.scroll-pane{
-    -fx-background-color: #000000;
+.scroll-pane {
+  -fx-background-color: #000000;
 }
-.post-button{
-    -fx-background-color: #fa9702;
+.post-button {
+  -fx-background-color: #fa9702;
 }

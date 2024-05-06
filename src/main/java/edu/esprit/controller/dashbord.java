@@ -113,10 +113,11 @@ public class dashbord {
         statisticsChart.getData().add(series);
     }
 
+
     @FXML
-    void showpostad(MouseEvent event) {
+    void showpost(MouseEvent event) {
         try {
-            // Load showsponsoring.fxml
+            // Load showPostAdminController.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/showPostAdminController.fxml"));
             Node eventFXML = loader.load();
 
@@ -126,7 +127,24 @@ public class dashbord {
             // Add the loaded eventFXML to vboxdash
             vboxdash.getChildren().add(eventFXML);
         } catch (IOException e) {
-            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+            e.printStackTrace();  // Handle IOException
         }
     }
+
+     @FXML
+    private void showAvertissementPage(MouseEvent event) {
+        try {
+            // Charger la page ListAvertissement.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Avertissement/ListAvertissement.fxml"));
+            Node avertissementPage = loader.load();
+
+            // Effacer le contenu actuel de vboxdash et ajouter la page ListAvertissement.fxml
+            vboxdash.getChildren().clear();
+            vboxdash.getChildren().add(avertissementPage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

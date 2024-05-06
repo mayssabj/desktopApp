@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.Statistique.StatisticsController"
+      stylesheets="@style/statStyle.css" style="-fx-background-color: white;"> <!-- Make sure the path is correct -->
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <children>
+        <Label text="Statistiques des Avertissements" style="-fx-font-size: 24px; -fx-text-fill: #333;"/>
+        <BarChart fx:id="barChart">
+            <xAxis>
+                <CategoryAxis label="Utilisateur"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Nombre d'Avertissements"/>
+            </yAxis>
+        </BarChart>
+        <HBox spacing="10">
+            <Button text="Rafraîchir" fx:id="btnRefresh"/>
+            <Button text="Exporter" fx:id="btnExport" onAction="#exportData"/>
+        </HBox>
+    </children>
+</VBox>
