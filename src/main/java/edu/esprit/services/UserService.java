@@ -381,5 +381,19 @@ public class UserService {
             }
         }
     }
+
+    public void updateUserEnabledStatus(User user) {
+        // Your database code to update the user's enabled status
+        String sql = "UPDATE user SET is_enabled = ? WHERE id = ?";
+        try (Connection conn = mydb.getInstance().getCon();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setBoolean(1, user.isEnabled());
+            stmt.setInt(2, user.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
