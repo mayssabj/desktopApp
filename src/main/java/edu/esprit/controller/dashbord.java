@@ -3,6 +3,7 @@ package edu.esprit.controller;
 
 import edu.esprit.entities.Avertissement;
 import edu.esprit.entities.User;
+import edu.esprit.services.PostCRUD;
 import edu.esprit.services.ServiceAvertissement;
 import edu.esprit.services.StatisticsService;
 import edu.esprit.services.UserService;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
 public class dashbord {
 
 
+    public BarChart<String, Number> postsChart;
     @FXML
     private BarChart<String, Number> userStatusChart;
 
@@ -108,9 +110,29 @@ public class dashbord {
         }
 
         displayUserStatusStatistics();
+        displayPostStatistics();
 
 
     }
+
+    private void displayPostStatistics() {
+        PostCRUD postService = new PostCRUD();
+        try {
+            Map<String, Integer> postStats = postService.calculateLostAndFoundStatistics();
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Posts");
+
+            postStats.forEach((type, count) -> {
+                series.getData().add(new XYChart.Data<>(type, count));
+            });
+
+            postsChart.getData().add(series);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // handle error, maybe show an alert or log it
+        }
+    }
+
     private void loadChart() {
         try {
             List<Avertissement> avertissements = serviceAvertissement.afficherAvertissement();
@@ -402,6 +424,10 @@ public class dashbord {
         enabledSeries.getData().add(new XYChart.Data<>("Enabled", userStats.getOrDefault("VerifiedEnabled", 0) + userStats.getOrDefault("UnverifiedEnabled", 0)));
 
         userStatusChart.getData().addAll(verifiedSeries, enabledSeries);
+    }
+
+    public void redirectToStats(MouseEvent event){
+        NavigationUtil.redirectTo("/dashbord.fxml",event);
     }
 
 }
