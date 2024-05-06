@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="545.0" prefWidth="518.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.AddQuestionController">
+    <children>
+        <VBox alignment="CENTER" layoutX="59.0" layoutY="23.0" prefHeight="500.0" prefWidth="400.0" spacing="10" stylesheets="@../css/styles.css">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button fx:id="backButton" onAction="#returnToQuestionsPage" styleClass="back-button">
+                        <graphic>
+                            <ImageView fitHeight="16" fitWidth="16" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../imgs/icons/back-icon.png" />
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Modify your question:" />
+                </HBox>
+                <TextField fx:id="titreField" prefHeight="21.0" prefWidth="384.0" promptText="Title" styleClass="search-box">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </TextField>
+                <Text fx:id="errorTitre" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="364.800048828125" />
+                <TextArea fx:id="descriptionArea" prefHeight="52.0" prefWidth="441.0" promptText="Body" styleClass="search-box">
+                    <padding>
+                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                    </padding>
+                </TextArea>
+                <Text fx:id="errorDescription" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="367.7367057800293" />
+                <Button fx:id="btn_modify" onAction="#updateQuestion" prefHeight="26.0" prefWidth="103.0" styleClass="sponsor-button" text="Modify" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font></Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

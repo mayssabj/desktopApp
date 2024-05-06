@@ -1,0 +1,42 @@
+.primary-color {
+    -fx-background-color: #1f1f1f;
+}
+
+.secondary-color {
+    -fx-background-color: #121212;
+}
+
+.root {
+    -fx-font-family: "Arial";
+    -fx-base: rgb(255, 255, 255);
+    -fx-background-color: linear-gradient(to bottom, #1f1f1f, #121212); /* Use primary and secondary colors for the background */
+}
+.button {
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(#1ED760, #1ED760);
+    -fx-padding: 10;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#1ED760, #1ED760);
+}
+
+.text-field, .text-area {
+    -fx-background-color: white;
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+    -fx-padding: 5;
+}
+
+.label {
+    -fx-text-fill: #ffffff;
+}
+
+.back-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2A5058;
+}
+
+.error-text {
+    -fx-fill: red;
+    -fx-font-size: 12px;
+}

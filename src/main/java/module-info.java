@@ -11,6 +11,8 @@ module edu.esprit {
     requires cloudinary.core;
     exports edu.esprit.enums to com.google.gson;
     requires jdk.jsobject;
+    requires org.kordamp.bootstrapfx.core;
+    requires twilio;
     requires itextpdf;
     requires java.desktop;
     requires httpmime;
