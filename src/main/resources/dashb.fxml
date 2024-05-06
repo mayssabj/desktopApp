@@ -43,39 +43,11 @@
                                         </Label>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                                    <children>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
-                                            </image>
-                                        </ImageView>
-                                        <Label prefHeight="21.0" prefWidth="101.0" text="Explore" textFill="#a1a1a1" onMouseClicked="#showsponsor">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                                    <children>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
-                                            </image>
-                                        </ImageView>
-                                        <Label prefHeight="21.0" prefWidth="101.0" text="Radio" textFill="#a1a1a1">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </HBox>
                             </children>
                         </VBox>
                         <VBox prefHeight="292.0" prefWidth="235.0">
                             <children>
-                                <Label prefHeight="48.0" prefWidth="192.0" text="YOUR LIBRARY" textFill="#a1a1a1">
+                                <Label prefHeight="48.0" prefWidth="192.0" text="YOUR FONCTIONALITY" textFill="#a1a1a1">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
@@ -83,32 +55,17 @@
                                         <Insets />
                                     </VBox.margin>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="////" textFill="#a1a1a1" >
+                                <Label prefHeight="40.0" prefWidth="192.0" text="SHOW SPONSOR " textFill="#a1a1a1" onMouseClicked="#showsponsor">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Recently Played" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="SHOW RECLAMATION" textFill="#a1a1a1" onMouseClicked="#showreclamation">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Liked Songs" textFill="#a1a1a1">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Reclamation" textFill="#a1a1a1" onMouseClicked="#showreclamation">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Artists" textFill="#a1a1a1">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Q/A" onMouseClicked="#showQA" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="SHOW Q/A" onMouseClicked="#showQA" textFill="#a1a1a1">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
