@@ -395,8 +395,15 @@ public class AfficherPostController {
 
         // Add an event handler to the submit button
         submitButton.setOnAction(event -> {
-            String commentText = commentField.getText();
-            if (!commentText.isEmpty()) {
+            String commentText = commentField.getText().trim();
+            if (commentText.isEmpty()) {
+                // Show an alert dialog indicating that the comment is empty
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter a comment before submitting.");
+                alert.showAndWait();
+            } else {
                 try {
                     Comment comment = new Comment(commentText, post, Session.getInstance().getCurrentUser());
                     commentCRUD.ajouter(comment);
@@ -408,6 +415,7 @@ public class AfficherPostController {
                 }
             }
         });
+
 
         // Add the comment field and submit button to a HBox
         HBox commentInputBox = new HBox(10);
