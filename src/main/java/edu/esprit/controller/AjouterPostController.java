@@ -173,7 +173,7 @@ public class AjouterPostController {
     @FXML
     private void returnToPostsPage(ActionEvent event) {
         try {
-            NavigationUtil.redirectTo("/dash.fxml", event);
+            NavigationUtil.redirectTo("/dashb.fxml", event);
         } catch (Exception e) {
             e.printStackTrace();
         }
