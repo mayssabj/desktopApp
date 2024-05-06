@@ -75,7 +75,7 @@
                                 <Insets left="20.0" right="20.0" />
                             </padding>
                         </VBox>
-                        <Label prefHeight="48.0" prefWidth="192.0" text="PLAYLISTS" textFill="#a1a1a1">
+                        <Label onMouseClicked="#handleLogout" prefHeight="48.0" prefWidth="192.0" text="Logout" textFill="#a1a1a1">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -150,7 +150,6 @@
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
-                                        <Button text="Logout" onAction="#handleLogout" prefWidth="100.0" styleClass="logout-button" />
 
                                     </children>
                                 </HBox>

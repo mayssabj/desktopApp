@@ -158,7 +158,7 @@ public class dash {
 
 
     @FXML
-    void handleLogout(ActionEvent event) {
+    void handleLogout(MouseEvent event) {
         // Log out the user
         Session.getInstance().setCurrentUser(null);
 
