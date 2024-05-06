@@ -8,7 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ActivityMonitor {
-    private static final long MAX_REQUESTS_PER_MINUTE = 10; // Limite d'activité intense par minute
+    private static final long MAX_REQUESTS_PER_MINUTE = 1; // Limite d'activité intense par minute
     private long requestCount = 0;
     private long startTime = System.currentTimeMillis();
     private Timer timer = new Timer();
@@ -44,12 +44,12 @@ public class ActivityMonitor {
 
                     // Styliser l'alerte
                     DialogPane dialogPane = alert.getDialogPane();
-                    dialogPane.setStyle("-fx-background-color: black; -fx-text-fill: white;"); // Couleur de fond et texte de l'alerte
+                    dialogPane.setStyle("-fx-background-color: #ffffff; -fx-text-fill: white;"); // Couleur de fond et texte de l'alerte
 
                     // Styliser les boutons
                     dialogPane.getButtonTypes().stream()
                             .map(dialogPane::lookupButton)
-                            .forEach(button -> button.setStyle("-fx-background-color: darkgray; -fx-text-fill: black;"));
+                            .forEach(button -> button.setStyle("-fx-background-color: #121313; -fx-text-fill: #ffffff;"));
 
                     alert.showAndWait();
                 });

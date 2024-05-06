@@ -15,7 +15,7 @@ public class Dashboard2Cpntroller {
     void showpost(MouseEvent event) {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UserDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashb.fxml"));
             Node eventFXML = loader.load();
 
             vboxdash.getChildren().clear();

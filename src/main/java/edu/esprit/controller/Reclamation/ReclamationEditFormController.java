@@ -1,7 +1,9 @@
 package edu.esprit.controller.Reclamation;
 
 import edu.esprit.entities.Reclamation;
+import edu.esprit.services.ImageUploadService;
 import edu.esprit.services.ServiceReclamation;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -65,23 +67,34 @@ public class ReclamationEditFormController {
     }
 
     @FXML
-    void ajoutScreenshoot() {
+    public void ajoutScreenshoot() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Screenshot");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File file = fileChooser.showOpenDialog(null);
 
         if (file != null) {
-            Image image = new Image(file.toURI().toString());
-            imageView.setImage(image);
-            uploadScreenshot.setText(file.toURI().toString());  // Store the path in the uploadScreenshot button
+            ImageUploadService uploadService = new ImageUploadService();
+            uploadService.uploadImageAsync(file)
+                    .thenAccept(imageUrl -> {
+                        Platform.runLater(() -> {
+                            uploadScreenshot.setText(imageUrl);  // Store the URL returned by Cloudinary
+                            Image image = new Image(imageUrl);
+                            imageView.setImage(image);  // Display the uploaded image
+                        });
+                    })
+                    .exceptionally(e -> {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to upload file: " + e.getMessage(), Alert.AlertType.ERROR);
+                        return null;
+                    });
         } else {
             showAlert("Error", "No file selected!", Alert.AlertType.ERROR);
         }
     }
     private void redirectToReclamationList() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReclamationList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashb.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) subject.getScene().getWindow(); // Get the current window
             stage.setScene(new Scene(root));

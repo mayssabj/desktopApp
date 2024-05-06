@@ -309,19 +309,3 @@
 .like-button {
     /* Add your custom styling for the like button */
 }
-.root {
-    -fx-font-family: 'Arial';
-    -fx-base: #202020;
-    -fx-background: #333;
-}
-
-.label {
-    -fx-text-fill: white;
-    -fx-font-size: 18px;
-}
-
-.button {
-    -fx-background-color: #666;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-}

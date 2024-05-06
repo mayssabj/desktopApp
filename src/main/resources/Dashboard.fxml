@@ -94,7 +94,7 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label text="Recent" textFill="#a2bee8">
+                        <Label text="Avertissement" textFill="#a2bee8" onMouseClicked="#showAvertissementPage" >
                             <font>
                                 <Font name="Cambria" size="14.0" />
                             </font>

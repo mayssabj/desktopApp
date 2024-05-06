@@ -22,6 +22,8 @@ module edu.esprit {
     // Add this line to open the Reclamation controller package to javafx.fxml
     opens edu.esprit.controller.Avertissement to javafx.fxml;
 
+
+
     exports edu.esprit;
     // Exporte le package contenant StatisticsController au module javafx.fxml
     exports edu.esprit.controller.Statistique to javafx.fxml;

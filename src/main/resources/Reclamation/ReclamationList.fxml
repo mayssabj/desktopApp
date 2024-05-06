@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ListView?>
-<AnchorPane prefHeight="727.0" prefWidth="930.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.Reclamation.ReclamationListController">
-    <!-- Header with darker blue background -->
-    <!-- Header Section -->
-    <HBox alignment="CENTER_LEFT" prefHeight="459.0" prefWidth="1080.0" spacing="20.0">
-        <!-- Navigation Buttons and Search Bar -->
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 
-        <!-- Additional UI components can be added here -->
-    </HBox>
+<AnchorPane prefHeight="727.0" prefWidth="930.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.Reclamation.ReclamationListController">
     <children>
         <!-- Left panel for Dashboard -->
-        <fx:include source="/UserDashboard.fxml"  />
         <VBox layoutX="10.0" layoutY="50.0" prefHeight="600.0" prefWidth="160.0">
-            <children>
-                <!-- Ajoutez des éléments de dashboard ici -->
-            </children>
+            <!-- Add dashboard elements here -->
         </VBox>
 
-        <!-- Right panel for ListView -->
-        <ListView fx:id="listView" layoutX="296.0" layoutY="130.0" prefHeight="750.0" prefWidth="800.0">
-            <!-- Le ListView sera configuré et peuplé depuis le contrôleur -->
-        </ListView>
-        <!-- Les cellules seront ajoutées dynamiquement -->
+        <!-- Add Reclamation Button -->
+        <Button text="Add Reclamation" layoutX="10.0" layoutY="10.0" onAction="#openReclamationForm" style="-fx-background-color: #28a745; -fx-text-fill: white;"/>
 
+        <!-- Right panel for ListView -->
+        <!-- Adjust the layoutX to position slightly closer to the VBox -->
+        <ListView fx:id="listView" layoutX="170.0" layoutY="50.0" prefHeight="600.0" prefWidth="740.0">
+            <!-- The ListView will be configured and populated from the controller -->
+        </ListView>
+        <!-- Cells will be dynamically added -->
 
         <!-- Footer with similar styling to the header -->
     </children>

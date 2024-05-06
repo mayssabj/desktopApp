@@ -1,6 +1,5 @@
 package edu.esprit.controller.Reclamation;
 
-import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.Reclamation;
 import edu.esprit.services.ImageUploadService;
 import edu.esprit.services.ServiceReclamation;
@@ -19,20 +18,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.controlsfx.control.textfield.AutoCompletionBinding;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 public class ReclamationFormController {
 
@@ -96,7 +83,7 @@ public class ReclamationFormController {
             currentStage.close();
 
             // Redirect to the listReclamation view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReclamationList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashb.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("List of Reclamations");

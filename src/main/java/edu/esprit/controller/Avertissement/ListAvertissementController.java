@@ -34,7 +34,7 @@
     import java.util.stream.Collectors;
 
     public class ListAvertissementController implements Initializable {
-        private static final int ITEMS_PER_PAGE = 10;
+        private static final int ITEMS_PER_PAGE = 2;
 
         Connection connection = null;
         PreparedStatement st = null;
@@ -90,14 +90,14 @@
                 private Text raison = new Text();
                 private Text reportedUsername = new Text();
                 private HBox buttonsBox = new HBox(10);
-                private Button validerButton = new Button("Valider");
-                private Button supprimerButton = new Button("Supprimer");
+                private Button validerButton = new Button("Validate");
+                private Button supprimerButton = new Button("Delete");
 
                 {
                     activityMonitor.recordActivity();
-                    // Appliquer des styles aux boutons
-                    validerButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;");
-                    supprimerButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5;");
+                    // Styling for the buttons
+                    validerButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10 20;");
+                    supprimerButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10 20;");
 
                     // Ajouter des effets de survol
                     validerButton.setOnMouseEntered(e -> validerButton.setStyle("-fx-background-color: #45a049;"));
@@ -116,10 +116,15 @@
                     if (empty || item == null) {
                         setGraphic(null);
                     } else {
-                        raison.setText("Raison: " + item.getRaison());
-                        reportedUsername.setText("Utilisateur: " + item.getReported_username());
-                        Text confirmationStatus = new Text(item.getConfirmation() == 1 ? "Confirmé" : "Non confirmé");
-                        confirmationStatus.setStyle("-fx-font-weight: bold; -fx-fill: " + (item.getConfirmation() == 1 ? "green" : "red") + ";");
+                        Text raison = new Text("Reason: " + item.getRaison());
+                        raison.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+                        Text reportedUsername = new Text("Reported User: " + item.getReported_username());
+                        reportedUsername.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+                        Text confirmationStatus = new Text(item.getConfirmation() == 1 ? "confirmed" : "Not confirmed");
+                        confirmationStatus.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: " + (item.getConfirmation() == 1 ? "green" : "red") + ";");
+
                         try {
                             Image image = new Image(item.getScreenshot(), true);
                             imageView.setImage(image);
@@ -129,6 +134,8 @@
                         } catch (Exception e) {
                             imageView.setImage(null);
                         }
+
+                        // Assuming vbox and buttonsBox are already initialized and styled elsewhere
                         vbox.getChildren().setAll(imageView, raison, reportedUsername, confirmationStatus, buttonsBox);
                         setGraphic(vbox);
 
@@ -137,10 +144,11 @@
                     }
                 }
 
+
                 private void handleDelete(Avertissement avertissement) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Confirmation de suppression");
-                    alert.setContentText("Êtes-vous sûr de vouloir supprimer cet avertissement ?");
+                    alert.setTitle("Deletion confirmation");
+                    alert.setContentText("Are you sure you want to remove this warning?");
                     Optional<ButtonType> response = alert.showAndWait();
                     if (response.isPresent() && response.get() == ButtonType.OK) {
                         try {
@@ -195,19 +203,19 @@
 
 
                         sendEmail(user.getEmail(), user.getAvertissements_count());
-                        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Compteur d'avertissements incrémenté pour " + user.getUsername() + ". Avertissement confirmé.");
+                        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION,  user.getUsername() + " Warning confirmed.");
                         infoAlert.showAndWait();
                     } else {
-                        Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Utilisateur non trouvé.");
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR, "User not found.");
                         errorAlert.showAndWait();
                     }
                 } catch (Exception e) {
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la validation de l'avertissement.");
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error validating the warning.");
                     errorAlert.showAndWait();
                     e.printStackTrace();
                 }
             } else {
-                Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Veuillez sélectionner un avertissement à valider.");
+                Alert infoAlert = new Alert(Alert.AlertType.INFORMATION, "Please select a warning to validate.");
                 infoAlert.showAndWait();
             }
 
