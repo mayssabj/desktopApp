@@ -59,7 +59,7 @@
                                        <Insets bottom="4.0" />
                                     </VBox.margin>
                                  </HBox>
-                                 <Label fx:id="profilePictureUpdateMessageLabel1" />
+                                 <Label fx:id="profilePictureUpdateMessageLabel" />
                                  <Button maxHeight="35.0" minHeight="35.0" onAction="#performUpdatePicture" prefHeight="35.0" prefWidth="500.0" text="Submit" />
                               </children>
                            </VBox>
@@ -71,11 +71,11 @@
                               <children>
                                  <Label text="Phone:" />
                                  <TextField fx:id="phoneField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
-                                 <VBox fx:id="phoneErrorsContainer1" />
+                                 <VBox fx:id="phoneErrorsContainer" />
                                  <Label text="Address:" />
                                  <TextField fx:id="addressField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
-                                 <VBox fx:id="addressErrorsContainer1" />
-                                 <Label fx:id="infoUpdateMessageLabel1" />
+                                 <VBox fx:id="addressErrorsContainer" />
+                                 <Label fx:id="infoUpdateMessageLabel" />
                                  <Button maxHeight="35.0" minHeight="35.0" onAction="#updateInformation" prefHeight="35.0" prefWidth="500.0" text="Update Information" />
                               </children>
                            </VBox>
@@ -89,11 +89,11 @@
                                  <TextField fx:id="currentEmailField" editable="false" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
                                  <Label text="New Email:" />
                                  <TextField fx:id="newEmailField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
-                                 <VBox fx:id="newEmailErrorsContainer1" />
+                                 <VBox fx:id="newEmailErrorsContainer" />
                                  <Label text="Password:" />
                                  <PasswordField fx:id="passwordForEmailField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
-                                 <VBox fx:id="passwordForEmailErrorsContainer1" />
-                                 <Label fx:id="emailUpdateMessageLabel1" />
+                                 <VBox fx:id="passwordForEmailErrorsContainer" />
+                                 <Label fx:id="emailUpdateMessageLabel" />
                                  <Button maxHeight="35.0" minHeight="35.0" onAction="#changeEmail" prefHeight="35.0" prefWidth="500.0" text="Change Email" />
                               </children>
                            </VBox>
@@ -105,11 +105,11 @@
                               <children>
                                  <Label text="Old Password:" />
                                  <PasswordField fx:id="oldPasswordField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
-                                 <VBox fx:id="oldPasswordErrorsContainer1" />
+                                 <VBox fx:id="oldPasswordErrorsContainer" />
                                  <Label text="New Password:" />
                                  <PasswordField fx:id="newPasswordField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
-                                 <VBox fx:id="newPasswordErrorsContainer1" />
-                                 <Label fx:id="passwordUpdateMessageLabel1" />
+                                 <VBox fx:id="newPasswordErrorsContainer" />
+                                 <Label fx:id="passwordUpdateMessageLabel" />
                                  <Button maxHeight="35.0" minHeight="35.0" onAction="#changePassword" prefHeight="35.0" prefWidth="500.0" text="Change Password" />
                               </children>
                            </VBox>
@@ -121,8 +121,8 @@
                               <children>
                                  <Label text="Password:" />
                                  <PasswordField fx:id="deletePasswordField" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" />
-                                 <VBox fx:id="deletePasswordErrorsContainer1" />
-                                 <Label fx:id="deleteMessageLabel1" />
+                                 <VBox fx:id="deletePasswordErrorsContainer" />
+                                 <Label fx:id="deleteMessageLabel" />
                                  <Button maxHeight="35.0" minHeight="35.0" onAction="#deleteAccount" prefHeight="35.0" prefWidth="500.0" style="-fx-background-color: #ed372d;" text="Delete Account" textFill="WHITE" />
                               </children>
                            </VBox>
