@@ -4,6 +4,7 @@ import edu.esprit.entities.Reclamation;
 import edu.esprit.services.ImageUploadService;
 import edu.esprit.services.ServiceReclamation;
 import edu.esprit.services.TranslationService;
+import edu.esprit.utils.NavigationUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,17 +79,6 @@ public class ReclamationFormController {
             showAlert("Success", "Reclamation saved successfully!", Alert.AlertType.INFORMATION);
             clear();  // Clear form after save
 
-            // Close the current form
-            Stage currentStage = (Stage) subject.getScene().getWindow();
-            currentStage.close();
-
-            // Redirect to the listReclamation view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashb.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("List of Reclamations");
-            stage.setScene(new Scene(root));
-            stage.show();
 
         } catch (Exception e) {
             showAlert("Error", "Failed to save reclamation: " + e.getMessage(), Alert.AlertType.ERROR);

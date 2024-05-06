@@ -36,7 +36,7 @@
                                                 <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
                                             </image>
                                         </ImageView>
-                                        <Label prefHeight="21.0" prefWidth="101.0" text="Home" textFill="WHITE">
+                                        <Label prefHeight="21.0" prefWidth="101.0" text="Home" textFill="WHITE" onMouseClicked="#showpost">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -50,7 +50,7 @@
                                                 <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
                                             </image>
                                         </ImageView>
-                                        <Label prefHeight="21.0" prefWidth="101.0" text="Explore" textFill="#a1a1a1">
+                                        <Label prefHeight="21.0" prefWidth="101.0" text="Explore" textFill="#a1a1a1" onMouseClicked="#showsponsor">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -183,7 +183,7 @@
                                 </HBox>
                                 <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                     <children /></Pane>
-                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" styleClass="upgrade-button" stylesheets="style1.css" text="UPGRADE" textFill="WHITE" />
+                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" onAction="#handleAddPostButton"/>
                                 <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0">
                                     <children>
                                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
