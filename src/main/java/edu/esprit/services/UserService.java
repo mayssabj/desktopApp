@@ -68,15 +68,18 @@ public class UserService {
     }
 
     public User findUserByEmail(String email) {
+
         return findUserBy("email", email);
     }
+
     public boolean registerUser(User user, VerificationCode verificationCode) {
         Connection con = mydb.getInstance().getCon();
         try {
             con.setAutoCommit(false);  // Start transaction
 
             // Insert user
-            String userQuery = "INSERT INTO user (email, password, phone, photo, address, gender, roles, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String userQuery = "INSERT INTO user (email, password, phone, photo, address, gender, roles, username, is_enabled, is_verified, avertissements_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
             try (PreparedStatement pst = con.prepareStatement(userQuery, Statement.RETURN_GENERATED_KEYS)) {
                 pst.setString(1, user.getEmail());
                 pst.setString(2, user.getPassword());
@@ -86,6 +89,10 @@ public class UserService {
                 pst.setString(6, user.getGender());
                 pst.setString(7, user.getRolesAsString());  // Use serialized roles
                 pst.setString(8, user.getUsername());
+                pst.setInt(9, 1); // is_enabled (provide a value, e.g., 1)
+                pst.setInt(10, 1); // is_verified (provide a value, e.g., 1)
+                pst.setInt(11, 0); // avertissements_count (provide a value, e.g., 0)
+
                 int affectedRows = pst.executeUpdate();
 
                 if (affectedRows == 0) {

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="964.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.MarketController">
+    <children>
+        <Pane layoutX="14.0" layoutY="14.0" prefHeight="114.0" prefWidth="936.0" style="-fx-background-color: gray;">
+            <children>
+            <Pane fx:id="goBack" layoutX="22.0" layoutY="17.0" onMouseClicked="#goBack" prefHeight="81.0" prefWidth="134.0">
+               <children>
+                  <ImageView fitHeight="72.0" fitWidth="134.0" layoutX="31.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/fleche-fine-contour-vers-la-gauche.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+                <Label layoutX="263.0" layoutY="25.0" prefHeight="65.0" prefWidth="410.0" text="Market Management">
+                    <font>
+                        <Font name="DejaVu Sans Mono Bold" size="31.0" />
+                    </font>
+                </Label>
+            <Pane layoutX="772.0" layoutY="9.0" prefHeight="93.0" prefWidth="148.0">
+               <children>
+                  <ImageView fitHeight="81.0" fitWidth="85.0" layoutX="41.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/homme.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            </children>
+        </Pane>
+        <Pane layoutX="14.0" layoutY="134.0" prefHeight="504.0" prefWidth="312.0" style="-fx-background-color: black;">
+            <children>
+                <Pane fx:id="display" layoutX="29.0" layoutY="83.0" onMouseClicked="#displayRoute" prefHeight="65.0" prefWidth="254.0" style="-fx-background-color: white;">
+                    <children>
+                        <ImageView fitHeight="50.0" fitWidth="43.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/panier.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="89.0" layoutY="16.0" prefHeight="34.0" prefWidth="125.0" text="Display Market" />
+                    </children>
+                </Pane>
+                <Pane layoutX="29.0" layoutY="212.0" prefHeight="65.0" prefWidth="254.0" style="-fx-background-color: white;">
+                    <children>
+                        <ImageView fitHeight="50.0" fitWidth="43.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/edit.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="83.0" layoutY="21.0" prefHeight="24.0" prefWidth="125.0" text="Edit Market" />
+                    </children>
+                </Pane>
+                <Pane layoutX="29.0" layoutY="352.0" prefHeight="65.0" prefWidth="254.0" style="-fx-background-color: white;">
+                    <children>
+                        <ImageView fitHeight="50.0" fitWidth="43.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/poubelle.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="91.0" layoutY="21.0" prefHeight="34.0" prefWidth="125.0" text="Delete Market" />
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+        <Pane layoutX="338.0" layoutY="134.0" prefHeight="504.0" prefWidth="614.0" style="-fx-background-color: gray;">
+            <children>
+            <Pane layoutX="27.0" layoutY="277.0" prefHeight="201.0" prefWidth="530.0">
+               <children>
+                      <TextField fx:id="nameField" layoutX="14.0" layoutY="20.0" promptText="add name" />
+                  <TextField fx:id="addressField" layoutX="14.0" layoutY="80.0" prefHeight="24.0" prefWidth="170.0" promptText="add address" />
+                  <TextField fx:id="cityField" layoutX="14.0" layoutY="143.0" prefHeight="24.0" prefWidth="170.0" promptText="add city" />
+                  <TextField fx:id="regionField" layoutX="300.0" layoutY="89.0" prefHeight="24.0" prefWidth="138.0" promptText="add region" />
+                  <TextField fx:id="zipCodeField" layoutX="300.0" layoutY="20.0" prefHeight="24.0" prefWidth="138.0" promptText="add zipCode" />
+                      <Pane layoutX="222.0" layoutY="234.0" prefHeight="49.0" prefWidth="83.0" />
+                        <Button layoutX="470.0" layoutY="167.0" mnemonicParsing="false" onMouseClicked="#addMarket" text="Add" />
+                  <Label fx:id="nameControll" layoutX="14.0" layoutY="52.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
+                  <Label fx:id="cityControll" layoutX="14.0" layoutY="167.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
+                  <Label fx:id="addressControl" layoutX="14.0" layoutY="111.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
+                  <Label fx:id="zipControll" layoutX="300.0" layoutY="52.0" prefHeight="24.0" prefWidth="222.0" textFill="RED" />
+                  <Label fx:id="regionControll" layoutX="300.0" layoutY="123.0" prefHeight="24.0" prefWidth="170.0" textFill="RED" />
+               </children>
+            </Pane>
+            <Pane layoutX="27.0" layoutY="14.0" prefHeight="252.0" prefWidth="530.0">
+               <children>
+                  <Button fx:id="uploadImage" layoutX="234.0" layoutY="214.0" mnemonicParsing="false" onMouseClicked="#uploadImage" text="Upload" />
+                  <ImageView fx:id="imageView" fitHeight="171.0" fitWidth="503.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            </children>
+        </Pane>
+      <Label layoutX="782.0" layoutY="639.0" prefHeight="24.0" prefWidth="180.0" text="Powred By CodeWarriors" />
+    </children>
+</AnchorPane>
