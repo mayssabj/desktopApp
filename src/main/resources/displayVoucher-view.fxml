@@ -3,7 +3,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,8 +11,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="925.0" prefWidth="1392.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.VoucherDisplayController">
-    <TableView fx:id="voucherTable" layoutX="528.0" layoutY="14.0" onMouseClicked="#getVoucherInfo" prefHeight="622.0" prefWidth="780.0" AnchorPane.bottomAnchor="289.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="14.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="1352.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.VoucherDisplayController">
+    <TableView fx:id="voucherTable" layoutX="528.0" layoutY="14.0" onMouseClicked="#getVoucherInfo" prefHeight="464.0" prefWidth="808.0" AnchorPane.bottomAnchor="318.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="14.0">
         <columns>
             <TableColumn fx:id="colValue" text="Value" />
             <TableColumn fx:id="colDate" prefWidth="103.0" text="Date" />
@@ -26,12 +25,12 @@
          <TableColumn fx:id="colCode" prefWidth="149.0" text="Code" />
         </columns>
     </TableView>
-    <Pane layoutX="118.0" layoutY="14.0" prefHeight="410.0" prefWidth="368.0">
+    <Pane layoutX="118.0" layoutY="14.0" prefHeight="252.0" prefWidth="252.0">
         <children>
-            <ImageView fx:id="voucherImage" fitHeight="384.0" fitWidth="348.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="voucherImage" fitHeight="220.0" fitWidth="231.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
         </children>
     </Pane>
-    <Pane layoutX="14.0" layoutY="830.0" prefHeight="81.0" prefWidth="248.0">
+    <Pane layoutX="774.0" layoutY="412.0" prefHeight="81.0" prefWidth="317.0">
         <children>
             <Pane layoutX="94.0" layoutY="14.0" onMouseClicked="#updateVoucher" prefHeight="59.0" prefWidth="60.0">
                 <children>
@@ -51,7 +50,7 @@
                     </ImageView>
                 </children>
             </Pane>
-            <Pane fx:id="back" layoutX="161.0" layoutY="14.0" onMouseClicked="#goBack" prefHeight="59.0" prefWidth="60.0">
+            <Pane fx:id="back" layoutX="237.0" layoutY="14.0" onMouseClicked="#pdf" prefHeight="59.0" prefWidth="60.0">
                 <children>
                     <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -60,9 +59,18 @@
                     </ImageView>
                 </children>
             </Pane>
+         <Pane fx:id="back1" layoutX="166.0" layoutY="14.0" onMouseClicked="#addVoucher" prefHeight="59.0" prefWidth="60.0">
+            <children>
+               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#addVoucher" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/add.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </Pane>
         </children>
     </Pane>
-    <Pane layoutX="26.0" layoutY="410.0" prefHeight="427.0" prefWidth="485.0">
+    <Pane layoutX="20.0" layoutY="314.0" prefHeight="375.0" prefWidth="485.0">
         <children>
             <TextField fx:id="updateValue" layoutX="32.0" layoutY="38.0" prefHeight="24.0" prefWidth="221.0" promptText="Voucher's value" />
          <DatePicker fx:id="updatedDate" layoutX="273.0" layoutY="38.0" />
@@ -75,5 +83,4 @@
          <TextField fx:id="updatedTypeField" layoutX="243.0" layoutY="302.0" promptText="type ..." />
         </children>
     </Pane>
-   <Label layoutX="1198.0" layoutY="878.0" prefHeight="33.0" prefWidth="180.0" text="Powred By CodeWarriors" />
 </AnchorPane>

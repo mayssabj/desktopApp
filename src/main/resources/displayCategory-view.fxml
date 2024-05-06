@@ -17,8 +17,17 @@
             <TableColumn fx:id="colDescription" text="Description" />
         </columns>
     </TableView>
-    <Pane layoutX="32.0" layoutY="553.0" prefHeight="81.0" prefWidth="248.0">
+    <Pane layoutX="32.0" layoutY="553.0" prefHeight="81.0" prefWidth="303.0">
         <children>
+            <Pane fx:id="back1" layoutX="166.0" layoutY="14.0" onMouseClicked="#addCategory" prefHeight="59.0" prefWidth="60.0">
+                <children>
+                    <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#addCategory" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/add.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
             <Pane layoutX="94.0" layoutY="14.0" onMouseClicked="#updateCategory" prefHeight="59.0" prefWidth="60.0">
                 <children>
                     <ImageView fitHeight="52.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
@@ -37,7 +46,7 @@
                     </ImageView>
                 </children>
             </Pane>
-            <Pane fx:id="back" layoutX="161.0" layoutY="14.0" onMouseClicked="#goBack" prefHeight="59.0" prefWidth="60.0">
+            <Pane fx:id="back" layoutX="226.0" layoutY="14.0" onMouseClicked="#goBack" prefHeight="59.0" prefWidth="60.0">
                 <children>
                     <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                         <image>

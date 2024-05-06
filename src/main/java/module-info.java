@@ -17,6 +17,8 @@ module edu.esprit {
     requires okhttp3;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires itextpdf;
+    requires java.desktop;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

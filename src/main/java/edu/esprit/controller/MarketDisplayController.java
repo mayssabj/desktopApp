@@ -266,4 +266,22 @@ public class MarketDisplayController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void addMarket(MouseEvent event) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/market-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Home Window");
+            newStage.show();
+
+            // Close the current stage (window)
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

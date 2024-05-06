@@ -100,7 +100,7 @@ public class dashbord {
     void showcategory(MouseEvent event) {
         try {
             // Load showsponsoring.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/category-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayCategory-view.fxml"));
             Node eventFXML = loader.load();
 
             // Clear existing content from vboxdash
@@ -117,7 +117,7 @@ public class dashbord {
     void showmarket(MouseEvent event) {
         try {
             // Load showsponsoring.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/market-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayMarket-view.fxml"));
             Node eventFXML = loader.load();
 
             // Clear existing content from vboxdash
@@ -134,7 +134,7 @@ public class dashbord {
     void showvoucher(MouseEvent event) {
         try {
             // Load showsponsoring.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/voucher-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayVoucher-view.fxml"));
             Node eventFXML = loader.load();
 
             // Clear existing content from vboxdash

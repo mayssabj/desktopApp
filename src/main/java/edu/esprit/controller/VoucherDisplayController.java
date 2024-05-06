@@ -1,4 +1,9 @@
 package edu.esprit.controller;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.qrcode.WriterException;
 import edu.esprit.entities.Market;
 import edu.esprit.entities.User;
 import edu.esprit.entities.Voucher;
@@ -20,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,9 +34,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.awt.*;
+import java.awt.Button;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -39,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static javax.swing.text.StyleConstants.ALIGN_CENTER;
 
 public class VoucherDisplayController implements Initializable {
     private final VoucherDAO voucherDAO = new VoucherDAO();
@@ -164,7 +172,7 @@ public class VoucherDisplayController implements Initializable {
     }
 
     @FXML
-    void getVoucherInfo(MouseEvent event) throws SQLException {
+    void getVoucherInfo(MouseEvent event) throws SQLException, DocumentException, IOException, WriterException {
         Voucher selectedVoucher = voucherTable.getSelectionModel().getSelectedItem();
         if (selectedVoucher != null) {
             int id = selectedVoucher.getId();
@@ -222,7 +230,16 @@ public class VoucherDisplayController implements Initializable {
             int qrCodeHeight = 200;
             Image qrCode = generateQRCode(str, qrCodeWidth, qrCodeHeight);
             voucherImage.setImage(qrCode);
+
         }
+    }
+
+    @FXML
+    void pdf(MouseEvent event) throws SQLException, DocumentException, IOException, WriterException {
+        Voucher selectedVoucher = voucherTable.getSelectionModel().getSelectedItem();
+        System.out.println(selectedVoucher.toString());
+        handleSaveFile(selectedVoucher);
+
     }
 
     public void displayVouchers() {
@@ -328,7 +345,7 @@ public class VoucherDisplayController implements Initializable {
     }
 
     @FXML
-    void deleteVoucher() {
+    void deleteVoucher() throws SQLException, DocumentException, IOException, WriterException {
         Voucher voucherFound = getSelectedVoucher();
         if (voucherFound != null) {
             voucherDAO.deleteVoucher(voucherFound.getId());
@@ -338,7 +355,7 @@ public class VoucherDisplayController implements Initializable {
     }
 
     @FXML
-    void updateVoucher(MouseEvent event) throws SQLException {
+    void updateVoucher(MouseEvent event) throws SQLException, DocumentException, IOException, WriterException {
         Voucher selectedVoucher = getSelectedVoucher();
         int id = selectedVoucher.getId();
         Integer usable = updatedUsabilityBox.getSelectionModel().getSelectedItem();
@@ -372,25 +389,6 @@ public class VoucherDisplayController implements Initializable {
         }
     }
 
-    @FXML
-    void goBack(MouseEvent event) {
-        System.out.println("redirect to Home");
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/codewarrior/markets_coupons/voucher-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage newStage = new Stage();
-            newStage.setScene(scene);
-            newStage.setTitle("Home Window");
-            newStage.show();
-
-            // Close the current stage (window)
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Image generateQRCode(String content, int width, int height) {
         try {
             BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height);
@@ -403,8 +401,79 @@ public class VoucherDisplayController implements Initializable {
         }
     }
 
-    private Voucher getSelectedVoucher() {
-        return voucherTable.getSelectionModel().getSelectedItem();
+    @FXML
+    void addVoucher(MouseEvent event) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/voucher-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Home Window");
+            newStage.show();
+
+            // Close the current stage (window)
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void handleSaveFile(Voucher v) throws IOException, DocumentException, SQLException, WriterException {
+        User user = userDAO.getUserById(v.getUserWonId());
+        VoucherCategory category = categoryDAO.getCategoryById(v.getCategoryId());
+        String fileName = "voucher.pdf";
+        Document doc = new Document();
+        try (FileOutputStream fos = new FileOutputStream(fileName)) {
+            PdfWriter.getInstance(doc, fos);
+            doc.open();
+
+            // Title
+            Paragraph title = new Paragraph("LOST & FOUND");
+            title.setAlignment(ALIGN_CENTER);
+            doc.add(title);
+
+            doc.add(new Paragraph("\n"));
+            doc.add(new Paragraph("All Coupons information in this table:"));
+            doc.add(new Paragraph("\n"));
+
+            // Table setup
+            PdfPTable table = new PdfPTable(4); // Adjust the number of columns as needed
+            table.setWidthPercentage(100);
+
+            // Table headers
+            addTableCell(table, "Code", BaseColor.ORANGE);
+            addTableCell(table, "Type", BaseColor.ORANGE);
+            addTableCell(table, "Owner", BaseColor.ORANGE);
+            addTableCell(table, "Price", BaseColor.ORANGE);
+
+            // Table data from Voucher object
+            addTableCell(table, v.getCode(), null);
+            addTableCell(table, category.getTitre(), null);
+            addTableCell(table, user.getEmail(), null);
+            addTableCell(table, String.valueOf(v.getValue()), null);
+
+            doc.add(table);
+            doc.close();
+
+            // Open the generated PDF file
+            Desktop.getDesktop().open(new File(fileName));
+        }
+    }
+
+    private void addTableCell(PdfPTable table, String text, BaseColor backgroundColor) {
+        PdfPCell cell = new PdfPCell(new Paragraph(text));
+        if (backgroundColor != null) {
+            cell.setBackgroundColor(backgroundColor);
+        }
+        table.addCell(cell);
+    }
+
+    private Voucher getSelectedVoucher() throws SQLException, DocumentException, IOException, WriterException {
+        Voucher voucher = voucherTable.getSelectionModel().getSelectedItem();
+        return voucher;
+
     }
 }
 
