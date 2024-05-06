@@ -70,12 +70,17 @@ public class AfficherPostController {
 
 
 
+    private void updatePagination() {
+        int pageCount = (int) Math.ceil(allPosts.size() / (double) ITEMS_PER_PAGE);
+        pagination.setPageCount(pageCount > 0 ? pageCount : 1);
+        pagination.setCurrentPageIndex(0);
+        pagination.setPageFactory(this::createPage);
+    }
     @FXML
     private void initialize() {
         grid.getStyleClass().add("grid-pane");
         loadAllPosts();
-
-        pagination.setPageFactory(this::createPage);
+        updatePagination();
 /*
         ObservableList<String> listTrier = FXCollections.observableArrayList("Titre", "Description", "Place", "Type", "Date");
         comboBox.setItems(listTrier);
@@ -425,7 +430,7 @@ public class AfficherPostController {
         grid.getChildren().clear();
         loadAllPosts();
 
-        pagination.setPageFactory(this::createPage);
+        updatePagination();
     }
 
     private void deletePost(Post post) {

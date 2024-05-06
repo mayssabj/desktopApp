@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="765.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.AfficherPostController">
+<?import javafx.scene.layout.Pane?>
+<AnchorPane prefHeight="765.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.AfficherPostController">
   <children>
-    <BorderPane prefHeight="766.0" prefWidth="1047.0" styleClass="primary_color" stylesheets="/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <BorderPane prefHeight="766.0" prefWidth="1062.0" styleClass="primary_color" stylesheets="/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
       <center>
         <VBox prefHeight="704.0" prefWidth="944.0" BorderPane.alignment="CENTER">
           <children>
@@ -18,7 +23,7 @@
               <VBox.margin>
                 <Insets left="20.0" right="20.0" top="10.0" />
               </VBox.margin>
-              <Pagination id="pagination" fx:id="pagination" prefHeight="694.0" prefWidth="986.0" />
+              <Pagination id="pagination" fx:id="pagination" prefHeight="694.0" prefWidth="1036.0" />
             </HBox>
 
             <GridPane fx:id="grid" prefHeight="20.0" prefWidth="40.0" />

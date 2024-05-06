@@ -73,7 +73,7 @@ public class showPostAdminController {
         // Create header row
         HBox headerRow = new HBox();
         headerRow.setSpacing(8);
-        headerRow.setPrefWidth(1500);
+        headerRow.setPrefWidth(1300);
         headerRow.setStyle("-fx-background-color: #6b9eef; -fx-padding: 10px; -fx-spacing: 10px;");
 
         // Header labels
@@ -127,7 +127,7 @@ public class showPostAdminController {
     private HBox createPostEntry(Post post) {
         HBox hbox = new HBox();
         hbox.setSpacing(8);
-        hbox.setPrefWidth(1500);
+        hbox.setPrefWidth(1300);
 
         Label titleLabel = new Label( post.getTitre());
         titleLabel.setPrefWidth(200);

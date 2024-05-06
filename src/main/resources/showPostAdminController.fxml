@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.showPostAdminController">
+<AnchorPane stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.showPostAdminController">
 
     <AnchorPane layoutX="375.0" layoutY="15.0" prefHeight="120.0" prefWidth="191.0" style="-fx-border-radius: 0px 50px 0px 0px; -fx-border-color: #F1F2F7;">
         <effect>
@@ -27,7 +25,7 @@
             </Label>
         </children>
     </AnchorPane>
-    <TextField fx:id="tfSearch" />
-        <AnchorPane id="AnchorPane" fx:id="anchorPane" layoutX="-1.0" layoutY="90.0" prefHeight="627.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"> <!-- Contenu de votre AnchorPane --> </AnchorPane>
+    <TextField fx:id="tfSearch" layoutX="128.0" layoutY="109.0" />
+        <AnchorPane id="AnchorPane" fx:id="anchorPane" layoutX="24.0" layoutY="142.0" prefHeight="627.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"> <!-- Contenu de votre AnchorPane --> </AnchorPane>
 
 </AnchorPane>

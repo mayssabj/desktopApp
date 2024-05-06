@@ -104,6 +104,7 @@ public class LoginController implements Initializable {
                     // Proceed with login (e.g., navigate to another page)
 //                    NavigationUtil.redirectTo("/user/updateUser.fxml", event);
                 }else{
+                    Session.getInstance().setVerificationEmail(user.getEmail());
                     NavigationUtil.redirectTo("/user/verificationCode.fxml", event);
                 }
 
