@@ -1,6 +1,7 @@
 package edu.esprit.services;
 
 import edu.esprit.entities.Answer;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class AnswerCRUD {
     public Answer ajouterAnswer(Answer answer) {
         String req = "INSERT INTO `answer` (`userId`, `questionId`, `body`, `createdAt`) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pst = mydb.getInstance().getCon().prepareStatement(req, Statement.RETURN_GENERATED_KEYS)) {
-            pst.setInt(1, answer.getUserId());
+            pst.setInt(1, Session.getInstance().getCurrentUser().getId());
             pst.setInt(2, answer.getQuestionId());
             pst.setString(3, answer.getBody());
             pst.setTimestamp(4, Timestamp.valueOf(answer.getCreatedAt()));

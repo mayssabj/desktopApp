@@ -15,9 +15,11 @@ module edu.esprit {
     requires twilio;
     requires itextpdf;
     requires java.desktop;
-    requires httpcore;
-    requires httpclient;
+    //requires httpcore;
+   // requires httpclient;
     requires httpmime;
+    requires org.apache.httpcomponents.httpcore;
+    requires org.apache.httpcomponents.httpclient;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;
