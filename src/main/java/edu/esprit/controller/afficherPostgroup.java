@@ -22,9 +22,12 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class afficherPostgroup {
@@ -68,12 +71,17 @@ public class afficherPostgroup {
                     Label userNameLabel = new Label(user.getUsername());
                     ImageView userImageView = new ImageView();
 
+                    Image profileImage;
+
                     if (user.getPhoto() != null && !user.getPhoto().isEmpty()) {
-                        Image image = new Image("http://localhost:8000/uploads/" + user.getPhoto());
-                        userImageView.setImage(image);
-                        userImageView.setFitWidth(20);
-                        userImageView.setFitHeight(20);
+                        profileImage = new Image(new URL(user.getPhoto()).openStream());
+
+                    }else{
+                        profileImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
                     }
+                    userImageView.setImage(profileImage);
+                    userImageView.setFitWidth(20);
+                    userImageView.setFitHeight(20);
 
                     Label contenuLabel = new Label(post.getContenu());
                     HBox userInfo = new HBox(userImageView, userNameLabel);
@@ -94,6 +102,10 @@ public class afficherPostgroup {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     private HBox createPostControls(Post_group post) {
@@ -129,7 +141,7 @@ public class afficherPostgroup {
 
         return postControls;
     }
-    private VBox createCommentsBox(Post_group post) {
+    private VBox createCommentsBox(Post_group post) throws IOException {
         VBox commentairesBox = new VBox();
         commentairesBox.setSpacing(8);// Espacement entre les commentaires
 
@@ -139,12 +151,19 @@ public class afficherPostgroup {
         for (Postcommentaire commentaire : post.getCommentaires()) {
             User user = commentaire.getUser_id();
             ImageView commentUserImageView =new ImageView();
+
+            Image profileImage;
+
             if (user.getPhoto() != null && !user.getPhoto().isEmpty()) {
-                Image image = new Image("http://localhost:8000/uploads/" + user.getPhoto());
-                commentUserImageView.setImage(image);
-                commentUserImageView.setFitWidth(20);
-                commentUserImageView.setFitHeight(20);
+                profileImage = new Image(new URL(user.getPhoto()).openStream());
+
+            }else{
+                profileImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
             }
+
+            commentUserImageView.setImage(profileImage);
+            commentUserImageView.setFitWidth(20);
+            commentUserImageView.setFitHeight(20);
 
 
             // Supposé déjà configuré

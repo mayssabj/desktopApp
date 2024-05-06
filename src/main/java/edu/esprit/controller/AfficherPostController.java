@@ -35,10 +35,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class AfficherPostController {
@@ -141,6 +143,8 @@ public class AfficherPostController {
                 }
             } catch (FileNotFoundException | SQLException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -168,12 +172,12 @@ public class AfficherPostController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private VBox createPostBox(Post post) throws FileNotFoundException, SQLException {
+    private VBox createPostBox(Post post) throws IOException, SQLException {
         VBox postBox = new VBox();
         postBox.getStyleClass().add("chosen-fruit-card");
         postBox.setPrefWidth(600);
@@ -190,27 +194,20 @@ public class AfficherPostController {
         String imagePath = u.getPhoto();
         ImageView user_idPhoto = new ImageView();
 
-        try {
-            // Try to load image from local file
-            InputStream inputStream = new FileInputStream(imagePath);
-            Image image = new Image(inputStream);
-            user_idPhoto.setImage(image);
-        } catch (FileNotFoundException e1) {
+        Image profileImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));;
+        if(!(u.getPhoto()==null)){
             try {
-                // If loading from local file fails, try to load from web URL
-                InputStream inputStream = new URL(imagePath).openStream();
-                Image image = new Image(inputStream);
-                user_idPhoto.setImage(image);
-            } catch (Exception e2) {
-                // Handle any exceptions
-                e2.printStackTrace();
-                // Set a default image or handle the error as needed
+                InputStream inputStream = new FileInputStream(imagePath);
+                profileImage = new Image(inputStream);
+            }catch (FileNotFoundException e1){
+                profileImage = new Image(new URL(u.getPhoto()).openStream());
             }
         }
+        user_idPhoto.setImage(profileImage);
         user_idPhoto.setFitWidth(30);
         user_idPhoto.setFitHeight(30);
 
-        Label labelProfilename = new Label(u.getEmail());
+        Label labelProfilename = new Label(u.getUsername());
         labelProfilename.setFont(new Font("Cambria", 18));
         labelProfilename.setTextFill(Color.web("#333333"));
 
@@ -348,7 +345,7 @@ public class AfficherPostController {
             System.out.println(comment);
 
             commentsBox.getChildren().addAll(
-                    new CommentDesign(comment.getId_u().getEmail(), comment.getText())
+                    new CommentDesign(comment.getId_u().getUsername(), comment.getText())
             );
             if (Session.getInstance().getCurrentUser().getId() == comment.getId_u().getId()) {
                 Button deleteButton2 = new Button();
