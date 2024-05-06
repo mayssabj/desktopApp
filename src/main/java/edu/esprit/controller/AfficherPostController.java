@@ -344,8 +344,9 @@ public class AfficherPostController {
         for (Comment comment : comments) {
             System.out.println(comment);
 
+
             commentsBox.getChildren().addAll(
-                    new CommentDesign(comment.getId_u().getUsername(), comment.getText())
+                    new CommentDesign(comment.getId_u().getUsername(), comment.getText(),comment.getId_u().getPhoto() )
             );
             if (Session.getInstance().getCurrentUser().getId() == comment.getId_u().getId()) {
                 Button deleteButton2 = new Button();
@@ -369,8 +370,6 @@ public class AfficherPostController {
         }
         // Set margin for the buttonBox
         // top padding for commentsBox
-
-
 
 
 // Add the comments VBox to the postBox
