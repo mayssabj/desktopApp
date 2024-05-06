@@ -320,3 +320,13 @@
 .pagination .page-count-label {
   -fx-font-size: 14px; /* Set font size for page count label */
 }
+
+.sidebar-btn {
+  -fx-background-color: transparent;
+}
+.sidebar-btn-text {
+  -fx-text-fill: #a2bee8;
+}
+.sidebar-btn:hover .sidebar-btn-text {
+  -fx-text-fill: #7aa2e7;
+}

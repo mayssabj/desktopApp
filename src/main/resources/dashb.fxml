@@ -184,20 +184,22 @@
                                 <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                     <children /></Pane>
                                 <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" onAction="#handleAddPostButton"/>
-                                <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0">
+
+                                <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0" onMouseClicked="#redirectToUpdateUser">
                                     <children>
-                                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
-                                            </image>
-                                        </ImageView>
-                                        <Label prefHeight="27.0" prefWidth="171.0" text="Username" textFill="WHITE">
+                                        <ImageView fx:id="userPhoto" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                                        <Label fx:id="usernameLabel" prefHeight="27.0" prefWidth="120.0" text="Username" textFill="WHITE">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
+                                        <Button text="Logout" onAction="#handleLogout" prefWidth="100.0" styleClass="logout-button" />
+
                                     </children>
                                 </HBox>
+
+
+
                             </children>
                         </HBox>
                         <HBox fx:id="vboxdash" prefHeight="730.0" prefWidth="1060.0">
