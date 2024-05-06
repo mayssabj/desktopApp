@@ -2,6 +2,7 @@ package edu.esprit.services;
 
 import edu.esprit.entities.Answer;
 import edu.esprit.entities.Question;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class QuestionCRUD {
     public void ajouterQuestion(Question question) {
         String req = "INSERT INTO `question` (`userId`, `title`, `body`, `createdAt`) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
-            pst.setInt(1, question.getUserId());
+            pst.setInt(1, Session.getInstance().getCurrentUser().getId());
             pst.setString(2, question.getTitle());
             pst.setString(3, question.getBody());
             pst.setTimestamp(4, Timestamp.valueOf(question.getCreatedAt()));
@@ -62,6 +63,7 @@ public class QuestionCRUD {
             e.printStackTrace();
         }
     }
+
 
 
 

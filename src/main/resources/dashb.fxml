@@ -83,7 +83,7 @@
                                         <Insets />
                                     </VBox.margin>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Made For You" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="////" textFill="#a1a1a1" >
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -108,7 +108,7 @@
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Poscasts" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="Q/A" onMouseClicked="#showQA" textFill="#a1a1a1">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>

@@ -39,7 +39,7 @@ public class QuestionStatsController {
         }
 
 private int getAnsweredQuestions() {
-        String query = "SELECT COUNT(*) AS total FROM question WHERE answerId IS NOT NULL";
+        String query = "SELECT COUNT(*) AS total FROM answer WHERE QuestionId IS NOT NULL";
         return executeCountQuery(query);
         }
 

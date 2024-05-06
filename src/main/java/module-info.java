@@ -16,12 +16,12 @@ module edu.esprit {
     requires itextpdf;
     requires java.desktop;
     requires httpmime;
-    requires java.datatransfer;
     requires org.apache.httpcomponents.httpcore;
+    requires org.apache.httpcomponents.httpclient;
+    requires java.datatransfer;
 
     requires com.google.zxing;
     requires com.google.zxing.javase;
-    requires org.apache.httpcomponents.httpclient;
     requires javax.mail.api;
     requires okhttp3;
     requires google.api.translate.java;
