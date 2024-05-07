@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox stylesheets="/style1.css" fx:id="marketContainer" alignment="CENTER" prefHeight="348.0" prefWidth="254.0" spacing="5" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.MarketCardController">
+
+    <!-- Market Image -->
+    <ImageView fx:id="marketImage" fitHeight="158.0" fitWidth="171.0" />
+
+    <!-- Market Details -->
+    <Label fx:id="marketName" prefHeight="18.0" prefWidth="79.0" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: green;" />
+    <Label fx:id="marketAddress" prefHeight="15.0" prefWidth="64.0" style="-fx-font-size: 12px; -fx-text-fill: green;" />
+    <Label fx:id="marketCityRegion" prefHeight="15.0" prefWidth="69.0" style="-fx-font-size: 12px; -fx-text-fill: green;" />
+
+</VBox>
