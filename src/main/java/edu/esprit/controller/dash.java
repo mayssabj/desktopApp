@@ -81,6 +81,22 @@ public class dash {
             e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
         }
     }
+    @FXML
+    void showVoucher(MouseEvent event) {
+        try {
+            // Load showsponsoring.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/voucherList.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+        }
+    }
 
     @FXML
     void showQA(MouseEvent event) {

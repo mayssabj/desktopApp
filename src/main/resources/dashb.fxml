@@ -118,6 +118,11 @@
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
+                                <Label prefHeight="40.0" prefWidth="192.0" text="Voucher" onMouseClicked="#showVoucher" textFill="#a1a1a1">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
                             </children>
                             <padding>
                                 <Insets left="20.0" right="20.0" />

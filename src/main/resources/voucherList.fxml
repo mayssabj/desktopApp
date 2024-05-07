@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="1168.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.voucherListController">
+    <TableView fx:id="voucherTable" layoutX="355.0" layoutY="21.0" onMouseClicked="#getVoucherInfo" prefHeight="264.0" prefWidth="578.0" AnchorPane.bottomAnchor="311.0" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="21.0">
+        <columns>
+            <TableColumn fx:id="colValue" text="Value" />
+            <TableColumn fx:id="colDate" prefWidth="103.0" text="Date" />
+            <TableColumn fx:id="colUsable" prefWidth="71.0" text="Usable" />
+            <TableColumn fx:id="colValid" prefWidth="66.0" text="Valid" />
+            <TableColumn fx:id="colGiven" text="Given" />
+            <TableColumn fx:id="colMarket" text="Market" />
+            <TableColumn fx:id="colCategory" prefWidth="108.0" text="Category" />
+            <TableColumn fx:id="colUser" prefWidth="89.0" text="User" />
+            <TableColumn fx:id="colCode" prefWidth="149.0" text="Code" />
+        </columns>
+    </TableView>
+    <Pane layoutX="51.0" layoutY="36.0" prefHeight="252.0" prefWidth="252.0">
+        <children>
+            <ImageView fx:id="voucherImage" fitHeight="220.0" fitWidth="231.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+        </children>
+    </Pane>
+    <Pane layoutX="439.0" layoutY="314.0" prefHeight="81.0" prefWidth="207.0">
+        <children>
+
+            <Pane fx:id="deleteVoucher" layoutX="14.0" layoutY="11.0" onMouseClicked="#deleteVoucher" prefHeight="59.0" prefWidth="60.0">
+                <children>
+                    <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/poubelle.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane fx:id="back" layoutX="129.0" layoutY="14.0" onMouseClicked="#pdf" prefHeight="59.0" prefWidth="60.0">
+                <children>
+                    <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/fleche-fine-contour-vers-la-gauche.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+        </children>
+    </Pane>
+
+</AnchorPane>
