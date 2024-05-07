@@ -20,6 +20,7 @@ module edu.esprit {
     requires httpmime;
     requires org.apache.httpcomponents.httpcore;
     requires org.apache.httpcomponents.httpclient;
+    requires google.cloud.translate;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;
