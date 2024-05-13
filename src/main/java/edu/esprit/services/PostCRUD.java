@@ -3,6 +3,7 @@ package edu.esprit.services;
 import edu.esprit.entities.Post;
 import edu.esprit.entities.User;
 import edu.esprit.utils.Session;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -166,25 +167,23 @@ public class PostCRUD implements ServicePost<Post> {
         return postBox;
     }
 
+
+
     public Map<String, Integer> calculateLostAndFoundStatistics() throws SQLException {
         Map<String, Integer> statistics = new HashMap<>();
-        List<Post> posts = afficher();
+        String query = "SELECT type, COUNT(*) AS count FROM post GROUP BY type";
 
-        int lostCount = 0;
-        int foundCount = 0;
-
-        for (Post post : posts) {
-            if (post.getType() == Post.Type.Lost) {
-                lostCount++;
-            } else if (post.getType() == Post.Type.Found) {
-                foundCount++;
+        try (Connection con = mydb.getInstance().getCon();
+             PreparedStatement pst = con.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                String type = rs.getString("type");
+                int count = rs.getInt("count");
+                statistics.put(type, count);
             }
         }
-
-        statistics.put("Lost", lostCount);
-        statistics.put("Found", foundCount);
-
         return statistics;
     }
+
 
 }

@@ -41,4 +41,6 @@ public class Session {
     public User getCurrentUser() {
         return currentUser;
     }
+
+
 }

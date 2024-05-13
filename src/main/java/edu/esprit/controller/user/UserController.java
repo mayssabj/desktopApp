@@ -6,6 +6,7 @@ import edu.esprit.utils.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -67,6 +68,8 @@ public class UserController implements Initializable {
     public VBox deletePasswordErrorsContainer;
     @FXML
     public Label deleteMessageLabel;
+    @FXML
+    public Button backButton;
 
     private File selectedImageFile;
 
@@ -388,5 +391,7 @@ public class UserController implements Initializable {
     }
 
 
-
+    public void returnToPostsPage(ActionEvent event) {
+        NavigationUtil.redirectTo("/dashb.fxml",event);
+    }
 }

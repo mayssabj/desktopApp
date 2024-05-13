@@ -1,0 +1,14 @@
+.text-field {
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-border-color: #d3d3d3; /* Couleur de la bordure */
+    -fx-border-radius: 10px; /* Rayon de la bordure pour la rendre arrondie */
+    -fx-padding: 5px 10px; /* Padding à l'intérieur du champ */
+    -fx-background-color: #ffffff; /* Couleur de fond */
+    -fx-prompt-text-fill: #a8a8a8; /* Couleur du texte d'indication */
+    -fx-focus-color: transparent; /* Couleur de la bordure lorsque le champ est actif */
+    -fx-faint-focus-color: transparent; /* Couleur de la bordure floue lors de la mise au point */
+}
+
+.text-field:focused {
+    -fx-border-color: #0096c7; /* Change la couleur de la bordure lorsqu'elle est focalisée */
+}

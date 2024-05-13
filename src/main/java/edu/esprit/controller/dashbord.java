@@ -1,7 +1,16 @@
+
 package edu.esprit.controller;
 
+import edu.esprit.entities.Avertissement;
+import edu.esprit.entities.User;
+import edu.esprit.services.PostCRUD;
+import edu.esprit.services.ServiceAvertissement;
 import edu.esprit.services.StatisticsService;
+import edu.esprit.services.UserService;
+import edu.esprit.utils.NavigationUtil;
+import edu.esprit.utils.Session;
 import edu.esprit.utils.mydb;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,19 +18,32 @@ import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class dashbord {
+
+
+    public BarChart<String, Number> postsChart;
+    @FXML
+    private BarChart<String, Number> userStatusChart;
 
     @FXML
     private VBox vboxdash;
@@ -30,9 +52,149 @@ public class dashbord {
     private BarChart<String, Integer> statisticsChart;
 
     private StatisticsService statisticsService = new StatisticsService();
+    @FXML
+    private BarChart<String, Number> barChart;
+    @FXML
+    private BarChart<String, Number> barChart1;
+
+    private Connection connection;
+
+    @FXML
+    private ImageView userPhoto;
+    @FXML
+    private Label usernameLabel;
 
 
     @FXML
+    private Button btnRefresh;
+
+    @FXML
+    private Button btnExport;
+
+    private ServiceAvertissement serviceAvertissement = new ServiceAvertissement();
+    @FXML
+    void initialize() {
+
+        displayStatistics();
+
+
+        int totalQuestions = getTotalQuestions();
+        int answeredQuestions = getAnsweredQuestions();
+
+        XYChart.Series<String, Number> totalSeries = new XYChart.Series<>();
+        XYChart.Data<String, Number> totalData = new XYChart.Data<>("Questions", totalQuestions);
+        totalSeries.getData().add(totalData);
+        totalSeries.setName("Total number of questions");
+
+        XYChart.Series<String, Number> answeredSeries = new XYChart.Series<>();
+        XYChart.Data<String, Number> answeredData = new XYChart.Data<>("Answers", answeredQuestions);
+        answeredSeries.getData().add(answeredData);
+        answeredSeries.setName("Total number of answers");
+
+        barChart.getData().addAll(totalSeries, answeredSeries);
+        loadChart();
+
+
+        User currentUser = Session.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            usernameLabel.setText(currentUser.getUsername());
+            Image profileImage = new Image(getClass().getResourceAsStream("/images/default_user.png"));
+            if (currentUser.getPhoto() != null && !currentUser.getPhoto().isEmpty()) {
+                try {
+                    profileImage = new Image(new FileInputStream(currentUser.getPhoto()));
+                } catch (FileNotFoundException e) {
+                    profileImage = new Image(currentUser.getPhoto(), true); // Assume URL or path is valid
+                }
+            }
+            userPhoto.setImage(profileImage);
+        }
+
+        displayUserStatusStatistics();
+        displayPostStatistics();
+
+
+    }
+
+    private void displayPostStatistics() {
+        PostCRUD postService = new PostCRUD();
+        try {
+            Map<String, Integer> postStats = postService.calculateLostAndFoundStatistics();
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Posts");
+
+            postStats.forEach((type, count) -> {
+                series.getData().add(new XYChart.Data<>(type, count));
+            });
+
+            postsChart.getData().add(series);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // handle error, maybe show an alert or log it
+        }
+    }
+
+    private void loadChart() {
+        try {
+            List<Avertissement> avertissements = serviceAvertissement.afficherAvertissement();
+            Map<String, Long> countByUser = avertissements.stream()
+                    .collect(Collectors.groupingBy(Avertissement::getReported_username, Collectors.counting()));
+
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            countByUser.forEach((username, count) -> {
+                series.getData().add(new XYChart.Data<>(username, count));
+            });
+
+            barChart1.getData().clear();
+            barChart1.getData().add(series);
+        } catch (SQLException e) {
+            showError("Erreur de chargement des données", e.getMessage());
+        }
+    }
+
+    @FXML
+    void refreshChart(ActionEvent event) {
+        loadChart();
+    }
+
+    @FXML
+    void exportData(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Data");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        File file = fileChooser.showSaveDialog(barChart1.getScene().getWindow());
+
+        if (file != null) {
+            try (PrintWriter writer = new PrintWriter(file)) {
+                writer.println("Username,Number of Warnings"); // Header
+                for (XYChart.Series<String, Number> series : barChart1.getData()) {
+                    for (XYChart.Data<String, Number> data : series.getData()) {
+                        writer.println(data.getXValue() + "," + data.getYValue());
+                    }
+                }
+                showInformation("Export Successful", "Data has been exported successfully.");
+            } catch (Exception e) {
+                showError("Export Error", "Failed to export data: " + e.getMessage());
+            }
+        }
+    }
+
+    private void showError(String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void showInformation(String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+     @FXML
     void showQA(MouseEvent event) {
         try {
             // Load showsponsoring.fxml
@@ -48,6 +210,7 @@ public class dashbord {
             e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
         }
     }
+
     @FXML
     void showsponsor(MouseEvent event) {
         loadFXML("/showsponsoring.fxml");
@@ -59,12 +222,27 @@ public class dashbord {
     }
 
     @FXML
+    void showUsers(MouseEvent event) {
+        try {
+            // Ensure the path starts with a slash indicating it's relative to the classpath root
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/showUsersAdmin.fxml"));
+            Node eventFXML = loader.load();
+
+            // Assuming vboxdash is already defined and part of your scene
+            vboxdash.getChildren().clear();
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Log the exception to understand what went wrong
+        }
+    }
+    @FXML
     void ajoutsponsor(MouseEvent event) {
         try {
             // Load showsponsoring.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterSponsoring.fxml"));
             Node eventFXML = loader.load();
 
+            // Clear existing content from vboxdash
             // Clear existing content from vboxdash
             vboxdash.getChildren().clear();
 
@@ -87,33 +265,66 @@ public class dashbord {
             vboxdash.getChildren().clear();
             vboxdash.getChildren().add(eventFXML);
         } catch (IOException e) {
+            e.printStackTrace();  // Log the exception to understand what went wrong
+        }
+    }
+
+
+    @FXML
+    private void displayStatistics() {
+        Map<String, Integer> statistics = statisticsService.calculateActiveDesactiveStatistics(); // Utilisation de statisticsService
+        int activeCount = statistics.get("ACTIVE");
+        int desactiveCount = statistics.get("DESACTIVE");
+
+
+        // Clear any existing data from the chart
+        statisticsChart.getData().clear();
+
+        // Define the data series for lost and found items
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        series.setName("Active et Desactive");
+
+        // Populate the data series with the calculated statistics
+        series.getData().add(new XYChart.Data<>("ACTIVE", activeCount));
+        series.getData().add(new XYChart.Data<>("DESACTIVE", desactiveCount));
+
+        // Add the data series to the chart
+        statisticsChart.getData().add(series);
+    }
+
+
+    @FXML
+    void showpost(MouseEvent event) {
+        try {
+            // Load showPostAdminController.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/showPostAdminController.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException
+        }
+    }
+
+     @FXML
+    private void showAvertissementPage(MouseEvent event) {
+        try {
+            // Charger la page ListAvertissement.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Avertissement/ListAvertissement.fxml"));
+            Node avertissementPage = loader.load();
+
+            // Effacer le contenu actuel de vboxdash et ajouter la page ListAvertissement.fxml
+            vboxdash.getChildren().clear();
+            vboxdash.getChildren().add(avertissementPage);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    @FXML
-    private BarChart<String, Number> barChart;
 
-    private Connection connection;
-
-    public dashbord() {
-        this.connection = mydb.getInstance().getCon();
-    }
-    public void initialize() {
-        int totalQuestions = getTotalQuestions();
-        int answeredQuestions = getAnsweredQuestions();
-
-        XYChart.Series<String, Number> totalSeries = new XYChart.Series<>();
-        XYChart.Data<String, Number> totalData = new XYChart.Data<>("Questions", totalQuestions);
-        totalSeries.getData().add(totalData);
-        totalSeries.setName("Total number of questions");
-
-        XYChart.Series<String, Number> answeredSeries = new XYChart.Series<>();
-        XYChart.Data<String, Number> answeredData = new XYChart.Data<>("Answers", answeredQuestions);
-        answeredSeries.getData().add(answeredData);
-        answeredSeries.setName("Total number of answers");
-
-        barChart.getData().addAll(totalSeries, answeredSeries);
-    }
 
 
     private int getTotalQuestions() {
@@ -127,7 +338,7 @@ public class dashbord {
     }
 
     private int executeCountQuery(String query) {
-        try (PreparedStatement pst = connection.prepareStatement(query)) {
+        try (PreparedStatement pst = mydb.getInstance().getCon().prepareStatement(query)) {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 return rs.getInt("total");
@@ -142,6 +353,81 @@ public class dashbord {
 
 
 
+    @FXML
+    void showcategory(MouseEvent event) {
+        try {
+            // Load showsponsoring.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayCategory-view.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+        }
+    }
+
+    @FXML
+    void showmarket(MouseEvent event) {
+        try {
+            // Load showsponsoring.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayMarket-view.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+        }
+    }
+
+    @FXML
+    void showvoucher(MouseEvent event) {
+        try {
+            // Load showsponsoring.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayVoucher-view.fxml"));
+            Node eventFXML = loader.load();
+
+            // Clear existing content from vboxdash
+            vboxdash.getChildren().clear();
+
+            // Add the loaded eventFXML to vboxdash
+            vboxdash.getChildren().add(eventFXML);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle IOException (e.g., file not found or invalid FXML)
+        }
+    }
+
+    @FXML
+    void handleLogout(ActionEvent event) {
+        Session.getInstance().setCurrentUser(null);
+        NavigationUtil.redirectTo("/user/login.fxml",event);
+    }
+
+    private void displayUserStatusStatistics() {
+        UserService userService = new UserService();
+        Map<String, Integer> userStats = userService.calculateUserStatusStatistics();
+        XYChart.Series<String, Number> verifiedSeries = new XYChart.Series<>();
+        verifiedSeries.setName("Verified");
+
+        XYChart.Series<String, Number> enabledSeries = new XYChart.Series<>();
+        enabledSeries.setName("Enabled");
+
+        // Assuming `calculateUserStatusStatistics` returns a map with keys like "VerifiedEnabled", "VerifiedDisabled", etc.
+        verifiedSeries.getData().add(new XYChart.Data<>("Verified", userStats.getOrDefault("VerifiedEnabled", 0) + userStats.getOrDefault("VerifiedDisabled", 0)));
+        enabledSeries.getData().add(new XYChart.Data<>("Enabled", userStats.getOrDefault("VerifiedEnabled", 0) + userStats.getOrDefault("UnverifiedEnabled", 0)));
+
+        userStatusChart.getData().addAll(verifiedSeries, enabledSeries);
+    }
+
+    public void redirectToStats(MouseEvent event){
+        NavigationUtil.redirectTo("/dashbord.fxml",event);
+    }
+
 }
-
-

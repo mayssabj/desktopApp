@@ -167,6 +167,7 @@
                         <Insets left="5.0" />
                     </padding>
                 </HBox>
+
                 <Label alignment="CENTER" layoutX="32.0" layoutY="361.0" text="Strorage Details" textFill="#a2bee8">
                     <font>
                         <Font name="Berlin Sans FB" size="16.0" />
@@ -229,6 +230,7 @@
                                 <NumberAxis label="Number of Questions" />
                             </yAxis>
                         </BarChart>
+
                     </children>
                 </HBox>
             </children></VBox>
@@ -237,3 +239,4 @@
     </children>
 
 </AnchorPane>
+

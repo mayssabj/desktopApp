@@ -46,3 +46,13 @@
 .list-view .list-cell:hover {
     -fx-background-color: #121212; /* Same as .secondary-color */
 }
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px; /* Optional: Adjust font size as needed */
+}
+
+.logout-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+}

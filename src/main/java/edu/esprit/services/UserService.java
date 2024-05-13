@@ -12,7 +12,9 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserService {
 
@@ -50,7 +52,7 @@ public class UserService {
         user.setEmailVerificationToken(rs.getString("email_verification_token"));
         user.setVerified(rs.getBoolean("is_verified"));
         user.setResetToken(rs.getString("reset_token"));
-        user.setAvertissementsCount(rs.getInt("avertissements_count"));
+        user.setAvertissements_count(rs.getInt("avertissements_count"));
         user.setReputation(rs.getObject("reputation") != null ? rs.getInt("reputation") : null);
 
         if (rs.getString("code") != null) {
@@ -68,15 +70,18 @@ public class UserService {
     }
 
     public User findUserByEmail(String email) {
+
         return findUserBy("email", email);
     }
+
     public boolean registerUser(User user, VerificationCode verificationCode) {
         Connection con = mydb.getInstance().getCon();
         try {
             con.setAutoCommit(false);  // Start transaction
 
             // Insert user
-            String userQuery = "INSERT INTO user (email, password, phone, photo, address, gender, roles, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String userQuery = "INSERT INTO user (email, password, phone, photo, address, gender, roles, username, is_enabled, is_verified, avertissements_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
             try (PreparedStatement pst = con.prepareStatement(userQuery, Statement.RETURN_GENERATED_KEYS)) {
                 pst.setString(1, user.getEmail());
                 pst.setString(2, user.getPassword());
@@ -86,6 +91,10 @@ public class UserService {
                 pst.setString(6, user.getGender());
                 pst.setString(7, user.getRolesAsString());  // Use serialized roles
                 pst.setString(8, user.getUsername());
+                pst.setInt(9, 1); // is_enabled (provide a value, e.g., 1)
+                pst.setInt(10, 1); // is_verified (provide a value, e.g., 1)
+                pst.setInt(11, 0); // avertissements_count (provide a value, e.g., 0)
+
                 int affectedRows = pst.executeUpdate();
 
                 if (affectedRows == 0) {
@@ -339,4 +348,77 @@ public class UserService {
         return user;
     }
 
+
+    public User getUserByUsername(String reportedUsername) throws SQLException {
+        Connection con = mydb.getInstance().getCon();
+        User user = null;
+        try (PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user WHERE username = ?")) {
+            preparedStatement.setString(1,reportedUsername);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setPhone(resultSet.getString("phone"));
+
+                user.setAddress(resultSet.getString("address"));
+                user.setGender(resultSet.getString("gender"));
+                user.setAvertissements_count(resultSet.getInt("avertissements_count"));
+            }
+        }
+        return user;
+    }
+
+    //incrementer le nombre d'avertissements d'un utilisateur
+    public void incrementAvertissementCount(int id) throws SQLException {
+        Connection con = mydb.getInstance().getCon();
+        try (PreparedStatement preparedStatement = con.prepareStatement("UPDATE user SET avertissements_count = avertissements_count + 1 WHERE id = ?")) {
+            preparedStatement.setInt(1, id);
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Updating avertissements_count failed, no rows affected.");
+            }
+        }
+    }
+
+    public void updateUserEnabledStatus(User user) {
+        // Your database code to update the user's enabled status
+        String sql = "UPDATE user SET is_enabled = ? WHERE id = ?";
+        try (Connection conn = mydb.getInstance().getCon();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setBoolean(1, user.isEnabled());
+            stmt.setInt(2, user.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, Integer> calculateUserStatusStatistics() {
+            Map<String, Integer> stats = new HashMap<>();
+            String query = "SELECT is_verified, is_enabled, COUNT(*) as count FROM user GROUP BY is_verified, is_enabled";
+
+            try (Connection con = mydb.getInstance().getCon();
+                 PreparedStatement pst = con.prepareStatement(query);
+                 ResultSet rs = pst.executeQuery()) {
+
+                while (rs.next()) {
+                    boolean isVerified = rs.getBoolean("is_verified");
+                    boolean isEnabled = rs.getBoolean("is_enabled");
+                    int count = rs.getInt("count");
+
+                    String key = (isVerified ? "Verified" : "Unverified") + (isEnabled ? "Enabled" : "Disabled");
+                    stats.put(key, count);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return stats;
+    }
 }
+

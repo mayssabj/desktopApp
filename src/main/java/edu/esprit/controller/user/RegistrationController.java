@@ -5,8 +5,11 @@ import com.cloudinary.utils.ObjectUtils;
 import edu.esprit.entities.User;
 import edu.esprit.entities.VerificationCode;
 import edu.esprit.services.MailService;
+import edu.esprit.entities.VerificationCode;
+import edu.esprit.services.MailService;
 import edu.esprit.services.UserService;
 import edu.esprit.utils.*;
+import edu.esprit.utils.VerificationCodeUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +28,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -131,7 +136,9 @@ public class RegistrationController implements Initializable {
             User user = new User();
             user.setEmail(emailField.getText());
             // Hash the password before setting it
-            String hashedPassword = BCrypt.hashpw(passwordField.getText(), BCrypt.gensalt());
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(passwordField.getText());
+
             user.setPassword(hashedPassword);
             user.setPhone(phoneField.getText());
 //            user.setPhoto(getImagePath(profileImageView));

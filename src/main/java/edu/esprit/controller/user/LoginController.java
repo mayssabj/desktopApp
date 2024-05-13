@@ -20,6 +20,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.io.IOException;
@@ -94,9 +96,12 @@ public class LoginController implements Initializable {
                 System.out.println(user);
                 // Set the current user in the session
                 Session.getInstance().setCurrentUser(user);
+                if(!user.isEnabled()){
+                    return;
+                }
                 if(user.isVerified()){
                     if(user.getRoles().contains(Role.ROLE_ADMIN)){
-                        NavigationUtil.redirectTo("/Dashboard.fxml", event);
+                        NavigationUtil.redirectTo("/dashbord.fxml", event);
                     }else{
                         NavigationUtil.redirectTo("/dashb.fxml", event);
 //                        NavigationUtil.redirectTo("/Post.fxml", event);
@@ -104,6 +109,7 @@ public class LoginController implements Initializable {
                     // Proceed with login (e.g., navigate to another page)
 //                    NavigationUtil.redirectTo("/user/updateUser.fxml", event);
                 }else{
+                    Session.getInstance().setVerificationEmail(user.getEmail());
                     NavigationUtil.redirectTo("/user/verificationCode.fxml", event);
                 }
 
@@ -125,7 +131,8 @@ public class LoginController implements Initializable {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
-                if (BCrypt.checkpw(password, storedPassword)) {
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                if (passwordEncoder.matches(password,storedPassword)) {
                     UserService userService = new UserService();
                     // If password matches, fetch the complete user details using the dedicated method
                     return userService.getUserById(rs.getInt("id"));

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane prefHeight="727.0" prefWidth="930.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.Reclamation.ReclamationListController">
+    <children>
+        <!-- Left panel for Dashboard -->
+        <VBox layoutX="10.0" layoutY="50.0" prefHeight="600.0" prefWidth="160.0">
+            <!-- Add dashboard elements here -->
+        </VBox>
+
+        <!-- Add Reclamation Button -->
+        <Button text="Add Reclamation" layoutX="10.0" layoutY="10.0" onAction="#openReclamationForm" style="-fx-background-color: #28a745; -fx-text-fill: white;"/>
+
+        <!-- Right panel for ListView -->
+        <!-- Adjust the layoutX to position slightly closer to the VBox -->
+        <ListView fx:id="listView" layoutX="170.0" layoutY="50.0" prefHeight="600.0" prefWidth="740.0">
+            <!-- The ListView will be configured and populated from the controller -->
+        </ListView>
+        <!-- Cells will be dynamically added -->
+
+        <!-- Footer with similar styling to the header -->
+    </children>
+</AnchorPane>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="1352.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.VoucherDisplayController">
+    <TableView fx:id="voucherTable" layoutX="528.0" layoutY="14.0" onMouseClicked="#getVoucherInfo" prefHeight="464.0" prefWidth="808.0" AnchorPane.bottomAnchor="318.0" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="14.0">
+        <columns>
+            <TableColumn fx:id="colValue" text="Value" />
+            <TableColumn fx:id="colDate" prefWidth="103.0" text="Date" />
+            <TableColumn fx:id="colUsable" prefWidth="71.0" text="Usable" />
+            <TableColumn fx:id="colValid" prefWidth="66.0" text="Valid" />
+            <TableColumn fx:id="colGiven" text="Given" />
+            <TableColumn fx:id="colMarket" text="Market" />
+            <TableColumn fx:id="colCategory" prefWidth="108.0" text="Category" />
+         <TableColumn fx:id="colUser" prefWidth="89.0" text="User" />
+         <TableColumn fx:id="colCode" prefWidth="149.0" text="Code" />
+        </columns>
+    </TableView>
+    <Pane layoutX="118.0" layoutY="14.0" prefHeight="252.0" prefWidth="252.0">
+        <children>
+            <ImageView fx:id="voucherImage" fitHeight="220.0" fitWidth="231.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+        </children>
+    </Pane>
+    <Pane layoutX="774.0" layoutY="412.0" prefHeight="81.0" prefWidth="317.0">
+        <children>
+            <Pane layoutX="94.0" layoutY="14.0" onMouseClicked="#updateVoucher" prefHeight="59.0" prefWidth="60.0">
+                <children>
+                    <ImageView fitHeight="52.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/edit.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane fx:id="deleteVoucher" layoutX="14.0" layoutY="11.0" onMouseClicked="#deleteVoucher" prefHeight="59.0" prefWidth="60.0">
+                <children>
+                    <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/poubelle.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane fx:id="back" layoutX="237.0" layoutY="14.0" onMouseClicked="#pdf" prefHeight="59.0" prefWidth="60.0">
+                <children>
+                    <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/fleche-fine-contour-vers-la-gauche.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+         <Pane fx:id="back1" layoutX="166.0" layoutY="14.0" onMouseClicked="#addVoucher" prefHeight="59.0" prefWidth="60.0">
+            <children>
+               <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#addVoucher" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/add.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </Pane>
+        </children>
+    </Pane>
+    <Pane layoutX="20.0" layoutY="314.0" prefHeight="375.0" prefWidth="485.0">
+        <children>
+            <TextField fx:id="updateValue" layoutX="32.0" layoutY="38.0" prefHeight="24.0" prefWidth="221.0" promptText="Voucher's value" />
+         <DatePicker fx:id="updatedDate" layoutX="273.0" layoutY="38.0" />
+         <CheckBox fx:id="updatedValidBox" layoutX="98.0" layoutY="112.0" mnemonicParsing="false" text="validity" />
+         <CheckBox fx:id="updatedOwnedByBox" layoutX="98.0" layoutY="154.0" mnemonicParsing="false" text="owned By" />
+         <ComboBox fx:id="updatedUsabilityBox" layoutX="263.0" layoutY="118.0" prefWidth="150.0" promptText="usability" />
+         <ComboBox fx:id="updatedUserBox" layoutX="32.0" layoutY="232.0" prefWidth="150.0" promptText="User" />
+         <ComboBox fx:id="updatedCategoryBox" layoutX="263.0" layoutY="232.0" prefWidth="150.0" promptText="Category" />
+         <ComboBox fx:id="updatedMarketBox" layoutX="36.0" layoutY="302.0" prefWidth="150.0" promptText="Market" />
+         <TextField fx:id="updatedTypeField" layoutX="243.0" layoutY="302.0" promptText="type ..." />
+        </children>
+    </Pane>
+</AnchorPane>

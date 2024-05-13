@@ -72,43 +72,43 @@ public class showPostAdminController {
 
         // Create header row
         HBox headerRow = new HBox();
-        headerRow.setSpacing(8);
+        headerRow.setSpacing(7);
         headerRow.setPrefWidth(1500);
         headerRow.setStyle("-fx-background-color: #6b9eef; -fx-padding: 10px; -fx-spacing: 10px;");
 
         // Header labels
         Label titleLabel = new Label("Titre");
-        titleLabel.setPrefWidth(200);
+        titleLabel.setPrefWidth(150);
         titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(titleLabel);
 
         Label dateLabel = new Label("Date");
-        dateLabel.setPrefWidth(200);
+        dateLabel.setPrefWidth(150);
         dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(dateLabel);
 
         Label localLabel = new Label("Local");
-        localLabel.setPrefWidth(200);
+        localLabel.setPrefWidth(150);
         localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(localLabel);
 
         Label sizeLabel = new Label("Type");
-        sizeLabel.setPrefWidth(200);
+        sizeLabel.setPrefWidth(150);
         sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(sizeLabel); // Add bold style
 
         Label desLabel = new Label("Description");
-        desLabel.setPrefWidth(200);
+        desLabel.setPrefWidth(150);
         desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(desLabel);
 
         Label userLabel = new Label("User");
-        userLabel.setPrefWidth(200);
+        userLabel.setPrefWidth(150);
         userLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(userLabel);
 
         Label Action = new Label("Delete");
-        Action.setPrefWidth(200);
+        Action.setPrefWidth(150);
         Action.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(Action);
 
@@ -126,29 +126,29 @@ public class showPostAdminController {
 
     private HBox createPostEntry(Post post) {
         HBox hbox = new HBox();
-        hbox.setSpacing(8);
+        hbox.setSpacing(7);
         hbox.setPrefWidth(1500);
 
         Label titleLabel = new Label( post.getTitre());
-        titleLabel.setPrefWidth(200);
+        titleLabel.setPrefWidth(150);
         titleLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(titleLabel);
 
         Label dateLabel = new Label( post.getDate().toString());
-        dateLabel.setPrefWidth(200);
+        dateLabel.setPrefWidth(150);
         dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
         hbox.getChildren().add(dateLabel);
 
         Label localLabel = new Label( post.getPlace());
-        localLabel.setPrefWidth(200);
+        localLabel.setPrefWidth(150);
         localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(localLabel);
 
         Label sizeLabel = new Label( post.getType().toString());
-        sizeLabel.setPrefWidth(200);
+        sizeLabel.setPrefWidth(150);
         sizeLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; " + "-fx-font-weight: bold;"); // Add bold style
 
-        if ("LOST".equals(post.getType())) {
+        if ("Lost".equals(post.getType())) {
             sizeLabel.setStyle(sizeLabel.getStyle() + "-fx-text-fill: red;");
         } else {
             sizeLabel.setStyle(sizeLabel.getStyle() + "-fx-text-fill: green;");
@@ -157,7 +157,7 @@ public class showPostAdminController {
         hbox.getChildren().add(sizeLabel);
 
         Label desLabel = new Label( post.getDescription());
-        desLabel.setPrefWidth(200);
+        desLabel.setPrefWidth(150);
         desLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
         hbox.getChildren().add(desLabel);
 
@@ -166,7 +166,7 @@ public class showPostAdminController {
         User user = userService.getUserById(id);
 
         Label nameuser = new Label(user.getEmail().toString());
-        nameuser.setPrefWidth(200);
+        nameuser.setPrefWidth(150);
         nameuser.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px;");
         hbox.getChildren().add(nameuser);
 

@@ -20,7 +20,7 @@ public class User {
     private String username;
     private String gender;
     private String resetToken;
-    private int avertissementsCount;
+    private int avertissements_count;
     private Integer reputation;  // Using Integer to allow null values
 
     private VerificationCode verificationCode;
@@ -31,6 +31,13 @@ public class User {
         this.isEnabled = true;
     }
 
+    public int getAvertissementsCount() {
+        return avertissements_count;
+    }
+
+    public void setAvertissementsCount(int avertissements_count) {
+        this.avertissements_count = avertissements_count;
+    }
     public User(int id, String photo, String username) {
         this.id = id;
         this.photo = photo;
@@ -149,12 +156,13 @@ public class User {
         this.resetToken = resetToken;
     }
 
-    public int getAvertissementsCount() {
-        return avertissementsCount;
+
+    public int getAvertissements_count() {
+        return avertissements_count;
     }
 
-    public void setAvertissementsCount(int avertissementsCount) {
-        this.avertissementsCount = avertissementsCount;
+    public void setAvertissements_count(int avertissements_count) {
+        this.avertissements_count = avertissements_count;
     }
 
     public Integer getReputation() {
@@ -189,7 +197,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", gender='" + gender + '\'' +
                 ", resetToken='" + resetToken + '\'' +
-                ", avertissementsCount=" + avertissementsCount +
+                ", avertissements_count=" + avertissements_count +
                 ", reputation=" + reputation +
                 ", verificationCode=" + verificationCode +
                 '}';
@@ -199,5 +207,6 @@ public class User {
         Gson gson = new Gson();
         return gson.toJson(this.roles);
     }
+
 
 }

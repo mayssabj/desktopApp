@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.dash">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.controller.dash" >
     <children>
         <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1335.0" styleClass="primary_color" stylesheets="/style1.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
             <left>
@@ -36,35 +36,7 @@
                                                 <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
                                             </image>
                                         </ImageView>
-                                        <Label onMouseClicked="#showpost" prefHeight="21.0" prefWidth="101.0" text="Home" textFill="WHITE">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                                    <children>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
-                                            </image>
-                                        </ImageView>
-                                        <Label onMouseClicked="#showsponsor" prefHeight="21.0" prefWidth="101.0" text="Explore" textFill="#a1a1a1">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
-                                    <children>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
-                                            </image>
-                                        </ImageView>
-                                        <Label prefHeight="21.0" prefWidth="101.0" text="Radio" textFill="#a1a1a1">
+                                        <Label prefHeight="21.0" prefWidth="101.0" text="Home" textFill="WHITE" onMouseClicked="#showpost">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -75,7 +47,7 @@
                         </VBox>
                         <VBox prefHeight="292.0" prefWidth="235.0">
                             <children>
-                                <Label prefHeight="48.0" prefWidth="192.0" text="YOUR LIBRARY" textFill="#a1a1a1">
+                                <Label prefHeight="48.0" prefWidth="192.0" text="YOUR FONCTIONALITY" textFill="#a1a1a1">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
@@ -83,32 +55,27 @@
                                         <Insets />
                                     </VBox.margin>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="////" textFill="#a1a1a1" >
+                                <Label prefHeight="40.0" prefWidth="192.0" text="SHOW SPONSOR " textFill="#a1a1a1" onMouseClicked="#showsponsor">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Recently Played" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="SHOW RECLAMATION" textFill="#a1a1a1" onMouseClicked="#showreclamation">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Liked Songs" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="SHOW Q/A" onMouseClicked="#showQA" textFill="#a1a1a1">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Albums" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="Market" onMouseClicked="#showMarket" textFill="#a1a1a1">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Artists" textFill="#a1a1a1">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label prefHeight="40.0" prefWidth="192.0" text="Q/A" onMouseClicked="#showQA" textFill="#a1a1a1">
+                                <Label prefHeight="40.0" prefWidth="192.0" text="Voucher" onMouseClicked="#showVoucher" textFill="#a1a1a1">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
@@ -118,7 +85,7 @@
                                 <Insets left="20.0" right="20.0" />
                             </padding>
                         </VBox>
-                        <Label prefHeight="48.0" prefWidth="192.0" text="PLAYLISTS" textFill="#a1a1a1">
+                        <Label onMouseClicked="#handleLogout" prefHeight="48.0" prefWidth="192.0" text="Logout" textFill="#a1a1a1">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -184,20 +151,21 @@
                                 <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                     <children /></Pane>
                                 <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="add-btn" stylesheets="style.css" text="Ajouter Post" textFill="blue" onAction="#handleAddPostButton"/>
-                                <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0">
+
+                                <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0" onMouseClicked="#redirectToUpdateUser">
                                     <children>
-                                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="https://static.vecteezy.com/ti/vecteur-libre/p3/9124661-jfx-logo-jfx-letter-jfx-letter-logo-design-initials-jfx-logo-linked-with-circle-and-uppercase-monogram-logo-jfx-typography-for-technology-business-and-real-marque-immobilier-vectoriel.jpg" />
-                                            </image>
-                                        </ImageView>
-                                        <Label prefHeight="27.0" prefWidth="171.0" text="Username" textFill="WHITE">
+                                        <ImageView fx:id="userPhoto" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                                        <Label fx:id="usernameLabel" prefHeight="27.0" prefWidth="120.0" text="Username" textFill="WHITE">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </Label>
+
                                     </children>
                                 </HBox>
+
+
+
                             </children>
                         </HBox>
                         <HBox fx:id="vboxdash" prefHeight="730.0" prefWidth="1060.0">
