@@ -25,6 +25,7 @@ module edu.esprit {
     requires javax.mail.api;
     requires okhttp3;
     requires google.api.translate.java;
+    requires spring.security.crypto;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

@@ -15,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.VBox;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -58,7 +60,8 @@ public class ResetPasswordController {
             UserService userService = new UserService();
             User user = userService.findUserByEmail(Session.getInstance().getResetPasswordEmail()); // Assumes current user's email is stored in session
             if (user != null) {
-                String hashedPassword = BCrypt.hashpw(passwordField.getText(), BCrypt.gensalt());
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String hashedPassword = passwordEncoder.encode(passwordField.getText());
                 boolean passwordUpdateSuccess = userService.updateUserPassword(hashedPassword, user.getId());
                 if (passwordUpdateSuccess) {
                     resetPassMessageLabel.setText("Your password has been updated successfully.");

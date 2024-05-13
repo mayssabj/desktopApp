@@ -273,6 +273,25 @@
             <artifactId>core</artifactId>
             <version>3.4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.6.0</version>
+        </dependency>
+
+        <!-- Spring Security Web (for web-based applications) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>5.6.0</version>
+        </dependency>
+
+        <!-- Spring Security Configuration (for configuring Spring Security) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>5.6.0</version>
+        </dependency>
 
         <!-- ZXing JavaSE, which includes MatrixToImageWriter -->
         <dependency>
