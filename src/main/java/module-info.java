@@ -45,5 +45,4 @@ module edu.esprit {
     opens edu.esprit.controller.Statistique to javafx.fxml;
 
 
-
 }
