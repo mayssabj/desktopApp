@@ -153,43 +153,64 @@ public class CommentaireService implements ServiceCommentaire<Postcommentaire>{
         try (PreparedStatement stmtSelect = con.prepareStatement(sqlSelect);
              PreparedStatement stmtUpdate = con.prepareStatement(sqlUpdate)) {
 
-            // Select the comment to get current likes and liked_by list
+            // Select the comment to get the current list of likes and the liked_by emails
             stmtSelect.setInt(1, commentId);
             ResultSet rs = stmtSelect.executeQuery();
 
             if (rs.next()) {
                 String likedBy = rs.getString("liked_by");
                 int currentLikes = rs.getInt("likes");
-                List<Integer> likedByUsers = Arrays.stream(likedBy.replace("[", "").replace("]", "").split(","))
-                        .filter(s -> !s.isEmpty())
-                        .map(String::trim) // Add this line to trim the whitespace
-                        .map(Integer::parseInt)
-                        .collect(Collectors.toList());
 
-
-                // Determine whether to like or unlike based on current state
-                boolean isAddingLike = !likedByUsers.contains(userId);
-                if (isAddingLike) {
-                    likedByUsers.add(userId);  // Add like
-                    currentLikes++;  // Increment like count
-                } else {
-                    likedByUsers.remove(Integer.valueOf(userId));  // Remove like
-                    currentLikes = Math.max(0, currentLikes - 1);  // Decrement like count, ensuring it doesn't go below zero
+                // Initialize the list with existing emails or start with an empty list
+                List<String> likedByEmails = new ArrayList<>();
+                if (likedBy != null && !likedBy.trim().isEmpty()) {
+                    likedByEmails = Arrays.stream(likedBy.replace("[", "").replace("]", "").split(","))
+                            .map(s -> s.replace("\"", "").trim())  // Remove existing quotes and trim
+                            .filter(s -> !s.isEmpty())
+                            .collect(Collectors.toList());
                 }
 
-                // Convert the list of user IDs back into a string for storage
-                String likedByString = "[" + likedByUsers.stream().map(String::valueOf).collect(Collectors.joining(", ")) + "]";
+                // Retrieve the user's email using their userId
+                String userEmail = getEmailFromUserId(userId);
 
+                // Determine whether to add or remove the email from the list
+                boolean isAddingLike = !likedByEmails.contains(userEmail);
+                if (isAddingLike) {
+                    likedByEmails.add(userEmail);  // Add the email
+                    currentLikes++;  // Increment the like count
+                } else {
+                    likedByEmails.remove(userEmail);  // Remove the email
+                    currentLikes = Math.max(0, currentLikes - 1);  // Decrement the like count, ensuring it doesn't go below zero
+                }
 
-                // Update the comment in the database with new likes and liked_by list
+                // Convert the list back into a formatted string with quotes around each email
+                String likedByString = "[" + likedByEmails.stream()
+                        .map(email -> "\"" + email + "\"")
+                        .collect(Collectors.joining(", ")) + "]";
+
+                // Update the comment in the database with the new list and like count
                 stmtUpdate.setString(1, likedByString);
                 stmtUpdate.setInt(2, currentLikes);
                 stmtUpdate.setInt(3, commentId);
                 stmtUpdate.executeUpdate();
-
             }
         }
     }
+
+    // Method to retrieve the user's email based on their userId
+    private String getEmailFromUserId(int userId) throws SQLException {
+        String sql = "SELECT email FROM user WHERE id = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("email");
+            } else {
+                throw new SQLException("User ID not found");
+            }
+        }
+    }
+
 
     public void unlikeComment(int commentId, int userId) throws SQLException {
         // Vous devez implémenter la logique pour décrémenter le compteur de likes
