@@ -202,10 +202,17 @@ public class AfficherPostController {
         Image profileImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));;
         if(!(u.getPhoto()==null)){
             try {
-                InputStream inputStream = new FileInputStream(imagePath);
+                // Try to load image from local file
+                InputStream inputStream = new FileInputStream("C:/Users/wsmtr/OneDrive/Desktop/PI/pidev-web/public/uploads/"+u.getPhoto());
                 profileImage = new Image(inputStream);
-            }catch (FileNotFoundException e1){
-                profileImage = new Image(new URL(u.getPhoto()).openStream());
+            } catch (FileNotFoundException e1) {
+                try {
+                    // If loading from local file fails, try to load from web URL
+                    profileImage = new Image(new URL(u.getPhoto()).openStream());
+                } catch (Exception e2) {
+                    // Handle any exceptions
+                    e2.printStackTrace();
+                }
             }
         }
         user_idPhoto.setImage(profileImage);
@@ -247,7 +254,7 @@ public class AfficherPostController {
         fruitImg.setFitWidth(285);
         try {
             // Try to load image from local file
-            InputStream inputStream = new FileInputStream("C:/Users/Rayen/Downloads/pidev-web-4046ebcc527d0f5ebf4ee7ee21cf41783dbfbec4/pidev-web-4046ebcc527d0f5ebf4ee7ee21cf41783dbfbec4/public/uploads/"+post.getImageUrl());
+            InputStream inputStream = new FileInputStream("C:/Users/wsmtr/OneDrive/Desktop/PI/pidev-web/public/uploads/"+post.getImageUrl());
             fruitImg.setImage(new Image(inputStream));
         } catch (FileNotFoundException e1) {
             try {

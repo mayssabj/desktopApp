@@ -22,10 +22,10 @@ module edu.esprit {
 
     requires com.google.zxing;
     requires com.google.zxing.javase;
-    requires javax.mail.api;
     requires okhttp3;
     requires google.api.translate.java;
     requires spring.security.crypto;
+    requires java.mail;
 
     opens edu.esprit.controller.user to javafx.fxml;
     opens edu.esprit.controller to javafx.fxml;

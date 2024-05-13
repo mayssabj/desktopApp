@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
@@ -39,12 +40,14 @@ public class dash {
             Image profileImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/default_user.png")));
             if (currentUser.getPhoto() != null && !currentUser.getPhoto().isEmpty()) {
                 try {
-                    profileImage = new Image(new FileInputStream(currentUser.getPhoto()));
+                    InputStream inputStream = new FileInputStream("C:/Users/wsmtr/OneDrive/Desktop/PI/pidev-web/public/uploads/"+currentUser.getPhoto());
+                    profileImage = new Image(inputStream);
                 } catch (FileNotFoundException e) {
                     try {
                         profileImage = new Image(new URL(currentUser.getPhoto()).openStream());
                     } catch (Exception e1) {
                         e1.printStackTrace();
+                        System.out.println("👄👄👄👄👄👄👄👄👄👄👄👄👄👄👄👄");
                     }
                 }
             }

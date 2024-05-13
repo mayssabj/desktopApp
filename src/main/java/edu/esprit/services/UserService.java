@@ -291,21 +291,40 @@ public class UserService {
 
     public boolean updateVerificationCode(int userId, VerificationCode verificationCode) {
         Connection con = mydb.getInstance().getCon();
-        String query = "UPDATE verification_code SET code = ?, expiry_date = ? WHERE user_id = ?";
+        String checkQuery = "SELECT 1 FROM verification_code WHERE user_id = ?";
+        String updateQuery = "UPDATE verification_code SET code = ?, expiry_date = ? WHERE user_id = ?";
+        String insertQuery = "INSERT INTO verification_code (user_id, code, expiry_date) VALUES (?, ?, ?)";
 
-        try (PreparedStatement pst = con.prepareStatement(query)) {
-            pst.setString(1, verificationCode.getCode());
-            pst.setTimestamp(2, Timestamp.valueOf(verificationCode.getExpiryDate()));
-            pst.setInt(3, userId);
-
-            int rowsUpdated = pst.executeUpdate();
-            return rowsUpdated > 0;
+        try {
+            // First, check if the verification code already exists for the user
+            try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
+                checkStmt.setInt(1, userId);
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next()) {
+                    // If the user exists, update their verification code
+                    try (PreparedStatement updateStmt = con.prepareStatement(updateQuery)) {
+                        updateStmt.setString(1, verificationCode.getCode());
+                        updateStmt.setTimestamp(2, Timestamp.valueOf(verificationCode.getExpiryDate()));
+                        updateStmt.setInt(3, userId);
+                        return updateStmt.executeUpdate() > 0;
+                    }
+                } else {
+                    // If the user does not exist, insert a new verification code
+                    try (PreparedStatement insertStmt = con.prepareStatement(insertQuery)) {
+                        insertStmt.setInt(1, userId);
+                        insertStmt.setString(2, verificationCode.getCode());
+                        insertStmt.setTimestamp(3, Timestamp.valueOf(verificationCode.getExpiryDate()));
+                        return insertStmt.executeUpdate() > 0;
+                    }
+                }
+            }
         } catch (SQLException e) {
-            System.err.println("Error updating verification code: " + e.getMessage());
+            System.err.println("Error handling verification code: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
+
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
