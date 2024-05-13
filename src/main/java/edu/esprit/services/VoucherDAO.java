@@ -84,6 +84,38 @@ public class VoucherDAO {
         return vouchers;
     }
 
+    public ObservableList<Voucher> getAllVouchersObForUser(int id) {
+        ObservableList<Voucher> vouchers = FXCollections.observableArrayList();
+        String query = "SELECT * FROM voucher where user_won_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            // Set the parameter for the prepared statement
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Voucher voucher = new Voucher();
+                    voucher.setId(resultSet.getInt("id"));
+                    voucher.setCategoryId(resultSet.getInt("category_id"));
+                    voucher.setUserWonId(resultSet.getInt("user_won_id"));
+                    voucher.setMarketRelatedId(resultSet.getInt("market_related_id"));
+                    voucher.setCode(resultSet.getString("code"));
+                    voucher.setExpiration(resultSet.getDate("expiration"));
+                    voucher.setValue(resultSet.getDouble("value"));
+                    voucher.setUsageLimit(resultSet.getInt("usage_limit"));
+                    voucher.setType(resultSet.getString("type"));
+                    voucher.setValid(resultSet.getBoolean("is_valid"));
+                    voucher.setGivenToUser(resultSet.getBoolean("is_given_to_user"));
+                    vouchers.add(voucher);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vouchers;
+    }
+
+
+
     // Method to update an existing voucher
     public void updateVoucher(Voucher voucher) {
         String query = "UPDATE voucher SET category_id = ?, user_won_id = ?, market_related_id = ?, code = ?, expiration = ?, value = ?, usage_limit = ?, type = ?, is_valid = ?, is_given_to_user = ? WHERE id = ?";
