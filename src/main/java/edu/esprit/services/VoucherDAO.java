@@ -137,6 +137,16 @@ public class VoucherDAO {
         }
     }
 
+    public void updateVoucherState(Voucher voucher) {
+        String query = "UPDATE voucher SET is_valid = 0 WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, voucher.getId());  // Make sure you set the ID correctly
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Method to delete a voucher by ID
     public void deleteVoucher(int id) {
         String query = "DELETE FROM voucher WHERE id = ?";
