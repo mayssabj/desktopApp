@@ -7,7 +7,7 @@
 }
 
 .selected {
-  -fx-border-color: #1ed760;
+  -fx-border-color: #ff7555;
   -fx-border-width: 0 0 0 5;
 }
 
@@ -52,7 +52,7 @@
     1
   ); /* subtle shadow effect */
   -fx-cursor: hand; /* Changes the cursor to a hand when hovered over the button */
-  -fx-background-color: #4e9f3d; /* An inviting green color */
+  -fx-background-color: #ff7555; /* An inviting green color */
   -fx-background-radius: 20;
   -fx-text-fill: white;
 }
@@ -91,7 +91,7 @@
     1
   ); /* subtle shadow effect */
   -fx-cursor: hand; /* Changes the cursor to a hand when hovered over the button */
-  -fx-background-color: #4e9f3d; /* An inviting green color */
+  -fx-background-color: #ff7555; /* An inviting green color */
   -fx-background-radius: 20;
   -fx-text-fill: white;
 }
@@ -102,7 +102,7 @@
 }
 
 .shopping-online-card {
-  -fx-background-color: #baeac3;
+  -fx-background-color: #faa894;
   -fx-background-radius: 30;
 }
 
@@ -151,7 +151,7 @@
 }
 
 .sponsor-button {
-  -fx-background-color: #4caf50; /* Set background color */
+  -fx-background-color: #ff7555; /* Set background color */
   -fx-text-fill: white; /* Set text color */
   -fx-font-size: 14px; /* Set font size */
   -fx-padding: 10px 20px; /* Add padding */
@@ -228,7 +228,7 @@
 
 .select-button,
 .submit--button {
-  -fx-background-color: #4caf50; /* Green */
+  -fx-background-color: #ff7555; /* Green */
   -fx-border: none;
   -fx-color: white;
   -fx-padding: 10px 20px;
