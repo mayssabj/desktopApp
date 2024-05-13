@@ -194,9 +194,17 @@ public class voucherListController implements Initializable {
     @FXML
     void pdf(MouseEvent event) throws SQLException, DocumentException, IOException, WriterException {
         Voucher selectedVoucher = voucherTable.getSelectionModel().getSelectedItem();
-        System.out.println(selectedVoucher.toString());
-        handleSaveFile(selectedVoucher);
-
+        if (selectedVoucher != null) {
+            System.out.println(selectedVoucher.toString());
+            try{
+                voucherDAO.updateVoucherState(selectedVoucher);
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+            handleSaveFile(selectedVoucher);
+        } else {
+            System.out.println("No voucher selected");
+        }
     }
 
     public void displayVouchers() {
