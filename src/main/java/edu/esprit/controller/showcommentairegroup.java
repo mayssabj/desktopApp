@@ -72,10 +72,6 @@ public class showcommentairegroup {
         sponLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
         headerRow.getChildren().add(sponLabel);
 
-        Label dateLabel = new Label("postliked");
-        dateLabel.setPrefWidth(170);
-        dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: white;");
-        headerRow.getChildren().add(dateLabel);
 
         Label likeLabel = new Label("nblikes");
         likeLabel.setPrefWidth(170);
@@ -121,11 +117,6 @@ public class showcommentairegroup {
         localLabel.setPrefWidth(150);
         localLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;"); // Add text color styling
         hbox.getChildren().add(localLabel);
-
-        Label dateLabel = new Label( post.getLikedByUsersAsString());
-        dateLabel.setPrefWidth(150);
-        dateLabel.setStyle("-fx-font-family: 'Berlin Sans FB'; -fx-font-size: 14px; -fx-text-fill: #6b9eef;");
-        hbox.getChildren().add(dateLabel);
 
         String ss= String.valueOf(post.getLikes());
         Label likesLabel = new Label( ss);

@@ -1,9 +1,9 @@
 .sidebar {
-  -fx-background-color: #2262c6;
+  -fx-background-color: #404954;
   -fx-background-radius: 0px 50px 0px 0px;
 }
 .labbtn {
-  -fx-text-fill: #2262c6;
+  -fx-text-fill: #ffffff;
   -fx-background-color: #fefffd;
   -fx-background-radius: 50px;
 }
